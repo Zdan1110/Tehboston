@@ -31,6 +31,31 @@ class C_admin extends Controller
         return view('admin.v_tabelcalon', $admin);
     }
 
+    public function indexprofile()
+    {
+        $id_akun = Session::get('user')['id_akun'];
+
+        $mitra = [
+            'mitra' => $this->M_Admin->datamitra($id_akun)
+        ];
+        $foto = [
+            'foto' => $this->M_Admin->datamitrafoto($id_akun)
+        ];
+        return view('v_profileakun', $mitra, $foto);
+    }
+
+    public function indexfranchise()
+    {
+        $id_akun = Session::get('user')['id_akun'];
+
+        $id_mitra = DB::table('tb_mitra')->select('id_mitra')->where('id_akun', $id_akun)->first();
+        $franchise = DB::table('tb_franchise')->where('id_mitra', $id_mitra->id_mitra)->get();
+        $foto = DB::table('tb_franchise')->where('id_mitra', $id_mitra->id_mitra)->first();
+        $profile = DB::table('tb_mitra')->where('id_akun', $id_akun)->first();
+        return view('v_franchisee', compact('franchise', 'foto', 'profile'));
+    }
+
+
     public function index1()
     {
         $admin = [

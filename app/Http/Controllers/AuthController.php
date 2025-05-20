@@ -34,6 +34,8 @@ class AuthController extends Controller
         Session::put('user', [
             'id_akun' => $user->id_akun,
             'username' => $user->username,
+            'email' => $user->email,
+            'nama' => $user->nama,
             'type_akun' => $user->type_akun
         ]);
 

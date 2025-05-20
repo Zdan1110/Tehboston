@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CalonMitra;
+use App\Models\M_Admin;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,11 @@ use Illuminate\Support\Facades\Session;
 
 class CalonMitraController extends Controller
 {
+    public function __construct()
+    {
+        $this->M_Admin = new M_Admin();
+    }
+
     public function store(Request $request)
     {
         // Validasi Input
@@ -126,9 +132,71 @@ class CalonMitraController extends Controller
                     ->update([
                         'status' => $request->status
                     ]);
+
+                if ($request->status == 'Diterima') {
+
+                    $ubah = $this->M_Admin->datacalonpindah($id_calonmitra);
+
+                    $id_akun = Session::get('user')['id_akun'];
+                    $nama_franchise = Session::get('user')['username'];
+                    $lastMitra = DB::table('tb_mitra')
+                    ->select('id_mitra')
+                    ->orderByDesc('id_mitra')
+                    ->first();
+        
+                    if ($lastMitra) {
+                    $lastNummitra = (int) substr($lastMitra->id_mitra, 1); 
+                    $idMitra = 'M' . str_pad($lastNummitra + 1, 4, '0', STR_PAD_LEFT);
+                    } else {
+                    $idMitra = 'M0001'; 
+                    }
+
+                        // 1. Masukkan ke tb_mitra
+                    DB::table('tb_mitra')->insert([
+                        'id_mitra' => $idMitra, // atau bisa generate ID baru jika kamu mau
+                        'id_akun' => $id_akun,
+                        'nama_lengkap' => $ubah->nama_lengkap,
+                        'no_ktp' => $ubah->no_ktp,
+                        'provinsi' => $ubah->provinsi,
+                        'kota' => $ubah->kota,
+                        'kelurahan' => $ubah->kelurahan,
+                        'ktp' => $ubah->ktp,
+                        'no_hp' => $ubah->no_hp,
+                        'alamat_lengkap' => $ubah->alamat_lengkap,
+                        'pas_photo' => $ubah->pas_photo,
+                    ]);
+
+                    $lastFranchise = DB::table('tb_franchise')
+                    ->select('id_franchise')
+                    ->orderByDesc('id_franchise')
+                    ->first();
+        
+                    if ($lastFranchise) {
+                    $lastNumfranchise = (int) substr($lastFranchise->id_franchise, 1); 
+                    $idFranchise = 'F' . str_pad($lastNumfranchise + 1, 4, '0', STR_PAD_LEFT);
+                    } else {
+                    $idFranchise = 'F0001'; 
+                    }
+
+                        // 2. Masukkan ke tb_franchise
+                    DB::table('tb_franchise')->insert([
+                        'id_franchise' => $idFranchise,
+                        'id_mitra' => $idMitra,
+                        'nama_franchise' => $nama_franchise,
+                        'provinsi_usaha' => $ubah->provinsi_usaha,
+                        'kota_usaha' => $ubah->kota_usaha,
+                        'kelurahan_usaha' => $ubah->kelurahan_usaha,
+                        'kecamatan_usaha' => $ubah->kecamatan_usaha,
+                        'alamat_usaha' => $ubah->alamat_usaha,
+                        'kode_pos' => $ubah->kode_pos,
+                        'titik_koordinat' => $ubah->titik_koordinat,
+                        'lokasi_usaha' => $ubah->lokasi_usaha,
+                    ]);
+                }
         
                 return back()->with('success', 'Status berhasil diperbarui.');
             } catch (\Exception $e) {
+                dd($e->getMessage());
                 Log::error('Gagal update status: ' . $e->getMessage());
                 return back()->with('error', 'Gagal memperbarui status.');
             }

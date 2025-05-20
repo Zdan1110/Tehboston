@@ -33,6 +33,8 @@ Route::view('/admin/tabelcalon', 'admin.v_tabelcalon');
 Route::view('/admin/tabelfranchise', 'admin.v_tabelfranchise');
 Route::view('/', 'v_index');
 
+Route::get('/profiles', [C_admin::class, 'indexprofile']);
+Route::get('/franchisee', [C_admin::class, 'indexfranchise']);
 Route::get('/admin/tabelcalon', [C_admin::class, 'index1'])->name('admincalon');
 Route::get('/admin/tabelakun', [C_admin::class, 'index2'])->name('adminakun');
 Route::get('/admin/tabelproduk', [C_admin::class, 'index3'])->name('adminproduk');

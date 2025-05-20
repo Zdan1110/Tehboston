@@ -13,6 +13,11 @@ class M_Admin extends Model
         return DB::table('tb_calonmitra')->get();
     }
 
+    public function datacalonpindah($id_calonmitra)
+    {
+        return DB::table('tb_calonmitra')->where('id_calon', $id_calonmitra)->first();
+    }
+
     public function dataakun()
     {
         return DB::table('tb_akun')->where('type_akun', 'user')->get();
@@ -26,6 +31,16 @@ class M_Admin extends Model
     public function detailDatacalon($id_calon)
     {
         return DB::table('tb_calonmitra')->where('id_calon', $id_calon)->first();
+    }
+
+    public function datamitra($id_akun)
+    {
+        return DB::table('tb_mitra')->where('id_akun', $id_akun)->get();
+    }
+
+    public function datamitrafoto($id_akun)
+    {
+        return DB::table('tb_mitra')->where('id_akun', $id_akun)->first();
     }
 
     public function deleteDatacalon($id_calon)

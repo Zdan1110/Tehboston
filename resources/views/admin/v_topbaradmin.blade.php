@@ -329,6 +329,13 @@
               <ul class="dropdown-menu dropdown-user animated fadeIn">
                 <div class="dropdown-user-scroll scrollbar-outer">
                   <li>
+                    <div class="user-box">
+                      <div class="u-text">
+                        <h4><strong>{{ Session::get('user')['username'] ?? 'Guest' }}</strong></h4>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">My Profile</a>
                     <a class="dropdown-item" href="#">My Balance</a>
