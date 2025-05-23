@@ -50,6 +50,13 @@
 
     @foreach ($franchise as $data)
     <div class="px-4 py-2">
+            <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Kode Franchise</label>
+            <div class="w-full rounded-md border border-gray-300 px-3 py-2 bg-gray-100">
+                {{ $data->id_franchise ?? '-' }}
+            </div>
+        </div>
+        
         <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700 mb-1">Nama Franchise</label>
             <div class="w-full rounded-md border border-gray-300 px-3 py-2 bg-gray-100">

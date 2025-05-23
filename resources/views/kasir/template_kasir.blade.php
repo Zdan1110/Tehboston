@@ -52,6 +52,10 @@
       <span style="margin-right: 8px;">📄</span>
       <a href="/pelaporan" style="color:white;">Pelaporan</a>
     </div>
+      <div class="nav-item">
+      <span style="margin-right: 8px;">📄</span>
+      <a href="/editakun" style="color:white;">Setting Akun</a>
+    </div>
   </div>
 
     @yield('content')

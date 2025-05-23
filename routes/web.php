@@ -21,10 +21,10 @@ Route::get('/tabel', [C_User::class, 'tabel']);
 
 // Route::get('/dashboard', [C_Register::class, 'dashboard']);
 
-Route::post('/pelaporan', [KasirController::class, 'store'])->name('penjualan.store');
+// Route::post('/pelaporan', [KasirController::class, 'store'])->name('penjualan.store');
 // Route::get('/dashkasir', [KasirController::class, 'index']);
 
-Route::view('/about', 'v_about');
+Route::view('/editakun', 'kasir.editakun');
 Route::view('/contact', 'v_contact');
 Route::get('/admin', [C_admin::class, 'index'])->name('admin.v_dashboard');
 Route::get('/dashkasir', [KasirController::class, 'index'])->name('kasir.v_dashkasir');
@@ -59,7 +59,7 @@ Route::get('/produk/add', [C_owner::class, 'tambahproduk']);
 Route::post('/produk/insert', [C_owner::class, 'insertproduk'])->name('produk.insert');
 
 Route::get('/kasir', [KasirController::class, 'kasir']);
-Route::post('/checkout', [KasirController::class, 'store']);
+Route::post('/kasir/store', [KasirController::class, 'store'])->name('kasir.store');
 
 
 // Route::view('/kasir', 'kasir.v_kasir');

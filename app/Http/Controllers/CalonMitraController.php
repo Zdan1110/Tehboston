@@ -28,10 +28,10 @@ class CalonMitraController extends Controller
             'provinsi' => 'required|string|max:100',
             'kota' => 'required|string|max:100',
             'kelurahan' => 'required|string|max:100',
-            'ktp' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'ktp' => 'required|file|mimes:jpg,jpeg,png,pdf',
             'no_hp' => 'required|string|max:15',
             'alamat_lengkap' => 'required|string',
-            'pas_photo' => 'required|file|mimes:jpg,jpeg,png|max:1024',
+            'pas_photo' => 'required|file|mimes:jpg,jpeg,png',
 
             // Data Lokasi Usaha
             'provinsi_usaha' => 'required|string|max:100',
@@ -41,7 +41,7 @@ class CalonMitraController extends Controller
             'alamat_usaha' => 'required|string',
             'kode_pos' => 'required|string|max:10',
             'titik_koordinat' => 'required|string|max:100',
-            'lokasi_usaha' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'lokasi_usaha' => 'nullable|file|mimes:jpg,jpeg,png,pdf',
         ]);
 
             if (Auth::check()) {
@@ -192,6 +192,47 @@ class CalonMitraController extends Controller
                         'titik_koordinat' => $ubah->titik_koordinat,
                         'lokasi_usaha' => $ubah->lokasi_usaha,
                     ]);
+
+                        // 3. Masukkan ke tb_kasir
+                        $lastKasir = DB::table('tb_kasir')
+                            ->select('id_kasir')
+                            ->orderByDesc('id_kasir')
+                            ->first();
+
+                        if ($lastKasir) {
+                            $lastNumKasir = (int) substr($lastKasir->id_kasir, 1);
+                            $idKasir = 'K' . str_pad($lastNumKasir + 1, 4, '0', STR_PAD_LEFT);
+                        } else {
+                            $idKasir = 'K0001';
+                        }
+
+                        $lastAkun = DB::table('tb_akun')
+                        ->select('id_akun')
+                        ->orderByDesc('id_akun')
+                        ->first();
+
+                        if ($lastAkun) {
+                        $lastNumakun = (int) substr($lastAkun->id_akun, 1); // ambil angka setelah 'C'
+                        $idAkun = 'A' . str_pad($lastNumakun + 1, 4, '0', STR_PAD_LEFT);
+                        } else {
+                        $idAkun = 'A0001'; // Kalau belum ada data
+                        }
+
+                        // Simpan ke tb_akun
+                        DB::table('tb_akun')->insert([
+                            'id_akun' => $idAkun,         // FK dari tb_akun
+                            'username' => $idKasir,    
+                            'password' => bcrypt($idKasir),
+                            'type_akun' => 'kasir',      
+                        ]);
+
+                                                // Simpan ke tb_kasir
+                        DB::table('tb_kasir')->insert([
+                            'id_kasir' => $idKasir,
+                            'id_akun' => $idAkun,         // FK dari tb_akun
+                            'id_franchise' => $idFranchise       // FK dari tb_franchise yang baru dibuat
+                        ]);
+
                 }
         
                 return back()->with('success', 'Status berhasil diperbarui.');
