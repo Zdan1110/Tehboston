@@ -17,27 +17,26 @@ Tabel Produk
             >
             </div>
             <div class="row">
-              <div class="col-sm-6 col-md-3">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-primary bubble-shadow-small"
-                        >
-                          <i class="fas fa-users"></i>
+              <div class="row">
+                <div class="col-sm-6 col-md-3">
+                  <div class="card card-stats card-round">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col-icon">
+                          <div class="icon-big text-center icon-primary bubble-shadow-small">
+                            <i class="fas fa-users"></i>
+                          </div>
                         </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Pendaftar</p>
-                          <h4 class="card-title">1,294</h4>
+                        <div class="col col-stats ms-3 ms-sm-0">
+                          <div class="numbers">
+                            <p class="card-category">Pendaftar</p>
+                            <h4 class="card-title">{{ $jumlahPendaftar }}</h4>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
               <div class="col-sm-6 col-md-3">
                 <div class="card card-stats card-round">
                   <div class="card-body">
@@ -51,8 +50,8 @@ Tabel Produk
                       </div>
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
-                          <p class="card-category">Franchise</p>
-                          <h4 class="card-title">1303</h4>
+                            <p class="card-category">Franchise</p>
+                            <h4 class="card-title">{{ $jumlahFranchise }}</h4>
                         </div>
                       </div>
                     </div>
@@ -132,28 +131,27 @@ Tabel Produk
       </div>
     </div>
 
-    {{-- Card "Users Online" --}}
-    <div class="col-md-4">
-      <div class="card card-round">
-        <div class="card-body pb-0">
-          <div class="h1 fw-bold float-end text-primary">+5%</div>
-          <h2 class="mb-2">17</h2>
-          <p class="text-muted">Users online</p>
-          <div class="pull-in sparkline-fix">
-            <div id="lineChart"></div> {{-- Jika ini chart JS lain, pastikan script-nya juga aktif --}}
+              {{-- Card "Users Online" --}}
+              <div class="col-md-4">
+                <div class="card card-round">
+                  <div class="card-body pb-0">
+                    <div class="h1 fw-bold float-end text-primary">+5%</div>
+                    <h2 class="mb-2">17</h2>
+                    <p class="text-muted">Users online</p>
+                    <div class="pull-in sparkline-fix">
+                      <div id="lineChart"></div> {{-- Jika ini chart JS lain, pastikan script-nya juga aktif --}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
             <div class="row">
               <div class="col-md-12">
                 <div class="card card-round">
                   <div class="card-header">
                     <div class="card-head-row card-tools-still-right">
-                      <h4 class="card-title">Cabang Terkaya</h4>
+                      <h4 class="card-title">Franchise</h4>
                       <div class="card-tools">
                         <button
                           class="btn btn-icon btn-link btn-primary btn-xs"

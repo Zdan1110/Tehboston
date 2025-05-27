@@ -24,7 +24,7 @@
                         <input type="text" class="form-control" name="no_ktp" placeholder="No KTP *" required>
                     </div>
                     <div class="mb-3">
-                        <select class="form-control" name="provinsi" required>
+                        <select class="form-control" name="provinsi" id="provinsi" required onchange="updateKotaOptions('provinsi', 'kota')">
                             <option selected disabled>Pilih Provinsi *</option>
                             <option value="Jawa Barat">Jawa Barat</option>
                             <option value="Jawa Tengah">Jawa Tengah</option>
@@ -32,11 +32,8 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <select class="form-control" name="kota" required>
+                        <select class="form-control" name="kota" id="kota" required>
                             <option selected disabled>Pilih Kota *</option>
-                            <option value="Subang">Subang</option>
-                            <option value="Bandung">Bandung</option>
-                            <option value="Indramayu">Indramayu</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -62,7 +59,6 @@
                 </div>
             </div>
 
-            <!-- Tambahkan jarak antara bagian -->
             <div class="my-5"></div>
 
             <!-- Data Lokasi Usaha -->
@@ -76,7 +72,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <select class="form-control" name="provinsi_usaha" required>
+                        <select class="form-control" name="provinsi_usaha" id="provinsi_usaha" required onchange="updateKotaOptions('provinsi_usaha', 'kota_usaha')">
                             <option selected disabled>Pilih Provinsi *</option>
                             <option value="Jawa Barat">Jawa Barat</option>
                             <option value="Jawa Tengah">Jawa Tengah</option>
@@ -84,9 +80,8 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <select class="form-control" name="kota_usaha" required>
+                        <select class="form-control" name="kota_usaha" id="kota_usaha" required>
                             <option selected disabled>Pilih Kota *</option>
-                            <option value="Subang">Subang</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -96,9 +91,7 @@
                         <input type="text" class="form-control" name="kecamatan_usaha" placeholder="Kecamatan *" required>
                     </div>
                 </div>
-                </div>
                 <div class="col-md-6">
-
                     <div class="mb-3">
                         <input type="text" class="form-control" name="alamat_usaha" placeholder="Alamat Lengkap Lokasi Usaha *" required>
                     </div>
@@ -113,20 +106,37 @@
                         <input type="file" class="form-control" id="lokasi_usaha" name="lokasi_usaha" required>
                     </div>
                 </div>
-                
             </div>
 
-            <!-- Input untuk Data Calon Mitra -->
             <input type="hidden" name="status" value="calon_mitra">
-
 
             <div class="text-center mt-4 d-flex justify-content-center gap-3">
                 <button type="submit" class="btn btn-danger btn-lg w-25">SUBMIT</button>
                 <button type="button" class="btn btn-danger btn-lg w-25" onclick="window.history.back();">BATAL</button>
-        </div>
-
-
+            </div>
         </form>
     </div>
+
+    <script>
+        const dataWilayah = {
+            "Jawa Barat": ["Bandung", "Bekasi", "Bogor", "Cirebon", "Depok", "Karawang", "Subang", "Sukabumi", "Tasikmalaya"],
+            "Jawa Tengah": ["Semarang", "Solo", "Magelang", "Tegal", "Kudus", "Purwokerto", "Salatiga"],
+            "Jawa Timur": ["Surabaya", "Malang", "Kediri", "Madiun", "Blitar", "Banyuwangi", "Jember"]
+        };
+
+        function updateKotaOptions(provinsiId, kotaId) {
+            const provinsi = document.getElementById(provinsiId).value;
+            const kotaSelect = document.getElementById(kotaId);
+            kotaSelect.innerHTML = '<option selected disabled>Pilih Kota *</option>';
+            if (dataWilayah[provinsi]) {
+                dataWilayah[provinsi].forEach(kota => {
+                    const option = document.createElement("option");
+                    option.value = kota;
+                    option.textContent = kota;
+                    kotaSelect.appendChild(option);
+                });
+            }
+        }
+    </script>
 </body>
 </html>

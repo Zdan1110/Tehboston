@@ -54,8 +54,13 @@
     </div>
       <div class="nav-item">
       <span style="margin-right: 8px;">📄</span>
-      <a href="/editakun" style="color:white;">Setting Akun</a>
+      <a href="/profiles" style="color:white;">Setting Akun</a>
     </div>
+      <div class="nav-item">
+      <span style="margin-right: 8px;">📄</span>
+      <a href="/login" style="color:white;">Logout</a>
+    </div>
+  
   </div>
 
     @yield('content')

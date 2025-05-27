@@ -40,7 +40,7 @@ class CalonMitraController extends Controller
             'kecamatan_usaha' => 'required|string|max:100',
             'alamat_usaha' => 'required|string',
             'kode_pos' => 'required|string|max:10',
-            'titik_koordinat' => 'required|string|max:100',
+            'titik_koordinat' => 'required|string|max:255',
             'lokasi_usaha' => 'nullable|file|mimes:jpg,jpeg,png,pdf',
         ]);
 
@@ -71,7 +71,7 @@ class CalonMitraController extends Controller
             $filephoto->move(public_path('uploads/photo'), $fileNamephoto);
 
             $filelokasi = Request()->file('lokasi_usaha');
-            $fileNamelokasi = Request()->titik_koordinat . '.' . $filelokasi->extension();
+            $fileNamelokasi = Request()->idCalon . '.' . $filelokasi->extension();
             $filelokasi->move(public_path('uploads/lokasi'), $fileNamelokasi);
 
             // Simpan Data ke Database
@@ -114,6 +114,8 @@ class CalonMitraController extends Controller
             }
             
         }
+
+        
     
         public function index() {
             $admin = CalonMitra::all(); // ambil semua data

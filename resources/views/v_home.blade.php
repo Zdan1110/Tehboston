@@ -105,6 +105,8 @@
   }
 </style>
 
+
+
     <!-- end header section -->
 <!-- slider section -->
 <section class="slider_section">

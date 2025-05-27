@@ -78,6 +78,12 @@
                         <span class="sub-item">Data Produk</span>
                       </a>
                     </li>
+
+                      <li>
+                      <a href="/admin/tabelfranchise">
+                        <span class="sub-item">Data Franchise</span>
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </li>
@@ -85,7 +91,7 @@
               <li class="nav-item">
                 <a href="../../../documentation/index.html">
                   <i class="fas fa-file"></i>
-                  <p>Documentation</p>
+                  <p>Pelaporan</p>
                   <span class="badge badge-secondary">1</span>
                 </a>
               </li>

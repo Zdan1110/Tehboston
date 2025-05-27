@@ -42,6 +42,111 @@
 
 </head>
 
+<style>
+  .category-nav {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 40px;
+  }
+
+  .category-nav a {
+    position: relative;
+    font-weight: bold;
+    text-decoration: none;
+    color: #000;
+    padding-bottom: 5px;
+    transition: all 0.3s ease;
+  }
+
+  .category-nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 0%;
+    background-color: rgb(29, 95, 69);
+    transition: width 0.3s;
+  }
+
+  .category-nav a.active::after {
+    width: 100%;
+  }
+
+  .category-section {
+    display: none;
+  }
+
+  .category-section.active {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* === Kartu Kategori === */
+  .category-card {
+    width: 300px; /* atur lebar tetap */
+    height: 230px; /* tinggi tetap */
+    margin: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+  }
+
+  .category-card-image {
+    height: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .category-card img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+  }
+
+  .category-card-title {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .category-card-title h5 {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+  }
+
+  /* === Hover Effects dari Gambar === */
+  .card:hover .card-background {
+    transform: scale(1.15) translateZ(0);
+    background-size: 20px;
+  }
+
+  .card-grid:hover > .card:not(:hover) {
+    transform: scale(0.9);
+  }
+
+  .card-grid:hover > .card:not(:hover) .card-background,
+  .card-grid:hover > .card:not(:hover) .card-category {
+    filter: brightness(0.5) saturate(0) contrast(1.2) ;
+  }
+</style>
+
+
+
 <body>
 
   <div class="hero_area">
@@ -199,6 +304,8 @@
       </div>
     </div>
 
+    
+
     <!-- Carousel indicators -->
     <ol class="carousel-indicators">
       <li data-target="#customCarousel1" data-slide-to="0" class="active"></li>
@@ -207,59 +314,95 @@
     </ol>
   </div>
 </section>
+
+<div class="heading_container heading_center fade-up">
+        <h2>Produk <span>Kami</span></h2>
+        <!-- <p>Kami memiliki produk dengan varian rasa best seller di semua outlet.</p> -->
+      </div>
+
 <!-- end slider section -->
   </div>
 
+  <div class="category-nav">
+  <a href="#" class="category-link active" data-category="tea">Tea Series</a>
+  <a href="#" class="category-link" data-category="yakult">Yakult Series</a>
+  <a href="#" class="category-link" data-category="coffee">Coffee Series</a>
+  <a href="#" class="category-link" data-category="blend">Blend Series</a>
+</div>
 
-  <section class="service_section layout_padding fade-up">
+<section class="service_section layout_padding fade-up">
   <div class="service_container">
-    <div class="container ">
-      <div class="heading_container heading_center fade-up">
-        <h2>
-          Best <span>Seller</span>
-        </h2>
-        <p>
-          Kami memiliki produk dengan varian rasa best seller di semua outlet.
-        </p>
-      </div>
-      <div class="row">
-        <div class="col-md-4 fade-up">
-          <div class="box ">
-            <div class="img-box">
-              <img src="/finexo-html/images/bestsell1.jpg" alt="" width="100%" />
-            </div>
-            <div class="detail-box">
-              <h5>Yakult Lecy</h5>
+    <div class="container">
+
+      <!-- Tea Series -->
+      <div class="card-grid category-section active" id="category-tea">
+        @for($i = 1; $i <= 5; $i++)
+          <div class="col-md-4 fade-up card" style="margin-bottom: 30px;">
+            <div class="category-card card-background">
+              <div class="category-card-image">
+                <img src="/finexo-html/images/bestsell1.png" alt="Tea Produk {{ $i }}">
+              </div>
+              <div class="category-card-title card-category">
+                <h5>Tea Produk {{ $i }}</h5>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-4 fade-up">
-          <div class="box ">
-            <div class="img-box">
-              <img src="/finexo-html/images/bestsell1.jpg" alt="">
-            </div>
-            <div class="detail-box">
-              <h5>Yakult Strawberry</h5>
+        @endfor
+      </div>
+
+      <!-- Yakult Series -->
+      <div class="card-grid category-section" id="category-yakult">
+        @for($i = 6; $i <= 10; $i++)
+          <div class="col-md-4 fade-up card" style="margin-bottom: 30px;">
+            <div class="category-card card-background">
+              <div class="category-card-image">
+                <img src="/finexo-html/images/bestsell1.png" alt="Yakult Produk {{ $i }}">
+              </div>
+              <div class="category-card-title card-category">
+                <h5>Yakult Produk {{ $i }}</h5>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-4 fade-up">
-          <div class="box ">
-            <div class="img-box">
-              <img src="/finexo-html/images/bestsell1.jpg" alt="">
-            </div>
-            <div class="detail-box">
-              <h5>Yakult Melon</h5>
+        @endfor
+      </div>
+
+      <!-- Coffee Series -->
+      <div class="card-grid category-section" id="category-coffee">
+        @for($i = 11; $i <= 15; $i++)
+          <div class="col-md-4 fade-up card" style="margin-bottom: 30px;">
+            <div class="category-card card-background">
+              <div class="category-card-image">
+                <img src="/finexo-html/images/bestsell1.png" alt="Coffee Produk {{ $i }}">
+              </div>
+              <div class="category-card-title card-category">
+                <h5>Coffee Produk {{ $i }}</h5>
+              </div>
             </div>
           </div>
-        </div>
+        @endfor
       </div>
-      <div class="btn-box fade-up">
-        <a href="/menu">Varian Lainnya</a>
+
+      <!-- Blend Series -->
+      <div class="card-grid category-section" id="category-blend">
+        @for($i = 16; $i <= 20; $i++)
+          <div class="col-md-4 fade-up card" style="margin-bottom: 30px;">
+            <div class="category-card card-background">
+              <div class="category-card-image">
+                <img src="/finexo-html/images/bestsell1.png" alt="Blend Produk {{ $i }}">
+              </div>
+              <div class="category-card-title card-category">
+                <h5>Blend Produk {{ $i }}</h5>
+              </div>
+            </div>
+          </div>
+        @endfor
       </div>
+
     </div>
   </div>
 </section>
+
+
 
 <section class="client_section layout_padding fade-up">
   <div class="container">
@@ -298,7 +441,6 @@
 
 
 @include('layouts.footerindex')
-
   <script>
         function showPopup() {
             document.getElementById('popup').style.display = 'block';
@@ -447,6 +589,38 @@
     return rect.top < window.innerHeight && rect.bottom > 0;
   }
 </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const categoryLinks = document.querySelectorAll('.category-link');
+    const categorySections = document.querySelectorAll('.category-section');
+
+    categoryLinks.forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        // Hapus kelas aktif dari semua link
+        categoryLinks.forEach(link => link.classList.remove('active'));
+
+        // Tambahkan kelas aktif ke link yang diklik
+        this.classList.add('active');
+
+        // Ambil kategori dari data attribute
+        const category = this.getAttribute('data-category');
+
+        // Tampilkan hanya kategori yang sesuai
+        categorySections.forEach(section => {
+          if (section.id === 'category-' + category) {
+            section.classList.add('active');
+          } else {
+            section.classList.remove('active');
+          }
+        });
+      });
+    });
+  });
+</script>
+
 
 
 </body>

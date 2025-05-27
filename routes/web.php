@@ -13,6 +13,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalonMitraController;
 use App\Http\Controllers\KasirController;
+use App\Http\Controllers\C_Status;
 
 // Route::get('/', [C_Home::class, '']);
 
@@ -26,11 +27,18 @@ Route::get('/tabel', [C_User::class, 'tabel']);
 
 Route::view('/editakun', 'kasir.editakun');
 Route::view('/contact', 'v_contact');
+Route::view('/status', 'v_preview');
+Route::view('/cek-status', 'v_status');
 Route::get('/admin', [C_admin::class, 'index'])->name('admin.v_dashboard');
-Route::get('/dashkasir', [KasirController::class, 'index'])->name('kasir.v_dashkasir');
+Route::get('/kasir', [KasirController::class, 'kasir']);
+Route::get('/kasircoba', [KasirController::class, 'admincoba']);
+Route::get('/pelaporan', [KasirController::class, 'pelaporan']);
+Route::post('/kasir/store', [KasirController::class, 'store'])->name('kasir.store');
+Route::post('/kasir/checkout', [KasirController::class, 'checkout']);
 // Route::view('/admin', 'admin.v_tabelcalon');
 Route::view('/admin/tabelcalon', 'admin.v_tabelcalon');
-Route::view('/admin/tabelfranchise', 'admin.v_tabelfranchise');
+Route::get('/admin/tabelfranchise', [C_admin::class, 'tabelfranchise'])->name('adminfranchise');
+// Route::view('/admin/tabelfranchise', 'admin.v_tabelfranchise');
 Route::view('/', 'v_index');
 
 Route::get('/profiles', [C_admin::class, 'indexprofile']);
@@ -58,8 +66,7 @@ Route::post('/produk/update/{id_produk}', [C_owner::class, 'updateproduk']);
 Route::get('/produk/add', [C_owner::class, 'tambahproduk']);
 Route::post('/produk/insert', [C_owner::class, 'insertproduk'])->name('produk.insert');
 
-Route::get('/kasir', [KasirController::class, 'kasir']);
-Route::post('/kasir/store', [KasirController::class, 'store'])->name('kasir.store');
+
 
 
 // Route::view('/kasir', 'kasir.v_kasir');
@@ -73,7 +80,14 @@ Route::view('/cabangg', 'v_cabanglog');
 Route::view('/profilee', 'v_profilelog');
 Route::view('/kemitraann', 'v_kemitraanlog');
 
+Route::get('/cek-status/{id}', [CalonMitraController::class, 'viewStatus'])->name('cek.status.view');
 
+
+Route::get('/cek-status', function () {
+    return view('status');
+});
+
+Route::post('/cek-status', [C_Status::class, 'cek'])->name('cek.status');
 
 // Halaman Home
 Route::get('/login', function () {
@@ -92,6 +106,7 @@ Route::get('/home', function () {
 Route::get('/daftarmitra', function () {
     return view('daftarmitra');
 });
+
 
 Route::get('/profile', function () {
     return view('v_profile');

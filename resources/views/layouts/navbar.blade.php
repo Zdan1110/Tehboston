@@ -45,6 +45,7 @@
                   <a class="dropdown-item" href="/profiles">Data Diri</a>
                   <a class="dropdown-item" href="/franchisee">Franchisee</a>
                   <a class="dropdown-item" href="/login">Kasir</a>
+                  <a class="dropdown-item" href="/status">Status  Pendaftaran</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="/settingakun">Account Setting</a>
                   <div class="dropdown-divider"></div>
@@ -57,4 +58,17 @@
       </div>
     </nav>
   </div>
+
+  @if(session('success') && isset($data))
+    <div class="p-4 bg-green-100 rounded mb-4">
+        <p>{{ session('success') }}</p>
+        <p><strong>ID Calon Mitra:</strong> {{ $data->id_calon }}</p>
+        <p><strong>Scan QR untuk cek status:</strong></p>
+        <img src="{{ asset('uploads/qrcode/' . $data->qr_code) }}" class="w-48 h-48 my-2" alt="QR Code">
+        <a href="{{ asset('uploads/qrcode/' . $data->qr_code) }}" download="{{ $data->id_calon }}.png"
+           class="text-teal-700 underline">
+            ⬇️ Download QR Code
+        </a>
+    </div>
+@endif
 </header>

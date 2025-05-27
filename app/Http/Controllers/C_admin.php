@@ -13,10 +13,22 @@ use App\Charts\BostonAdminChart;
 class C_admin extends Controller
 {
 
-    public function index(BostonAdminChart $chart)
-    {
-        return view('admin.v_dashboard', ['chart' => $chart->build()]);
-    } 
+public function index(BostonAdminChart $chart)
+{
+    $jumlahPendaftar = DB::table('tb_calonmitra')
+                        ->where('status', 'LIKE', '%Proses%')
+                        ->count();
+
+    $jumlahFranchise = DB::table('tb_franchise')
+                        ->count();
+
+    return view('admin.v_dashboard', [
+        'chart' => $chart->build(),
+        'jumlahPendaftar' => $jumlahPendaftar,
+        'jumlahFranchise' => $jumlahFranchise
+    ]);
+}
+
 
     public function __construct()
     {
@@ -44,16 +56,39 @@ class C_admin extends Controller
         return view('v_profileakun', $mitra, $foto);
     }
 
-    public function indexfranchise()
-    {
-        $id_akun = Session::get('user')['id_akun'];
+public function indexfranchise()
+{
+    $id_akun = Session::get('user')['id_akun'];
 
-        $id_mitra = DB::table('tb_mitra')->select('id_mitra')->where('id_akun', $id_akun)->first();
-        $franchise = DB::table('tb_franchise')->where('id_mitra', $id_mitra->id_mitra)->get();
-        $foto = DB::table('tb_franchise')->where('id_mitra', $id_mitra->id_mitra)->first();
-        $profile = DB::table('tb_mitra')->where('id_akun', $id_akun)->first();
-        return view('v_franchisee', compact('franchise', 'foto', 'profile'));
+    // Cek apakah user sudah punya mitra
+    $id_mitra = DB::table('tb_mitra')
+                    ->select('id_mitra')
+                    ->where('id_akun', $id_akun)
+                    ->first();
+
+    // Jika belum daftar mitra, redirect kembali dengan notifikasi
+    if (!$id_mitra->id_mitra) {
+        return redirect()->back()->with('error', 'Silahkan daftar mitra dulu ya');
     }
+
+    // Ambil data franchise berdasarkan id_mitra
+    $franchise = DB::table('tb_franchise')
+                    ->where('id_mitra', $id_mitra->id_mitra)
+                    ->get();
+
+    // Ambil satu data foto
+    $foto = DB::table('tb_franchise')
+                ->where('id_mitra', $id_mitra->id_mitra)
+                ->first();
+
+    // Ambil profil mitra
+    $profile = DB::table('tb_mitra')
+                    ->where('id_akun', $id_akun)
+                    ->first();
+
+    return view('v_franchisee', compact('franchise', 'foto', 'profile'));
+}
+
 
 
     public function index1()
@@ -78,6 +113,13 @@ class C_admin extends Controller
             'admin' => $this->M_Admin->dataproduk()
         ];
         return view('admin.v_tabelproduk', $admin);
+    }
+
+    public function tabelfranchise()
+    {
+    $admin = DB::table('tb_franchise')->get(); // ambil semua data dari tabel franchise
+
+    return view('admin.v_tabelfranchise', compact('admin'));
     }
 
     public function deletecalon($id_calon)

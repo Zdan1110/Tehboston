@@ -58,7 +58,11 @@ Tabel Calon
                               <td>{{ $data->kecamatan_usaha }}</td>
                               <td>{{ $data->alamat_usaha }}</td>
                               <td>{{ $data->kode_pos }}</td>
-                              <td>{{ $data->titik_koordinat }}</td>
+                              <td>
+                                  <a href="{{ $data->titik_koordinat }}" target="_blank">
+                                    {{ $data->titik_koordinat }}
+                                  </a>
+                                </td>
                               <td><img src="{{ url('uploads/lokasi/'. $data->lokasi_usaha) }}" width="100px"></td>
                               <td>
                                 <form action="/admin/calonmitra/update-status/{{ $data->id_calon }}" method="POST">

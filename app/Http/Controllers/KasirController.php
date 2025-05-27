@@ -7,6 +7,8 @@ use App\Charts\BostonKasirChart;
 use App\Models\M_Kasir;
 use App\Models\penjualan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log; 
 use Carbon\Carbon;
 
 class KasirController extends Controller
@@ -29,36 +31,68 @@ class KasirController extends Controller
         return view('kasir.penjualan', compact('data'));
     }
 
-    public function store(Request $request)
+    public function checkout(Request $request)
     {
-        $validated = $request->validate([
-            'nama_pelanggan' => 'required|string',
-            'total' => 'required|numeric',
-            'tanggal' => 'required|string', // Format: 'd/m/Y'
-        ]);
-
-        $lastPenjualan = DB::table('tb_penjualan')
+        try {
+            DB::beginTransaction();
+            
+            $lastPenjualan = DB::table('tb_penjualan')
             ->select('id_penjualan')
             ->orderByDesc('id_penjualan')
             ->first();
 
-        if ($lastPenjualan) {
-            $lastNum = (int) substr($lastPenjualan->id_penjualan, 1);
-            $idPenjualan = 'J' . str_pad($lastNum + 1, 4, '0', STR_PAD_LEFT);
-        } else {
-            $idPenjualan = 'J0001';
+            if ($lastPenjualan) {
+            $lastNumpenjualan = (int) substr($lastPenjualan->id_penjualan, 1); 
+            $idPenjualan = 'T' . str_pad($lastNumpenjualan + 1, 4, '0', STR_PAD_LEFT);
+            } else {
+            $idPenjualan = 'T0001'; 
+            }
+
+            $id_akun = Session::get('user')['id_akun'];
+            $idFranchise = DB::table('tb_kasir')
+                ->join('tb_franchise', 'tb_kasir.id_franchise', '=', 'tb_franchise.id_franchise')
+                ->where('tb_kasir.id_akun', $id_akun)
+                ->select('tb_franchise.id_franchise')
+                ->first();
+
+            // Simpan ke tabel transaksi
+            $transaksiId = DB::table('tb_penjualan')->insertGetId([
+                'id_penjualan' => $idPenjualan,
+                'id_franchise' => $idFranchise->id_franchise,
+                'pelanggan' => $request->kode,
+                'harga' => $request->total,
+            ]);
+            
+                $lastDetail = DB::table('tb_detailpenjualan')
+                ->select('id_detailpenjualan')
+                ->orderByDesc('id_detailpenjualan')
+                ->first();
+            
+            $lastNumber = 0;
+            if ($lastDetail) {
+                // Ambil angka dari akhir ID contoh DT000102 => 02
+                $lastNumber = (int) substr($lastDetail->id_detailpenjualan, -4);
+            }
+            
+            foreach ($request->pesanan as $index => $item) {
+                $newNumber = $lastNumber + $index + 1;
+                $idDetail = 'DT' . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
+            
+                DB::table('tb_detailpenjualan')->insert([
+                    'id_detailpenjualan' => $idDetail,
+                    'id_penjualan' => $idPenjualan,
+                    'nama_produk' => $item['nama'],
+                    'harga' => $item['harga'],
+                    'jumlah' => $item['jumlah'],
+                ]);
+            }
+            
+            DB::commit();
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
-
-        // Simpan data ke tabel penjualan
-        penjualan::create([
-            'id_penjualan' => $idPenjualan,
-            'id_kasir' => session('user')['id_kasir'] ?? 'K0001', // sesuaikan defaultnya jika perlu
-            'nama_pelanggan' => $validated['nama_pelanggan'],
-            'total' => $validated['total'],
-            'tanggal' => Carbon::createFromFormat('d/m/Y', $validated['tanggal'])->format('Y-m-d'),
-        ]);
-
-        return response()->json(['success' => true]);
     }
 
     public function destroy($id)

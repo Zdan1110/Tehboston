@@ -17,18 +17,27 @@ Laporan
     </div>
 
     <!-- TABEL HISTORI -->
-    <table id="history-table">
+    <table>
       <thead>
         <tr>
           <th>No</th>
-          <th>Pelanggan</th>
-          <th>Menu</th>
-          <th>Harga</th>
-          <th>Waktu</th>
+          <th>Nama Pelanggan</th>
+          <th>Total</th>
+          <th>Tanggal</th>
           <th>Aksi</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        <?php $no=1; ?>
+        @foreach ($penjualan as $data)
+        <tr>
+          <td>{{ $no++ }}</td>
+          <td>{{ $data->pelanggan }}</td>
+          <td>{{ $data->harga }}</td>
+          <td>{{ $data->tanggal }}</td>
+        </tr>
+        @endforeach
+      </tbody>
     </table>
   </div>
 </div>

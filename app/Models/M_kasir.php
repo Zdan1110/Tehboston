@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class M_kasir extends Model
 {
     protected $table = 'tb_penjualan';
-    protected $fillable = ['id_penjualan','pelanggan', 'menu', 'harga', 'tanggal'];
+    protected $fillable = ['id_penjualan','pelanggan', 'harga', 'tanggal'];
 
     public function allData()
     {

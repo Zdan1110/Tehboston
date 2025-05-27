@@ -81,36 +81,47 @@ function checkoutOrder() {
   if (bayar < total) return alert("Uang tidak cukup untuk membayar.");
 
   const kembalian = bayar - total;
-  const kembalianField = document.getElementById("kembalian-input");
-  kembalianField.value = `Rp${kembalian.toLocaleString("id-ID")}`;
-
-  const now = new Date();
-  let htmlRows = "";
+  const pesanan = [];
 
   listItems.forEach(li => {
-    const text = li.textContent.replace("❌", "").trim();
-    const namaMenu = text.split(" - ")[0];
-    const hargaMenu = text.split(" - ")[1];
-
-    htmlRows += `<tr><td>${++count}</td><td>${kode}</td><td>${namaMenu}</td><td>${hargaMenu}</td><td>${now.toLocaleString("id-ID")}</td><td><button class='btn btn-edit' onclick='editRow(this)'>Edit</button><button class='btn btn-delete' onclick='deleteRow(this)'>Hapus</button></td></tr>`;
-
-    orderHistory.push({
-      kode,
-      menu: namaMenu,
-      harga: hargaMenu,
-      waktu: now.toISOString()
-    });
+    const nama = li.dataset.name;
+    const harga = parseInt(li.dataset.price);
+    const jumlah = parseInt(li.querySelector(".jumlah").textContent);
+    pesanan.push({ nama, harga, jumlah });
   });
 
-  document.querySelector("#history-table tbody").insertAdjacentHTML("beforeend", htmlRows);
-  document.getElementById("order-list").innerHTML = "";
-  total = 0;
-  document.getElementById("total").textContent = "Total: Rp0";
-  document.getElementById("bayar").value = "";
-  kembalianField.value = "";
-
-  saveHistoryToLocalStorage();
-  updateTotalPenjualan();
+  fetch("/kasir/checkout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+    },
+    body: JSON.stringify({
+      kode,
+      bayar,
+      kembalian,
+      total,
+      pesanan
+    })
+  })
+  .then(response => response.json())
+  .then(res => {
+    if (res.success) {
+      alert("Pesanan berhasil disimpan!");
+      // Reset form
+      document.getElementById("order-list").innerHTML = "";
+      document.getElementById("total").textContent = "Total: Rp0";
+      document.getElementById("bayar").value = "";
+      document.getElementById("kembalian-input").value = "";
+      total = 0;
+    } else {
+      alert("Gagal menyimpan pesanan.");
+    }
+  })
+  .catch(error => {
+    console.error("Checkout error:", error);
+    alert("Terjadi kesalahan saat checkout.");
+  });
 }
 
 

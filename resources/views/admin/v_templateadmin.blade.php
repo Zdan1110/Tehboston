@@ -45,6 +45,14 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
   </head>
+  @if (session('error'))
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
   <body>
     @include('admin.v_navadmin')  
       <!-- End Sidebar -->
