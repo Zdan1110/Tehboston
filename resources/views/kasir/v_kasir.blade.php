@@ -16,8 +16,8 @@ Kasir
 
     <div class="order-section">
       <div class="form-pelanggan">
-        <h3>Kode Pelanggan</h3>
-        <input type="text" id="kode-pelanggan" placeholder="Masukkan Kode Pelanggan" style="padding: 8px; width: 100%; border-radius: 6px; border: 1px solid #ccc;">
+        <h3>Nama Pelanggan</h3>
+        <input type="text" id="kode-pelanggan" placeholder="Masukkan Nama Pelanggan" style="padding: 8px; width: 100%; border-radius: 6px; border: 1px solid #ccc;">
       </div>
       
       <div class="pesanan">

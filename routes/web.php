@@ -14,6 +14,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalonMitraController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\C_Status;
+use App\Http\Controllers\C_Peta;
 
 // Route::get('/', [C_Home::class, '']);
 
@@ -75,7 +76,7 @@ Route::view('/pelaporan', 'kasir.v_pelaporan');
 Route::view('/kontak', 'v_kontak');
 Route::view('/kontaks', 'v_kontaklog');
 Route::view('/kemitraan', 'v_kemitraan');
-Route::view('/cabang', 'v_cabang');
+Route::get('/cabang', [C_Peta::class, 'showPetaFranchise']);
 Route::view('/cabangg', 'v_cabanglog');
 Route::view('/profilee', 'v_profilelog');
 Route::view('/kemitraann', 'v_kemitraanlog');

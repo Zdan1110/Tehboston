@@ -24,7 +24,7 @@
           <li class="nav-item {{ request()->is('cabang') ? 'active' : '' }}">
             <a class="nav-link" href="/cabang">Cabang</a>
           </li>
-          <li class="nav-item {{ request()->is('team') ? 'active' : '' }}">
+          <li class="nav-item {{ request()->is('contact') ? 'active' : '' }}">
             <a class="nav-link" href="/kontak">Contact</a>
           </li>
           <li class="nav-item {{ request()->is('login') ? 'active' : '' }}">

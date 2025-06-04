@@ -1,3 +1,16 @@
+@php
+    use Illuminate\Support\Facades\DB;
+
+    $id_akun = Session::get('user')['id_akun'] ?? null;
+    $calonmitra = [];
+
+    if ($id_akun) {
+        $calonmitra = DB::table('tb_calonmitra')
+                        ->where('id_akun', $id_akun)
+                        ->get();
+    }
+@endphp
+
 <header class="header_section">
   <div class="container-fluid">
     <nav class="navbar navbar-expand-lg custom_nav-container ">
@@ -22,53 +35,37 @@
           <li class="nav-item {{ request()->is('Cabang') ? 'active' : '' }}">
             <a class="nav-link" href="/cabangg">Cabang</a>
           </li>
-          <li class="nav-item {{ request()->is('contact') ? 'active' : '' }}">
+          <li class="nav-item {{ request()->is('Contact') ? 'active' : '' }}">
             <a class="nav-link" href="/kontaks">Contact</a>
           </li>
+          
           <li class="nav-item dropdown">
-            <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#">
+            <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" role="button">
               <button class="btn nav_search-btn" type="button" id="userIcon">
                 <i class="fa fa-user" aria-hidden="true"></i>
               </button>
             </a>
             <ul class="dropdown-menu dropdown-user animated fadeIn">
-              <div class="dropdown-user-scroll scrollbar-outer">
-                <li>
-                  <div class="user-box">
-                    <div class="u-text">
-                      <h4><strong>{{ Session::get('user')['username'] ?? 'Guest' }}</strong></h4>
-                    </div>
+              <li>
+                <div class="user-box px-3 py-2">
+                  <div class="u-text mb-1">
+                    <h6 class="mb-1"><strong>{{ Session::get('user')['username'] ?? 'Guest' }}</strong></h6>
                   </div>
-                </li>
-                <li>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="/profiles">Data Diri</a>
-                  <a class="dropdown-item" href="/franchisee">Franchisee</a>
-                  <a class="dropdown-item" href="/login">Kasir</a>
-                  <a class="dropdown-item" href="/status">Status  Pendaftaran</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="/settingakun">Account Setting</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
-                </li>
-              </div>
+                </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/profiles">Data Diri</a></li>
+              <li><a class="dropdown-item" href="/franchisee">Franchisee</a></li>
+              <li><a class="dropdown-item" href="/login">Kasir</a></li>
+              <li><a class="dropdown-item" href="/status">Status Pendaftaran</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/settingakun">Account Setting</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
             </ul>
           </li>
         </ul>
       </div>
     </nav>
   </div>
-
-  @if(session('success') && isset($data))
-    <div class="p-4 bg-green-100 rounded mb-4">
-        <p>{{ session('success') }}</p>
-        <p><strong>ID Calon Mitra:</strong> {{ $data->id_calon }}</p>
-        <p><strong>Scan QR untuk cek status:</strong></p>
-        <img src="{{ asset('uploads/qrcode/' . $data->qr_code) }}" class="w-48 h-48 my-2" alt="QR Code">
-        <a href="{{ asset('uploads/qrcode/' . $data->qr_code) }}" download="{{ $data->id_calon }}.png"
-           class="text-teal-700 underline">
-            ⬇️ Download QR Code
-        </a>
-    </div>
-@endif
 </header>

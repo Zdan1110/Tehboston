@@ -157,7 +157,6 @@
   <script type="text/javascript" src="{{ asset('finexo-html/js/custom.js') }}"></script>
   <!-- Leaflet -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
   <!-- Intersection Observer Animation -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -177,26 +176,37 @@
   </script>
 
 <script>
-  // Klik pada card => arahkan peta ke titik
   document.querySelectorAll('.location-card').forEach(card => {
     card.addEventListener('click', function () {
       const lat = parseFloat(this.dataset.lat);
       const lng = parseFloat(this.dataset.lng);
       const nama = this.dataset.nama;
 
-      map.setView([lat, lng], 15); // zoom 15
-      L.popup()
-        .setLatLng([lat, lng])
-        .setContent(`<b>${nama}</b>`)
-        .openOn(map);
+      // Scroll halaman ke bagian peta (bukan cuma peta aja)
+      const targetElement = document.getElementById("mapCard");
+      const offsetTop = targetElement.getBoundingClientRect().top + window.scrollY - 100; // sedikit offset atas
+      window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+
+      // Setelah scroll, arahkan peta dan buka popup
+      setTimeout(() => {
+        map.setView([lat, lng], 15); // Zoom ke lokasi
+        L.popup()
+          .setLatLng([lat, lng])
+          .setContent(`<b>${nama}</b>`)
+          .openOn(map);
+      }, 500); // beri waktu scroll selesai
     });
   });
 </script>
 
 
+
   <!-- Inisialisasi Peta -->
   <script>
-    var map = L.map('map').setView([-6.5592, 107.7608], 10);
+    var map = L.map('map', {
+      scrollWheelZoom: false
+    }).setView([-6.5592, 107.7608], 10);
+
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
