@@ -246,17 +246,19 @@ function cetakPDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
   const title = "Histori Pembelian - Teh Boston";
-  const headers = [["No", "Pelanggan", "Menu", "Harga", "Waktu"]];
+  const headers = [["No", "Menu", "Total Harga", "Waktu"]];
   const rows = [];
 
-  let no = 1;
-  orderHistory.forEach(item => {
+  const tableRows = document.querySelectorAll(".history-table tbody tr");
+
+
+  tableRows.forEach(row => {
+    const cols = row.querySelectorAll("td");
     rows.push([
-      no++,
-      item.kode,
-      item.menu,
-      item.harga,
-      new Date(item.waktu).toLocaleString("id-ID")
+      cols[0].innerText,
+      cols[1].innerText,
+      cols[2].innerText,
+      cols[3].innerText
     ]);
   });
 
@@ -273,6 +275,7 @@ function cetakPDF() {
 
   doc.save("histori-pembelian.pdf");
 }
+
 
 window.onload = function () {
   loadHistoryFromLocalStorage();

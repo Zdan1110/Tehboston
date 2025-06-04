@@ -42,7 +42,7 @@
                 </a>
                 <div class="collapse" id="dashboard">
                   <ul class="nav nav-collapse">
-                    <li>
+                    <li class="{{ Request::is('admin') ? 'active' : '' }}">
                       <a href="/admin">
                         <span class="sub-item">Dashboard Admin</span>
                       </a>
@@ -55,7 +55,7 @@
                   <i class="fa fa-ellipsis-h"></i>
                 </span>
               </li>
-              <li class="nav-item active submenu">
+              <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#tables">
                   <i class="fas fa-table"></i>
                   <p>Tables</p>
@@ -63,23 +63,22 @@
                 </a>
                 <div class="collapse show" id="tables">
                   <ul class="nav nav-collapse">
-                    <li class="active">
+                    <li class="{{ Request::is('admin/tabelcalon') ? 'active' : '' }}">
                       <a href="/admin/tabelcalon">
                         <span class="sub-item">Data Calon</span>
                       </a>
                     </li>
-                    <li>
+                    <li class="{{ Request::is('admin/tabelakun') ? 'active' : '' }}">
                       <a href="/admin/tabelakun">
                         <span class="sub-item">Data Akun</span>
                       </a>
                     </li>
-                    <li>
+                    <li class="{{ Request::is('admin/tabelproduk') ? 'active' : '' }}">
                       <a href="/admin/tabelproduk">
                         <span class="sub-item">Data Produk</span>
                       </a>
                     </li>
-
-                      <li>
+                      <li class="{{ Request::is('admin/tabelfranchise') ? 'active' : '' }}">
                       <a href="/admin/tabelfranchise">
                         <span class="sub-item">Data Franchise</span>
                       </a>

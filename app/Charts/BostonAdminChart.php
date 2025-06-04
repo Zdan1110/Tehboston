@@ -2,6 +2,7 @@
 
 namespace App\Charts;
 
+use Illuminate\Support\Facades\DB;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 
 class BostonAdminChart
@@ -15,11 +16,21 @@ class BostonAdminChart
 
     public function build(): \ArielMejiaDev\LarapexCharts\LineChart
     {
+        // Ambil total harga penjualan per pelanggan
+        $penjualan = DB::table('tb_penjualan')
+        ->select(DB::raw('DATE(tanggal) as tanggal'), DB::raw('SUM(harga) as total_harga'))
+        ->groupBy(DB::raw('DATE(tanggal)'))
+        ->get();
+    
+
+        // Pisahkan data untuk chart
+        $labels = $penjualan->pluck('pelanggan')->toArray();
+        $data = $penjualan->pluck('total_harga')->toArray();
+
         return $this->chart->lineChart()
-            ->setTitle('Sales during 2021.')
-            ->setSubtitle('Physical sales vs Digital sales.')
-            ->addData('Physical sales', [40, 93, 35, 42, 18, 82])
-            ->addData('Digital sales', [70, 29, 77, 28, 55, 45])
-            ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June']);
+            ->setTitle('Total Penjualan per Pelanggan')
+            ->setSubtitle('Berdasarkan data pada tb_penjualan')
+            ->addData('Total Harga', $data)
+            ->setXAxis($labels);
     }
 }

@@ -43,6 +43,11 @@ class M_Admin extends Model
         return DB::table('tb_mitra')->where('id_akun', $id_akun)->first();
     }
 
+    public function datafranchise()
+    {
+        return DB::table('tb_franchise')->get();
+    }
+
     public function deleteDatacalon($id_calon)
     {
         DB::table('tb_calonmitra')->where('id_calon', $id_calon)->delete();

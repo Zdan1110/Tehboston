@@ -54,6 +54,7 @@ Route::get('/admin/produk/edit/{id_produk}', [C_admin::class, 'editproduk']);
 Route::post('/admin/produk/update/{id_produk}', [C_admin::class, 'updateproduk']);
 Route::get('/admin/produk/add', [C_admin::class, 'tambahproduk']);
 Route::post('/admin/produk/insert', [C_admin::class, 'insertproduk'])->name('produkadmin.insert');
+Route::get('/admin/tabelfranchise', [C_admin::class, 'tabelfranchise'])->name('adminfranchise');
 Route::get('/owner/tabelcalon', [C_owner::class, 'index'])->name('ownercalon');
 Route::get('/owner/tabelakun', [C_owner::class, 'index2'])->name('ownerakun');
 Route::get('/owner/tabelproduk', [C_owner::class, 'index3'])->name('ownerproduk');
@@ -66,12 +67,26 @@ Route::post('/produk/update/{id_produk}', [C_owner::class, 'updateproduk']);
 Route::get('/produk/add', [C_owner::class, 'tambahproduk']);
 Route::post('/produk/insert', [C_owner::class, 'insertproduk'])->name('produk.insert');
 
+Route::get('/kasir', [KasirController::class, 'kasir']);
+Route::get('/dashkasir', [KasirController::class, 'index'])->name('kasir.v_dashkasir');
+Route::post('/kasir/store', [KasirController::class, 'store'])->name('kasir.store');
+Route::post('/kasir/checkout', [KasirController::class, 'checkout']);
+Route::get('/pelaporan', [KasirController::class, 'laporan']);
 
-
+// Route::view('/status', 'v_preview');
+Route::get('/status', [CalonMitraController::class, 'status']);
+// Route::view('/cek-status', 'v_status');
+Route::get('cekstatus', [CalonMitraController::class, 'viewStatus']);
+Route::get('/tambahfranchise', [CalonMitraController::class, 'indextambahfranchise']);
+Route::post('/tambahfranchise/insert', [CalonMitraController::class, 'tambahfranchise'])->name('franchise.baru');
+// Route::get('/cek-status', function () {
+//     return view('status');
+// });
+Route::get('/cekstatus/{id}', [CalonMitraController::class, 'viewStatus'])->name('cek.status.view');
+Route::post('/cekstatus', [C_Status::class, 'cek'])->name('cek.status');
 
 // Route::view('/kasir', 'kasir.v_kasir');
 // Route::view('/dashkasir', 'kasir.v_dashkasir');
-Route::view('/pelaporan', 'kasir.v_pelaporan');
 Route::view('/kontak', 'v_kontak');
 Route::view('/kontaks', 'v_kontaklog');
 Route::view('/kemitraan', 'v_kemitraan');

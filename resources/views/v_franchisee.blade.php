@@ -1,4 +1,8 @@
+<<<<<<< HEAD
     <!DOCTYPE html>
+=======
+<!DOCTYPE html>
+>>>>>>> f2d4220 (Chart)
     <html>
     <head>
     <meta charset="utf-8" />
@@ -134,7 +138,7 @@
 
         <!-- Add Franchise Container (Right Side) -->
         <div class="add-franchise-container">
-        <a href="/daftarmitra" class="block h-full">
+        <a href="/tambahfranchise" class="block h-full">
             <div class="add-franchise-card bg-white rounded-xl shadow-sm overflow-hidden p-6 text-center flex flex-col justify-center h-full">
             <div class="flex justify-center mb-3">
                 <div class="w-16 h-16 bg-purple-100 text-purple-600 flex items-center justify-center text-2xl rounded-full">

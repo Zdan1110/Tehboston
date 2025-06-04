@@ -71,7 +71,7 @@ class CalonMitraController extends Controller
             $filephoto->move(public_path('uploads/photo'), $fileNamephoto);
 
             $filelokasi = Request()->file('lokasi_usaha');
-            $fileNamelokasi = Request()->idCalon . '.' . $filelokasi->extension();
+            $fileNamelokasi = $idCalon . '.' . $filelokasi->extension();
             $filelokasi->move(public_path('uploads/lokasi'), $fileNamelokasi);
 
             // Simpan Data ke Database
@@ -244,5 +244,14 @@ class CalonMitraController extends Controller
                 return back()->with('error', 'Gagal memperbarui status.');
             }
         }
+
+        public function status()
+        {
+            return view('v_preview');
+        }
         
+        public function indextambahfranchise()
+        {
+            return view('v_tambahfranchise');
+        }
 }
