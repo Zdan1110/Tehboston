@@ -22,13 +22,35 @@ class KasirController extends Controller
     {
         $model = new M_Kasir();
         $kasir = $model->allData();
-        return view('kasir.v_kasir', compact('kasir'));
+        $id_akun = Session::get('user')['id_akun'];
+        $idFranchise = DB::table('tb_kasir')
+            ->join('tb_franchise', 'tb_kasir.id_franchise', '=', 'tb_franchise.id_franchise')
+            ->where('tb_kasir.id_akun', $id_akun)
+            ->select('tb_franchise.id_franchise')
+            ->first();
+        $id_franchise = $idFranchise->id_franchise;
+        $riwayat = $model->DataHarian($id_franchise);
+        return view('kasir.v_kasir', compact('kasir', 'riwayat'));
     }
 
-    public function penjualan()
+    public function laporan(Request $request)
     {
-        $data = penjualan::all();
-        return view('kasir.penjualan', compact('data'));
+        $tanggal_awal = $request->input('tanggal_awal');
+        $tanggal_akhir = $request->input('tanggal_akhir');
+        $model = new M_Kasir();
+        $id_akun = Session::get('user')['id_akun'];
+        $idFranchise = DB::table('tb_kasir')
+        ->join('tb_franchise', 'tb_kasir.id_franchise', '=', 'tb_franchise.id_franchise')
+        ->where('tb_kasir.id_akun', $id_akun)
+        ->select('tb_franchise.id_franchise')
+        ->first();
+        $id_franchise = $idFranchise->id_franchise;
+        if ($tanggal_awal && $tanggal_akhir) {
+            $penjualan = $model->DataLaporanFilter($id_franchise, $tanggal_awal, $tanggal_akhir);
+        } else {
+            $penjualan = $model->DataLaporan($id_franchise);
+        }
+        return view('kasir.v_pelaporan', compact('penjualan'));
     }
 
     public function checkout(Request $request)
@@ -82,7 +104,7 @@ class KasirController extends Controller
                     'id_detailpenjualan' => $idDetail,
                     'id_penjualan' => $idPenjualan,
                     'nama_produk' => $item['nama'],
-                    'harga' => $item['harga'],
+                    'harga' => $item['harga'] * $item['jumlah'],
                     'jumlah' => $item['jumlah'],
                 ]);
             }

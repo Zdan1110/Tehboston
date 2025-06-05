@@ -161,11 +161,10 @@
     <header class="header_section">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="/">
-            <span>
-              Teh Boston
-            </span>
-          </a>
+        <a class="navbar-brand" href="/">
+            <img src="{{ asset('finexo-html/images/LOGOBOSTON.png') }}" alt="Teh Boston Logo" style="height: 100px; max-height: 100%; width: auto;">
+        </a>
+
 
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class=""> </span>

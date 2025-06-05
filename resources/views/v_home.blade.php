@@ -105,13 +105,18 @@
   }
 </style>
 
-
-
     <!-- end header section -->
 <!-- slider section -->
+     @if(session('error'))
+  <div class="alert alert-danger alert-dismissible fade show m-2" role="alert">
+      {{ session('error') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  @endif
 <section class="slider_section">
   <div id="customCarousel1" class="carousel slide" data-ride="carousel" data-interval="5000">
     <div class="carousel-inner">
+
 
       <!-- Slide 1 -->
       <div class="carousel-item active">

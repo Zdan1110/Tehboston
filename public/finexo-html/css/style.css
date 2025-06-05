@@ -295,7 +295,7 @@ a:focus {
 
 .sub_page .hero_area {
   min-height: auto;
-  background: #83c497;
+  background: #03702e;
 }
 
 .sub_page .hero_area .hero_bg_box {
@@ -660,7 +660,7 @@ a:focus {
 }
 
 .about_section {
-  background: #83c497;
+  background: #ffffff;
   color: #ffffff;
 }
 
@@ -953,7 +953,7 @@ a:focus {
 
 /* client section end */
 .info_section {
-  background-color: #569c6b;
+  background-color: #03702e; 
   color: #ffffff;
   padding: 45px 0 15px 0;
 }

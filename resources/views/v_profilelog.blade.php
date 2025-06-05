@@ -27,6 +27,28 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
   
   <style>
+        /* Animasi masuk dari bawah */
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .fade-up {
+          opacity: 0;
+          transform: translateY(20px);
+          animation: fadeInUp 1s forwards;
+        }
+
+        .fade-up-visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
 
         .container {
             text-align: left;
@@ -88,21 +110,22 @@
     </div>
 
     <!-- header section strats -->
-    @include('layouts.navbar')
+    @include('layouts.navbarindex')
     <!-- end header section -->
   </div>
 
-  <div class="container">
-  <h2 class="heading fw-bold">VISI MISI</h2>
+<div class="container">
+  <h2 class="heading fw-bold fade-up">VISI MISI</h2>
 
-    <h3>VISI</h3>
-    <p>"MENJADI SALAH SATU PRODUK MINUMAN TEH TERBAIK DAN MEMILIKI BANYAK SERTIFIKAT PENGHARGAAN DI INDONESIA"</p>
-    
-    <h3>MISI</h3>
-    <div class="mission-item"><i class="fas fa-chart-line"></i> Mendukung Orang Yang Punya Keinginan Untuk Usaha</div>
-    <div class="mission-item"><i class="fas fa-leaf"></i> Membuat Olahan Daun Teh Berkualitas Dengan Konsisten</div>
-    <div class="mission-item"><i class="fas fa-coins"></i> Menjadikan Wadah Untuk Menopang Ekonomi Masyarakat</div>
+  <h3 class="fade-up">VISI</h3>
+  <p class="fade-up">"MENJADI SALAH SATU PRODUK MINUMAN TEH TERBAIK DAN MEMILIKI BANYAK SERTIFIKAT PENGHARGAAN DI INDONESIA"</p>
+
+  <h3 class="fade-up">MISI</h3>
+  <div class="mission-item fade-up"><i class="fas fa-chart-line"></i> Mendukung Orang Yang Punya Keinginan Untuk Usaha</div>
+  <div class="mission-item fade-up"><i class="fas fa-leaf"></i> Membuat Olahan Daun Teh Berkualitas Dengan Konsisten</div>
+  <div class="mission-item fade-up"><i class="fas fa-coins"></i> Menjadikan Wadah Untuk Menopang Ekonomi Masyarakat</div>
 </div>
+
 
 
 
@@ -149,17 +172,7 @@
   <!-- end about section -->
   @include('layouts.footerindex')
 
-  <script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
-    <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <!-- jQery -->
-  <script src="{{ asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
-    <!-- Kaiadmin JS -->
-    <script src="{{ asset('assets/js/kaiadmin.min.js') }}"></script>
-    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
-    <script src="{{ asset('assets/js/setting-demo2.js') }}"></script>
  <!-- jQuery -->
  <script>
   function animateCurrentSlide() {
@@ -294,6 +307,23 @@
     const rect = element.getBoundingClientRect();
     return rect.top < window.innerHeight && rect.bottom > 0;
   }
+
+  function handleScrollAnimation() {
+  document.querySelectorAll('.fade-up').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    const inView = rect.top < window.innerHeight - 50 && rect.bottom > 0;
+    if (inView) {
+      el.classList.add('fade-up-visible');
+    } else {
+      el.classList.remove('fade-up-visible'); // Bisa membuat elemen muncul lagi saat scroll balik
+    }
+  });
+}
+
+// Trigger saat scroll dan saat halaman dimuat
+window.addEventListener('scroll', handleScrollAnimation);
+window.addEventListener('load', handleScrollAnimation);
+
 </script>
 
 

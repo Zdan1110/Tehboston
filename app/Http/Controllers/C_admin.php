@@ -78,7 +78,8 @@ public function indexfranchise()
 
     // Ambil satu data foto
     $foto = DB::table('tb_franchise')
-                 ->first();
+                ->where('id_mitra', $id_mitra->id_mitra)
+                ->first();
 
     // Ambil profil mitra
     $profile = DB::table('tb_mitra')
