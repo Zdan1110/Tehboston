@@ -57,7 +57,7 @@
         .add-franchise-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        border-color: #9f7aea;
+        border-color:rgb(147, 198, 140);
         background-color: #f8f9fa;
         }
         .cards-container {

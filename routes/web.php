@@ -87,6 +87,7 @@ Route::post('/tambahfranchise/insert', [CalonMitraController::class, 'tambahfran
 Route::get('/cekstatus/{id}', [CalonMitraController::class, 'viewStatus'])->name('cek.status.view');
 Route::post('/cekstatus', [C_Status::class, 'cek'])->name('cek.status');
 
+
 // Route::view('/kasir', 'kasir.v_kasir');
 // Route::view('/dashkasir', 'kasir.v_dashkasir');
 Route::view('/kontak', 'v_kontak');

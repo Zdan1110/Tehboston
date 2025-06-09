@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Session;
 
 class CalonMitraController extends Controller
 {
+
     public function __construct()
     {
         $this->M_Admin = new M_Admin();
