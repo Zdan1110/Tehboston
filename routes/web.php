@@ -46,7 +46,9 @@ Route::get('/franchisee', [C_admin::class, 'indexfranchise']);
 Route::get('/admin/tabelcalon', [C_admin::class, 'index1'])->name('admincalon');
 Route::get('/admin/tabelakun', [C_admin::class, 'index2'])->name('adminakun');
 Route::get('/admin/tabelproduk', [C_admin::class, 'index3'])->name('adminproduk');
+Route::get('/admin/tabelfranchisebaru', [C_admin::class, 'index4'])->name('adminfranchisebaru');
 Route::put('/admin/calonmitra/update-status/{id_calonmitra}', [CalonMitraController::class, 'updateStatus'])->name('calonmitra.updateStatus');
+Route::put('/admin/franchisebaru/update-status/{id_franchisebaru}', [C_admin::class, 'updateStatus'])->name('franchisebaru.updateStatus');
 Route::delete('/admin/calonmitra/{id_calon}', [C_admin::class, 'deletecalon'])->name('C_admin.delete');
 Route::delete('/admin/akun/{id_akun}', [C_admin::class, 'deleteakun'])->name('deleteadmin');
 Route::delete('/admin/produk/{id_akun}', [C_admin::class, 'deleteproduk'])->name('produkadmin.delete');
@@ -95,14 +97,11 @@ Route::view('/cabangg', 'v_cabanglog');
 Route::view('/profilee', 'v_profilelog');
 Route::view('/kemitraann', 'v_kemitraanlog');
 
-Route::get('/cek-status/{id}', [CalonMitraController::class, 'viewStatus'])->name('cek.status.view');
-
 
 Route::get('/cek-status', function () {
     return view('status');
 });
 
-Route::post('/cek-status', [C_Status::class, 'cek'])->name('cek.status');
 
 // Halaman Home
 Route::get('/login', function () {

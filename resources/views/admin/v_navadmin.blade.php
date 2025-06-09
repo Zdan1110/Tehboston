@@ -83,6 +83,11 @@
                         <span class="sub-item">Data Franchise</span>
                       </a>
                     </li>
+                    <li class="{{ Request::is('admin/tabelfranchisebaru') ? 'active' : '' }}">
+                      <a href="/admin/tabelfranchisebaru">
+                        <span class="sub-item">Data Pendaftaran Franchise Baru</span>
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </li>

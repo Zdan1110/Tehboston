@@ -13,7 +13,7 @@ use App\Charts\BostonAdminChart;
 class C_admin extends Controller
 {
 
-public function index(BostonAdminChart $chart)
+public function index(Request $request, BostonAdminChart $chart)
 {
     $jumlahPendaftar = DB::table('tb_calonmitra')
                         ->where('status', 'LIKE', '%Proses%')
@@ -22,11 +22,32 @@ public function index(BostonAdminChart $chart)
     $jumlahFranchise = DB::table('tb_franchise')
                         ->count();
 
-    return view('admin.v_dashboard', [
-        'chart' => $chart->build(),
-        'jumlahPendaftar' => $jumlahPendaftar,
-        'jumlahFranchise' => $jumlahFranchise
-    ]);
+    $totalditerima = DB::table('tb_calonmitra')
+                        ->where('status', 'LIKE', '%Diterima%')
+                        ->count();
+    
+    $topFranchise = DB::table('tb_penjualan')
+        ->join('tb_franchise', 'tb_penjualan.id_franchise', '=', 'tb_franchise.id_franchise')
+        ->select('tb_penjualan.id_franchise', 'tb_franchise.nama_franchise', DB::raw('SUM(tb_penjualan.harga) as total_penjualan'))
+        ->groupBy('tb_penjualan.id_franchise', 'tb_franchise.nama_franchise')
+        ->orderByDesc('total_penjualan')
+        ->first();
+
+    $pendapatan = $totalditerima * 25000000;
+
+    $bulanAwal = $request->input('bulan_awal'); // format: 2025-04
+    $bulanAkhir = $request->input('bulan_akhir');
+                    
+    $chart = $chart->build($bulanAwal, $bulanAkhir);
+                    
+    // Ambil tahun dari data penjualan (otomatis)
+    $tahunList = DB::table('tb_penjualan')
+        ->selectRaw('YEAR(tanggal) as tahun')
+        ->distinct()
+        ->orderBy('tahun', 'desc')
+        ->pluck('tahun');
+                    
+    return view('admin.v_dashboard', compact('chart', 'tahunList', 'bulanAkhir', 'bulanAwal', 'jumlahPendaftar', 'jumlahFranchise', 'totalditerima', 'pendapatan', 'topFranchise'));
 }
 
 
@@ -114,6 +135,15 @@ public function indexfranchise()
         ];
         return view('admin.v_tabelproduk', $admin);
     }
+
+    public function index4()
+    {
+        $admin = [
+            'admin' => $this->M_Admin->datafranchisebaru()
+        ];
+        return view('admin.v_tabelfranchisebaru', $admin);
+    }
+
 
     public function tabelfranchise()
     {

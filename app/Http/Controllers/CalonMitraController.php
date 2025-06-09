@@ -254,4 +254,76 @@ class CalonMitraController extends Controller
         {
             return view('v_tambahfranchise');
         }
+
+        public function tambahfranchise(Request $request)
+        {
+            // Validasi Input
+            $request->validate([    
+                // Data Lokasi Usaha
+                'provinsi_usaha' => 'required|string|max:100',
+                'kota_usaha' => 'required|string|max:100',
+                'kelurahan_usaha' => 'required|string|max:100',
+                'kecamatan_usaha' => 'required|string|max:100',
+                'alamat_usaha' => 'required|string',
+                'kode_pos' => 'required|string|max:10',
+                'titik_koordinat' => 'required|string|max:255',
+                'lokasi_usaha' => 'nullable|file|mimes:jpg,jpeg,png,pdf',
+            ]);
+    
+                if (Auth::check()) {
+                    $id_akun = Auth::user()->id_akun;
+                }
+            
+                
+                // Di Controller saat insert:
+                $lastFBaru = DB::table('tb_franchisebaru')
+                ->select('id_franchisebaru')
+                ->orderByDesc('id_franchisebaru')
+                ->first();
+
+                $idMitra = DB::table('tb_mitra')
+                ->where('id_akun', $id_akun)
+                ->first();
+    
+                if ($lastFBaru) {
+                $lastNumFBaru = (int) substr($lastFBaru->id_franchisebaru, 1); // ambil angka setelah 'C'
+                $idFBaru = 'FB' . str_pad($lastNumFBaru + 1, 4, '0', STR_PAD_LEFT);
+                } else {
+                $idFBaru = 'FB0001'; // Kalau belum ada data
+                }
+        
+                $filelokasi = Request()->file('lokasi_usaha');
+                $fileNamelokasi = $idFBaru . '.' . $filelokasi->extension();
+                $filelokasi->move(public_path('uploads/lokasi'), $fileNamelokasi);
+    
+                // Simpan Data ke Database
+                $datacalon = [
+                    // Data Calon Mitra
+                    'id_franchisebaru' => $idFBaru,
+                    'id_mitra' => $idMitra->id_mitra,
+                    'nama_franchise' => $idMitra->nama_lengkap,
+                    'provinsi_usaha' => $request->provinsi_usaha,
+                    'kota_usaha' => $request->kota_usaha,
+                    'kelurahan_usaha' => $request->kelurahan_usaha,
+                    'kecamatan_usaha' => $request->kecamatan_usaha,
+                    'alamat_usaha' => $request->alamat_usaha,
+                    'kode_pos' => $request->kode_pos,
+                    'titik_koordinat' => $request->titik_koordinat,
+                    'lokasi_usaha' => $fileNamelokasi,
+                ];
+    
+                try {
+                    DB::table('tb_franchisebaru')->insert($datacalon);
+                    Log::info('Data Franchise Baru berhasil disimpan.', $datacalon);
+        
+                    // Redirect ke /home jika sukses
+                    return redirect('/home')->with('success', 'Pendaftaran berhasil!.');
+                } catch (\Exception $e) {
+                    Log::error('Gagal menyimpan data calon mitra: ' . $e->getMessage());
+        
+                    // Redirect balik ke /daftarmitra dengan pesan error
+                    return redirect('/home')->with('error', 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
+                }
+                
+            }
 }

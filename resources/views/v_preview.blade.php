@@ -8,7 +8,6 @@
   <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-cyan-200 to-teal-600 p-6">
-
   <!-- Card Form -->
   <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative z-10">
     <div class="flex justify-center mb-6">
@@ -17,7 +16,11 @@
            class="w-20 h-20 object-contain drop-shadow-md" />
     </div>
     <h1 class="text-3xl font-extrabold text-teal-700 mb-8 text-center">Cek Status Pendaftaran</h1>
-
+      @if (session('error'))
+          <div class="alert alert-danger">
+              {{ session('error') }}
+          </div>
+      @endif
     <form action="{{ route('cek.status') }}" method="POST" class="flex flex-col space-y-6">
       @csrf
       <!-- Input ID -->

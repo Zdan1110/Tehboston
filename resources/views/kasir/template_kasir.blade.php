@@ -58,7 +58,7 @@
     </div>
       <div class="nav-item">
       <span style="margin-right: 8px;">📄</span>
-      <a href="/login" style="color:white;">Logout</a>
+      <a href="/logout" style="color:white;">Logout</a>
     </div>
   
   </div>

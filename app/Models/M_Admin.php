@@ -28,6 +28,11 @@ class M_Admin extends Model
         return DB::table('tb_produk')->get();
     }
 
+    public function datafranchisebaru()
+    {
+        return DB::table('tb_franchisebaru')->get();
+    }
+
     public function detailDatacalon($id_calon)
     {
         return DB::table('tb_calonmitra')->where('id_calon', $id_calon)->first();

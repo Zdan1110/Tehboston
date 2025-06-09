@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-    <!DOCTYPE html>
-=======
 <!DOCTYPE html>
->>>>>>> f2d4220 (Chart)
     <html>
     <head>
     <meta charset="utf-8" />
