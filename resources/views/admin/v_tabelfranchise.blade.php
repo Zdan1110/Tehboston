@@ -1,7 +1,7 @@
 @section ('Title')
 Tabel Franchise
 @endsection
-@extends('admin.v_templateadmin')
+@extends('admin.templatecoba')
 @section('content')
 <div class="card">
                   <div class="card-header">

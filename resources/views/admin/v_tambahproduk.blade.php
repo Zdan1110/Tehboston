@@ -1,7 +1,7 @@
 @section ('Title')
 Tambah Produk
 @endsection
-@extends('admin.v_templateadmin')
+@extends('admin.templatecoba')
 @section('content')
 <div class="container-fluid" style="margin-top:70px">
     <div class="row">

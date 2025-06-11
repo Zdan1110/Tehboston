@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\C_Home;
 use App\Http\Controllers\C_Dosen;
 use App\Http\Controllers\C_Mahasiswa;
-use App\Http\Controllers\C_User;
 // use App\Http\Controllers\C_Register;
 use App\Http\Controllers\C_Login;
 use App\Http\Controllers\C_admin;
@@ -14,20 +13,13 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalonMitraController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\C_Status;
+use App\Http\Controllers\C_Survey;
 
-// Route::get('/', [C_Home::class, '']);
-
-Route::get('/tabel', [C_User::class, 'tabel']);
-
-
-// Route::get('/dashboard', [C_Register::class, 'dashboard']);
-
-// Route::post('/pelaporan', [KasirController::class, 'store'])->name('penjualan.store');
-// Route::get('/dashkasir', [KasirController::class, 'index']);
-
-Route::view('/editakun', 'kasir.editakun');
 Route::view('/contact', 'v_contact');
+Route::view('/tambah-stok', 'kasir.tambah-stok');
+Route::view('/laporansurvey', 'survey.v_laporansurvey');
 Route::view('/status', 'v_preview');
+Route::view('/coba', 'admin.v_dashboardcoba');
 Route::view('/cek-status', 'v_status');
 Route::get('/admin', [C_admin::class, 'index'])->name('admin.v_dashboard');
 Route::get('/kasir', [KasirController::class, 'kasir']);
@@ -146,3 +138,17 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::post('/daftarmitra', [CalonMitraController::class, 'store'])->name('calonmitra.store');
 });
+
+
+// Untuk navigasi sidebar “Setting Akun”
+Route::get('/kasir/akun', [KasirController::class, 'showakun'])->name('kasirakun');
+
+// Yang sudah ada tetap dipakai
+Route::get('/kasir/akun/edit/{id_akun}', [KasirController::class, 'editakun'])->name('editakun');
+Route::post('/kasir/akun/update/{id_akun}', [KasirController::class, 'updateakun'])->name('updateakun');
+
+
+Route::get('/datasurvey', [C_Survey::class, 'index'])->name('datasurvey');
+Route::get('/survey/tabelcalon', [C_Survey::class, 'index2'])->name('survey.calon');
+Route::get('/survey/laporansurvey', [C_Survey::class, 'index3'])->name('survey.laporan');
+Route::delete('/survey/delete/{id_calon}', [C_Survey::class, 'destroy'])->name('survey.destroy');

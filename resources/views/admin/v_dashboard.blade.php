@@ -1,7 +1,7 @@
-@section ('Title')
-Tabel Produk
-@endsection
-@extends('admin.v_templateadmin')
+@extends('admin.templatecoba')
+
+@section('title', 'Dashboard')
+
 @section('content')
     <div class="wrapper">
       <!-- Sidebar -->
@@ -10,7 +10,7 @@ Tabel Produk
 
           <!-- End Navbar -->
 
-        <div class="container" style="margin-top:50px">
+        <div class="container" style="margin-top: -50px">
           <div class="page-inner">
             <div
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
@@ -115,7 +115,7 @@ Tabel Produk
 
   <div class="row">
     {{-- Chart utama --}}
-    <div class="col-md-8" style="width: 1300px">
+    <div class="col-md-8" style="width: 1350px">
       <div class="card card-round">
         <div class="card-header">
           <div class="card-head-row">
@@ -645,8 +645,4 @@ Tabel Produk
 
 <!-- Render Laravel Chart -->
 {!! $chart->script() !!}
-
-</body>
-</html>
 @endsection
-

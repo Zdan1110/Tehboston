@@ -218,7 +218,7 @@ body {
 }
 
 .heading_container h2 span {
-  color: #83c497;
+  color: #0d5d22;
 }
 
 .heading_container p {
@@ -295,7 +295,7 @@ a:focus {
 
 .sub_page .hero_area {
   min-height: auto;
-  background: #83c497;
+  background: #0d5d22;
 }
 
 .sub_page .hero_area .hero_bg_box {
@@ -660,7 +660,7 @@ a:focus {
 }
 
 .about_section {
-  background: #83c497;
+  background: #0d5d22;
   color: #ffffff;
 }
 
@@ -1146,3 +1146,117 @@ a:focus {
   cursor: pointer;
 }
 /*# sourceMappingURL=style.css.map */
+
+:root {
+  --primary-green: #1e8449; /* Hijau utama yang elegan */
+  --secondary-green: #27ae60; /* Hijau sekunder lebih terang */
+  --dark-green: #186a3b; /* Hijau gelap untuk aksen */
+  --light-green: #e8f8ef; /* Hijau sangat muda untuk background */
+  --accent-green: #2ecc71; /* Hijau terang untuk aksen */
+  --button-hover: #219653; /* Warna hover tombol */
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+/* Header dan Navbar */
+.header_section {
+  background-color: var(--primary-green);
+}
+
+.navbar-brand span {
+  color: white;
+}
+
+.custom_nav-container .navbar-nav .nav-item .nav-link {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.custom_nav-container .navbar-nav .nav-item:hover .nav-link, 
+.custom_nav-container .navbar-nav .nav-item.active .nav-link {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Tombol */
+.btn-daftar-sekarang {
+  background-color: var(--accent-green);
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.4);
+}
+
+.btn-daftar-sekarang:hover {
+  background-color: var(--button-hover);
+  box-shadow: 0 6px 16px rgba(33, 150, 83, 0.5);
+}
+
+/* Card dan Section */
+.card-header-tosca {
+  background-color: var(--secondary-green);
+}
+
+.service_section .box {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s;
+}
+
+.service_section .box:hover {
+  box-shadow: 0 5px 15px rgba(30, 132, 73, 0.1);
+  transform: translateY(-5px);
+}
+
+.about_section {
+  background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+}
+
+.client_section {
+  background-color: var(--light-green);
+}
+
+/* Info Section */
+.info_section {
+  background-color: var(--dark-green);
+}
+
+.info_section form button {
+  background-color: var(--primary-green);
+}
+
+.info_section form button:hover {
+  background-color: var(--button-hover);
+}
+
+/* Animasi dan Efek */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(-8deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(-8deg);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header_section {
+    background-color: var(--primary-green);
+  }
+}
+
+/* Popup */
+.popup {
+  background: white;
+  border: 2px solid var(--accent-green);
+}
+
+.popup button {
+  background-color: var(--primary-green);
+  color: white;
+}
+
+.popup button:hover {
+  background-color: var(--dark-green);
+}

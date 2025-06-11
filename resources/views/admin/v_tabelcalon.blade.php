@@ -1,13 +1,13 @@
 @section ('Title')
 Tabel Calon
 @endsection
-@extends('admin.v_templateadmin')
+@extends('admin.templatecoba')
 @section('content')
-<div class="card" style="margin-top:70px">
+<div class="card" style="margin-top:8px">
                   <div class="card-header">
                     <div class="card-title">Data Calon Mitra</div>
                   </div>
-                  <div class="card-body">
+                  <div class="card-body" >
                     <div class="table-responsive">
                       <table class="table table-bordered">
                         <thead>

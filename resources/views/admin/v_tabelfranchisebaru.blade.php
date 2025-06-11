@@ -1,7 +1,7 @@
 @section ('Title')
 Tabel Calon
 @endsection
-@extends('admin.v_templateadmin')
+@extends('admin.templatecoba')
 @section('content')
 <div class="card" style="margin-top:70px">
                   <div class="card-header">

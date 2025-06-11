@@ -61,4 +61,15 @@ class M_kasir extends Model
             ->groupBy('tb_penjualan.pelanggan', 'tb_penjualan.tanggal', 'tb_penjualan.harga')
             ->get();
     }
+
+    public function getAkunById($id_akun)
+    {
+        return DB::table('tb_akun')->where('id_akun', $id_akun)->first();
+    }
+
+    public function updateAkun($id_akun, $data)
+    {
+        return DB::table('tb_akun')->where('id_akun', $id_akun)->update($data);
+    }
+
 }

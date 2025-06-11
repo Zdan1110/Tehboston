@@ -1,146 +1,69 @@
-<div class="wrapper">
-      <!-- Sidebar -->
-      <div class="sidebar" data-background-color="dark">
-        <div class="sidebar-logo">
-          <!-- Logo Header -->
-          <div class="logo-header" data-background-color="dark">
-            <a href="/dashboard" class="logo">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8W7oiRio5Eh4_ppE0Pour4OVey07Wh2W8Ag&s"
-                alt="navbar brand"
-                class="navbar-brand"
-                height="50px"
-              />
-            </a>
-            <div class="nav-toggle">
-              <button class="btn btn-toggle toggle-sidebar">
-                <i class="gg-menu-right"></i>
-              </button>
-              <button class="btn btn-toggle sidenav-toggler">
-                <i class="gg-menu-ldaeft"></i>
-              </button>
-            </div>
-            <button class="topbar-toggler more">
-              <i class="gg-more-vertical-alt"></i>
-            </button>
-          </div>
-          <!-- End Logo Header -->
-        </div>
-        <div class="sidebar-wrapper scrollbar scrollbar-inner">
-          <div class="sidebar-content">
-            <ul class="nav nav-secondary">
-              <li class="nav-item">
-                <a
-                  data-bs-toggle="collapse"
-                  href="#dashboard"
-                  class="collapsed"
-                  aria-expanded="false"
-                >
-                  <i class="fas fa-home"></i>
-                  <p>Dashboard</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="dashboard">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="/admin">
-                        <span class="sub-item">Dashboard Admin</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-section">
-                <span class="sidebar-mini-icon">
-                  <i class="fa fa-ellipsis-h"></i>
-                </span>
-              </li>
-              <li class="nav-item active submenu">
-                <a data-bs-toggle="collapse" href="#tables">
-                  <i class="fas fa-table"></i>
-                  <p>Tables</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse show" id="tables">
-                  <ul class="nav nav-collapse">
-                    <li class="active">
-                      <a href="/owner/tabelcalon">
-                        <span class="sub-item">Data Calon</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/owner/tabelakun">
-                        <span class="sub-item">Data Akun</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/owner/tabelproduk">
-                        <span class="sub-item">Data Produk</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-             
-              <li class="nav-item">
-                <a href="../../../documentation/index.html">
-                  <i class="fas fa-file"></i>
-                  <p>Documentation</p>
-                  <span class="badge badge-secondary">1</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#submenu">
-                  <i class="fas fa-bars"></i>
-                  <p>Menu Levels</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="submenu">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a data-bs-toggle="collapse" href="#subnav1">
-                        <span class="sub-item">Level 1</span>
-                        <span class="caret"></span>
-                      </a>
-                      <div class="collapse" id="subnav1">
-                        <ul class="nav nav-collapse subnav">
-                          <li>
-                            <a href="#">
-                              <span class="sub-item">Level 2</span>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <span class="sub-item">Level 2</span>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </li>
-                    <li>
-                      <a data-bs-toggle="collapse" href="#subnav2">
-                        <span class="sub-item">Level 1</span>
-                        <span class="caret"></span>
-                      </a>
-                      <div class="collapse" id="subnav2">
-                        <ul class="nav nav-collapse subnav">
-                          <li>
-                            <a href="#">
-                              <span class="sub-item">Level 2</span>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="sub-item">Level 1</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
+<aside :class="sidebarOpen ? 'w-64' : 'w-20'" class="bg-gradient-to-b from-green-950 to-green-800 text-white h-screen fixed transition-all duration-300 ease-in-out overflow-y-auto z-40">
+
+  <div class="flex items-center justify-between px-4 py-5 border-b border-green-700">
+    <div class="flex items-center space-x-3">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8W7oiRio5Eh4_ppE0Pour4OVey07Wh2W8Ag&s" class="h-10" alt="Logo">
+      <span class="text-xl font-semibold tracking-wide" x-show="sidebarOpen">Admin Panel</span>
+    </div>
+    <button @click="sidebarOpen = !sidebarOpen" class="text-white text-lg focus:outline-none">
+      <i :class="sidebarOpen ? 'fas fa-angle-left' : 'fas fa-angle-right'"></i>
+    </button>
+  </div>
+
+  <nav class="mt-4 px-2 text-sm space-y-1">
+    <a href="/owner" class="flex items-center px-4 py-3 rounded-md hover:bg-green-700 transition {{ Request::is('owner') ? 'bg-green-700 font-medium' : '' }}">
+      <i class="fas fa-gauge mr-3"></i>
+      <span x-show="sidebarOpen">Dashboard</span>
+    </a>
+
+    <!-- Data Master -->
+    <div x-data="{ open: false }">
+      <button @click="open = !open" class="flex items-center justify-between w-full px-4 py-3 rounded-md hover:bg-green-700 transition">
+        <span class="flex items-center">
+          <i class="fas fa-folder-open mr-3"></i>
+          <span x-show="sidebarOpen">Data Master</span>
+        </span>
+        <i class="fas fa-chevron-down text-xs transition-transform" :class="open ? 'rotate-180' : ''" x-show="sidebarOpen"></i>
+      </button>
+      <div x-show="open" x-transition class="ml-8 mt-1 space-y-1" x-cloak>
+        <a href="/owner/tabelcalon" class="block px-3 py-2 rounded-md hover:bg-green-700 transition {{ Request::is('owner/tabelcalon') ? 'bg-green-700 font-medium' : '' }}">
+          <i class="fas fa-user-group mr-2"></i> <span x-show="sidebarOpen">Data Calon</span>
+        </a>
+        <a href="/owner/tabelakun" class="block px-3 py-2 rounded-md hover:bg-green-700 transition {{ Request::is('owner/tabelakun') ? 'bg-green-700 font-medium' : '' }}">
+          <i class="fas fa-id-card mr-2"></i> <span x-show="sidebarOpen">Data Akun</span>
+        </a>
+        <a href="/owner/tabelproduk" class="block px-3 py-2 rounded-md hover:bg-green-700 transition {{ Request::is('owner/tabelproduk') ? 'bg-green-700 font-medium' : '' }}">
+          <i class="fas fa-cubes mr-2"></i> <span x-show="sidebarOpen">Data Produk</span>
+        </a>
+        <a href="/owner/tabelfranchise" class="block px-3 py-2 rounded-md hover:bg-green-700 transition {{ Request::is('owner/tabelfranchise') ? 'bg-green-700 font-medium' : '' }}">
+          <i class="fas fa-store-alt mr-2"></i> <span x-show="sidebarOpen">Data Franchise</span>
+        </a>
+        <a href="/owner/tabelfranchise" class="block px-3 py-2 rounded-md hover:bg-green-700 transition">
+          <i class="fas fa-store-alt mr-2"></i> <span x-show="sidebarOpen">Data Franchise Baru</span>
+        </a>
       </div>
+    </div>
+
+    <!-- Pelaporan -->
+    <div x-data="{ open: false }" class="mt-3">
+      <button @click="open = !open" class="flex items-center justify-between w-full px-4 py-3 rounded-md hover:bg-green-700 transition">
+        <span class="flex items-center">
+          <i class="fas fa-file-alt mr-3"></i>
+          <span x-show="sidebarOpen">Pelaporan</span>
+        </span>
+        <i class="fas fa-chevron-down text-xs transition-transform" :class="open ? 'rotate-180' : ''" x-show="sidebarOpen"></i>
+      </button>
+      <div x-show="open" x-transition class="ml-8 mt-1 space-y-1" x-cloak>
+        <a href="/owner/laporan/transaksi" class="block px-3 py-2 rounded-md hover:bg-green-700 transition">
+          <i class="fas fa-money-bill-wave mr-2"></i> <span x-show="sidebarOpen">Laporan Transaksi</span>
+        </a>
+        <a href="/owner/laporan/franchise" class="block px-3 py-2 rounded-md hover:bg-green-700 transition">
+          <i class="fas fa-store mr-2"></i> <span x-show="sidebarOpen">Laporan Franchise</span>
+        </a>
+        <a href="/owner/laporan/survey" class="block px-3 py-2 rounded-md hover:bg-green-700 transition">
+          <i class="fas fa-chart-line mr-2"></i> <span x-show="sidebarOpen">Hasil Survey</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+</aside>

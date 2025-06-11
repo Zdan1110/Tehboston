@@ -1,100 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>@yield('Title')</title>
-    <meta
-      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-      name="viewport"
-    />
-    <link
-      rel="icon"
-      href="{{ asset('assets/img/kaiadmin/favicon.ico') }}"
-      type="image/x-icon"
-    />
+<html lang="en" x-data="{ sidebarOpen: true }" x-cloak>
+<head>
+  <meta charset="UTF-8">
+  <title>@yield('title', 'Admin Panel')</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <!-- CDN Asset -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
+  <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }} " />
+  <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }}" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-900">
 
-    <!-- Fonts and icons -->
-    <script src="{{ asset('assets/js/plugin/webfont/webfont.min.js') }}"></script>
-    <script>
-      WebFont.load({
-        google: { families: ["Public Sans:300,400,500,600,700"] },
-        custom: {
-          families: [
-            "Font Awesome 5 Solid",
-            "Font Awesome 5 Regular",
-            "Font Awesome 5 Brands",
-            "simple-line-icons",
-          ],
-          urls: ["{{ asset('assets/css/fonts.min.css') }}"],
-        },
-        active: function () {
-          sessionStorage.fonts = true;
-        },
-      });
-    </script>
+<div class="flex min-h-screen">
+  
+  @include('admin.navcoba')
 
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }} " />
-    <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }}" />
+  <!-- Main Content -->
+  <div class="flex-1 ml-20 md:ml-64 transition-all duration-300 ease-in-out">
 
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
-  </head>
-  <body>
-    @include('owner.v_navowner')  
-      <!-- End Sidebar -->
-    
-
-      <div class="main-panel">
-        
-        @include('owner.v_topbarowner')
-        @yield('content')
-        
+    <!-- Topbar -->
+    <header class="flex items-center justify-between px-6 py-4 bg-white shadow-sm border-b sticky top-0 z-30">
+      <!-- Search -->
+      <div class="relative w-full max-w-md">
+        <input type="text" placeholder="Cari sesuatu..." class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-green-700 focus:outline-none transition">
       </div>
 
-          <!--   Core JS Files   -->
-    <script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
-    <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <!-- Right Actions -->
+      <div class="flex items-center gap-6">
+        <div id="liveClock" class="text-sm font-semibold text-green-900 tracking-widest"></div>
+        <button class="relative text-green-800 hover:text-green-900 transition">
+          <i class="fas fa-bell text-xl"></i>
+          <span class="absolute -top-1 -right-1 h-2 w-2 bg-red-500 rounded-full border border-white"></span>
+        </button>
+        <div class="relative group">
+          <button class="flex items-center space-x-2 focus:outline-none">
+            <img src="https://i.pravatar.cc/32" class="w-8 h-8 rounded-full border" alt="Profile">
+            <span class="text-sm font-medium text-gray-700">{{ Auth::user()->name ?? 'Admin' }}</span>
+            <i class="fas fa-chevron-down text-xs text-gray-500"></i>
+          </button>
+          <div class="absolute right-0 mt-2 w-40 bg-white text-gray-800 rounded-md shadow-lg opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transform transition duration-150 origin-top-right z-50">
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Profil</a>
+            <form method="POST" action="{{ route('logout') }}">
+              @csrf
+              <button type="submit" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Logout</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </header>
 
+    <!-- Page Content -->
+    <main class="p-6 bg-gray-50 min-h-[calc(100vh-64px)]">
+      @yield('content')
+    </main>
 
-    <!-- jQuery Scrollbar -->
-    <script src="{{ asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
-    <!-- Kaiadmin JS -->
-    <script src="{{ asset('assets/js/kaiadmin.min.js') }}"></script>
-    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
-    <script src="{{ asset('assets/js/setting-demo2.js') }}"></script>
-    <script>
-      $("#displayNotif").on("click", function () {
-        var placementFrom = $("#notify_placement_from option:selected").val();
-        var placementAlign = $("#notify_placement_align option:selected").val();
-        var state = $("#notify_state option:selected").val();
-        var style = $("#notify_style option:selected").val();
-        var content = {};
+  </div>
+</div>
 
-        content.message =
-          'Turning standard Bootstrap alerts into "notify" like notifications';
-        content.title = "Bootstrap notify";
-        if (style == "withicon") {
-          content.icon = "fa fa-bell";
-        } else {
-          content.icon = "none";
-        }
-        content.url = "index.html";
-        content.target = "_blank";
+<script>
+  function updateClock() {
+    const now = new Date();
+    const time = now.toLocaleTimeString('id-ID', { hour12: false });
+    document.getElementById('liveClock').textContent = time;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+</script>
 
-        $.notify(content, {
-          type: state,
-          placement: {
-            from: placementFrom,
-            align: placementAlign,
-          },
-          time: 1000,
-        });
-      });
-    </script>
-  </body>
+</body>
 </html>

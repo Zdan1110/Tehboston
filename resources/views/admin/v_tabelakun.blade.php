@@ -1,9 +1,9 @@
 @section ('Title')
 Tabel Franchise
 @endsection
-@extends('admin.v_templateadmin')
+@extends('admin.templatecoba')
 @section('content')
-<div class="card" style="margin-top:70px">
+<div class="card" style="margin-top:8px">
                   <div class="card-header">
                     <div class="card-title">Data Akun</div>
                   </div>
