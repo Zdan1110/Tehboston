@@ -62,4 +62,31 @@ class AuthController extends Controller
         Session::forget('user');
         return redirect('/')->with('success', 'Logout berhasil');
     }
+
+    public function loginkasir($id_franchise)
+    {
+        $idakun = DB::table('tb_kasir')->where('id_franchise', $id_franchise)->first();
+        $kasir = DB::table('tb_akun')->where('id_akun', $idakun->id_akun)->first();
+        $user = DB::table('tb_akun')->where('username', $kasir->username)->first();
+
+        // Cek apakah username ditemukan
+        if (!$user) {
+            return back()->with('error', 'Username tidak ditemukan');
+        }
+
+
+        Session::put('user', [
+            'id_akun' => $user->id_akun,
+            'username' => $user->username,
+            'email' => $user->email,
+            'nama' => $user->nama,
+            'type_akun' => $user->type_akun
+        ]);
+
+        session()->regenerate();
+        
+
+
+         return redirect('/kasir')->with('success', 'Login berhasil sebagai kasir');
+    }
 }

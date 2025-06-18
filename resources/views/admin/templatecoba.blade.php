@@ -13,25 +13,106 @@
   <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }}" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+  <style>
+/* Tambahkan CSS kustom */
+    .sticky-header-container {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: white;
+    }
+    
+    .table-container {
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    
+    .profile-actions {
+      position: sticky;
+      right: 0;
+      background: white;
+      padding-left: 20px;
+      z-index: 50;
+    }
+
+    .card.pendaftar-baru {
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: none;
+    }
+    
+    .card.pendaftar-baru .card-header {
+        background-color: #fff;
+        border-bottom: 1px solid #eee;
+        padding: 15px 20px;
+    }
+    
+    .card.pendaftar-baru .card-title {
+        font-weight: 600;
+        color: #333;
+        margin: 0;
+        font-size: 1.1rem;
+    }
+    
+    .card.pendaftar-baru .card-body {
+        padding: 20px;
+    }
+    
+    .item-list {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        transition: all 0.3s ease;
+        border-radius: 8px;
+    }
+    
+    .item-list:hover {
+        background-color: #f8f9fa;
+    }
+    
+    .avatar-title {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+        color: white;
+    }
+    
+    .username {
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 2px;
+    }
+    
+    .status {
+        font-size: 0.85rem;
+    }
+</style>
 </head>
-<body class="bg-gray-100 font-sans text-gray-900">
+<body class="bg-gray-100" x-data="{ sidebarOpen: true }" x-cloak>
 
 <div class="flex min-h-screen">
   
   @include('admin.navcoba')
 
   <!-- Main Content -->
-  <div class="flex-1 ml-20 md:ml-64 transition-all duration-300 ease-in-out">
+  <div :class="sidebarOpen ? 'ml-64' : 'ml-20'" class="flex-1 transition-all duration-300 ease-in-out">
 
     <!-- Topbar -->
-    <header class="flex items-center justify-between px-6 py-4 bg-white shadow-sm border-b sticky top-0 z-30">
+    <header class="flex items-center justify-between px-6 py-4 bg-white shadow-sm border-b sticky top-0 z-30 flex-nowrap">
       <!-- Search -->
-      <div class="relative w-full max-w-md">
+      <div class="relative w-full max-w-md min-w-[200px]">
         <input type="text" placeholder="Cari sesuatu..." class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-green-700 focus:outline-none transition">
-      </div>
+    </div>
 
       `<!-- Profile Actions -->
-          <div class="flex items-center gap-6 ml-auto"> <!-- Tambahkan ml-auto di sini -->
+          <div class="flex items-center gap-6 ml-auto shrink-0">
             <div id="liveClock" class="text-sm font-semibold text-green-900 tracking-widest"></div>
             <button class="relative text-green-800 hover:text-green-900 transition">
               <i class="fas fa-bell text-xl"></i>
@@ -53,19 +134,31 @@
                   x-transition:leave-end="transform opacity-0 scale-95"
                   class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-50">
                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profil</a>
-                <form method="POST" action="{{ route('logout') }}">
-                  @csrf
-                  <button type="submit" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="{{ route('logout') }}">Logout</a>
                 </form>
               </div>
             </div>
           </div>
     </header>
+    @if (session('success'))
+    <div class="alert alert-success alert-dismissible popup-top fade show" role="alert">
+        <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
 
+    @if (session('error'))
+    <div class="alert alert-danger alert-dismissible popup-top fade show" role="alert">
+        <i class="fas fa-times-circle me-2"></i> {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
     <!-- Page Content -->
-    <main class="p-6 bg-gray-50 min-h-[calc(100vh-64px)]">
+    <main class="p-6 overflow-visible"> <!-- Perubahan di sini -->
+    <div class="w-full overflow-x-auto"> <!-- Wrapper baru untuk responsivitas -->
       @yield('content')
-    </main>
+    </div>
+  </main>
 
   </div>
 </div>

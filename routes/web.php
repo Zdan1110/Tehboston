@@ -14,10 +14,13 @@ use App\Http\Controllers\CalonMitraController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\C_Status;
 use App\Http\Controllers\C_Survey;
+use App\Http\Controllers\UlasanController;
+use App\Http\Controllers\KontakController;
+use App\Http\Controllers\TransaksiController;
+
 
 Route::view('/contact', 'v_contact');
 Route::view('/tambah-stok', 'kasir.tambah-stok');
-Route::view('/laporansurvey', 'survey.v_laporansurvey');
 Route::view('/status', 'v_preview');
 Route::view('/coba', 'admin.v_dashboardcoba');
 Route::view('/cek-status', 'v_status');
@@ -60,12 +63,25 @@ Route::get('/produk/edit/{id_produk}', [C_owner::class, 'editproduk']);
 Route::post('/produk/update/{id_produk}', [C_owner::class, 'updateproduk']);
 Route::get('/produk/add', [C_owner::class, 'tambahproduk']);
 Route::post('/produk/insert', [C_owner::class, 'insertproduk'])->name('produk.insert');
+Route::get('/admin/tabelulasan', [UlasanController::class, 'index'])->name('admin.ulasan.index');
+Route::delete('/admin/tabelulasan/{id}', [UlasanController::class, 'destroy']);
+
+Route::prefix('admin')->group(function () {
+    Route::get('/transaksi', [TransaksiController::class, 'index'])->name('admin.transaksi.index'); // Untuk menampilkan daftar transaksi
+    Route::get('/transaksi/create', [TransaksiController::class, 'create'])->name('transaksi.create'); // Untuk menampilkan formulir
+    Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store'); // Untuk menyimpan data dari formulir
+    Route::delete('/transaksi/{id}', [TransaksiController::class, 'destroy'])->name('transaksi.destroy'); // Untuk menghapus transaksi
+});
+
+
 
 Route::get('/kasir', [KasirController::class, 'kasir']);
 Route::get('/dashkasir', [KasirController::class, 'index'])->name('kasir.v_dashkasir');
 Route::post('/kasir/store', [KasirController::class, 'store'])->name('kasir.store');
 Route::post('/kasir/checkout', [KasirController::class, 'checkout']);
 Route::get('/pelaporan', [KasirController::class, 'laporan']);
+Route::get('/loginkasir/{id_franchise}', [AuthController::class, 'loginkasir']);
+
 
 // Route::view('/status', 'v_preview');
 Route::get('/status', [CalonMitraController::class, 'status']);
@@ -78,6 +94,10 @@ Route::post('/tambahfranchise/insert', [CalonMitraController::class, 'tambahfran
 // });
 Route::get('/cekstatus/{id}', [CalonMitraController::class, 'viewStatus'])->name('cek.status.view');
 Route::post('/cekstatus', [C_Status::class, 'cek'])->name('cek.status');
+Route::get('/qrcode', [CalonMitraController::class, 'qrcode'])->name('qr.code');
+Route::get('/download-qrcode', [CalonMitraController::class, 'downloadQrCode'])->name('download.qrcode');
+
+
 
 // Route::view('/kasir', 'kasir.v_kasir');
 // Route::view('/dashkasir', 'kasir.v_dashkasir');
@@ -150,5 +170,10 @@ Route::post('/kasir/akun/update/{id_akun}', [KasirController::class, 'updateakun
 
 Route::get('/datasurvey', [C_Survey::class, 'index'])->name('datasurvey');
 Route::get('/survey/tabelcalon', [C_Survey::class, 'index2'])->name('survey.calon');
-Route::get('/survey/laporansurvey', [C_Survey::class, 'index3'])->name('survey.laporan');
+Route::get('/survey/laporansurvey/{id_calon}', [C_Survey::class, 'index3'])->name('survey.laporan');
+Route::post('/survey/laporansurvey/insert/{id_calon}', [C_Survey::class, 'laporansurvey'])->name('membuat.laporan');
 Route::delete('/survey/delete/{id_calon}', [C_Survey::class, 'destroy'])->name('survey.destroy');
+
+Route::post('/kirim-ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
+Route::post('/kontak/kirim-ulasan', [KontakController::class, 'storeUlasan'])->name('kontak.storeUlasan');
+

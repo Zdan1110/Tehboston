@@ -302,11 +302,32 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const dataWilayah = {
-            "Jawa Barat": ["Bandung", "Bekasi", "Bogor", "Cirebon", "Depok", "Karawang", "Subang", "Sukabumi", "Tasikmalaya"],
-            "Jawa Tengah": ["Semarang", "Solo", "Magelang", "Tegal", "Kudus", "Purwokerto", "Salatiga"],
-            "Jawa Timur": ["Surabaya", "Malang", "Kediri", "Madiun", "Blitar", "Banyuwangi", "Jember"]
-        };
+    // Fungsi untuk mengisi alamat usaha sama dengan data calon mitra
+    document.getElementById('sameAddress').addEventListener('change', function() {
+        if (this.checked) {
+            // Ambil nilai dari data calon mitra
+            const provinsi = document.querySelector('[name="provinsi"]').value;
+            const kota = document.querySelector('[name="kota"]').value;
+            const kelurahan = document.querySelector('[name="kelurahan"]').value;
+            const alamat = document.querySelector('[name="alamat_lengkap"]').value;
+            
+            // Isi ke data lokasi usaha
+            document.querySelector('[name="provinsi_usaha"]').value = provinsi;
+            document.querySelector('[name="kota_usaha"]').value = kota;
+            document.querySelector('[name="kelurahan_usaha"]').value = kelurahan;
+            document.querySelector('[name="alamat_usaha"]').value = alamat;
+            
+            // Trigger perubahan untuk update dropdown kota
+            const event = new Event('change');
+            document.querySelector('[name="provinsi_usaha"]').dispatchEvent(event);
+        }
+    });
+
+    const dataWilayah = {
+        "Jawa Barat": ["Bandung", "Bekasi", "Bogor", "Cirebon", "Depok", "Karawang", "Subang", "Sukabumi", "Tasikmalaya"],
+        "Jawa Tengah": ["Semarang", "Solo", "Magelang", "Tegal", "Kudus", "Purwokerto", "Salatiga"],
+        "Jawa Timur": ["Surabaya", "Malang", "Kediri", "Madiun", "Blitar", "Banyuwangi", "Jember"]
+    };
 
         function updateKotaOptions(provinsiId, kotaId) {
             const provinsi = document.getElementById(provinsiId).value;

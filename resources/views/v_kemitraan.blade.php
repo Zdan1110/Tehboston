@@ -1,350 +1,106 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <link rel="shortcut icon" href="{{ asset('finexo-html/images/favicon.png') }}" type="">
+@extends('layouts.app')
 
-  <!-- External Fonts & Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+@section('title', 'Kemitraan - Teh Boston')
 
-  <!-- Project CSS -->
-  <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
+@section('content')
+<section class="section">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">Kemitraan</h2>
 
-  <!-- Finexo template CSS -->
-  <link rel="stylesheet" href="{{ asset('finexo-html/css/bootstrap.css') }}" />
-  <link rel="stylesheet" href="{{ asset('finexo-html/css/font-awesome.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('finexo-html/css/style.css') }}" />
-  <link rel="stylesheet" href="{{ asset('finexo-html/css/responsive.css') }}" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+        <!-- Langkah Mitra -->
+        <div class="mb-5">
+            <h3 class="text-center mb-5" data-aos="fade-up">Langkah Gabung Menjadi Mitra</h3>
+            <div class="row g-4">
+                @php
+                    $steps = [
+                        ['icon' => 'fa-map-marker-alt', 'title' => 'Cari Lokasi Usaha', 'desc' => 'Tentukan lokasi strategis untuk usaha minuman Anda'],
+                        ['icon' => 'fa-file-alt', 'title' => 'Isi Form Pendaftaran', 'desc' => 'Lengkapi formulir pendaftaran mitra secara online'],
+                        ['icon' => 'fa-clock', 'title' => 'Tunggu Konfirmasi', 'desc' => 'Tim kami akan memproses pendaftaran Anda'],
+                        ['icon' => 'fa-money-bill-wave', 'title' => 'Pembayaran', 'desc' => 'Lakukan pembayaran paket kemitraan'],
+                        ['icon' => 'fa-search-location', 'title' => 'Survey Lokasi', 'desc' => 'Tim survey kami akan mengunjungi lokasi usaha'],
+                        ['icon' => 'fa-store', 'title' => 'Pembuatan Booth', 'desc' => 'Proses pembuatan dan pengiriman booth usaha'],
+                    ];
+                @endphp
 
-  <style>
-  .custom-card {
-    border-radius: 20px;
-    overflow: hidden;
-    background-color:rgb(90, 188, 142); /* tosca */
-    color: white;
-  }
-
-  .card-price {
-    font-size: 2rem;
-    font-weight: bold;
-    color: rgb(90, 188, 142);
-  }
-
-  .card-title {
-    font-size: 1.25rem;
-    font-weight: 500;
-    color: rgb(90, 188, 142);
-  }
-</style>
-
-  <title>Teh Boston</title>
-</head>
-
-<body class="sub_page">
-
-  <div class="hero_area">
-
-    <div class="hero_bg_box">
-      <div class="bg_img_box">
-        <img src="images/hero-bg.png" alt="">
-      </div>
-    </div>
-
-    <!-- header section strats -->
-    @include('layouts.navbarindex')
-    <!-- end header section -->
-  </div>
-
-  <!-- about section -->
-
-  <section class="about_section layout_padding"> 
-  <div class="container">
-    <div class="heading_container heading_center">
-     
-    <div class="row justify-content-center align-items-center" style="margin: 50px 0;">
-  <div class="col-auto">
-    <img src="finexo-html/images/yakmel.png" alt="Ikon Mitra" class="ikon-mitra-animasi">
-  </div>
-  <div class="col text-center">
-    <h2 style="font-weight: bold; margin-bottom: 30px;">PROSES GABUNG MITRA</h2>
-    <a href="finexo-html/images/alur.png" target="_blank">
-      <img src="finexo-html/images/alur.png" alt="Alur Singkat Pendaftaran"
-           class="img-alur">
-    </a>
-  </div>
-</div>
-
-</div>
-
-
-    <section class="about_section layout_padding" style="background-color:rgb(228, 222, 136); border-radius: 10%;">
-  <div class="container text-center">
-    <h2 class="mb-4" style="color: #006400; font-weight: bold; font-size: 40px; margin-top: 1px;" >Paket Mitra Teh Boston</h2>
-
-    <!-- Tabs Paket -->
-
-    <!-- Booth + Peralatan -->
-    <div class="row align-items-center">
-      <!-- Booth -->
-      <div class="col-md-5 mb-4">
-        <div class="position-relative">
-          <img src="{{ asset('finexo-html/images/booth.png') }}" alt="Booth Es Teh" class="img-fluid">
-          <div class="position-absolute" style="left: 0; bottom: 10px; background-color:rgb(162, 158, 120); padding: 10px 15px; border-radius: 50%;">
-            <strong>UKURAN BOOTH</strong><br>
-            <span>120x65x221.5 cm</span><br>
-            <small>(P × L × T)</small>
-          </div>
-        </div>
-      </div>
-
-      <!-- Peralatan -->
-      <div class="col-md-7">
-        <h5 class="text-left" style="color: #006400; font-size: 20px">Peralatan dan bahan baku yang didapatkan:</h5>
-        <div class="row mt-3">
-        @php
-        $items = [
-        ['img' => 'booth.png', 'label' => 'Meja Counter', 'size' => '75px'],
-        ['img' => 'seal.png', 'label' => 'Mesin Seal', 'size' => '120px'],
-        ['img' => 'coolerbox.png', 'label' => 'Cooler Box', 'size' => '125px'],
-        ['img' => 'dispenser.png', 'label' => 'Tea Barrel', 'size' => '120px'],
-        ['img' => 'cup.png', 'label' => '100 Cup', 'size' => '120px'],
-        ['img' => 'apron.png', 'label' => 'Apron', 'size' => '120px'],
-        ['img' => 'varian rasa.png', 'label' => 'Serbuk Rasa', 'size' => '100px'],
-        ];
-        @endphp
-
-
-        @foreach ($items as $item)
-        <div class="col-md-2 col-4 text-center">
-            <img src="{{ asset('finexo-html/images/' . $item['img']) }}" alt="{{ $item['label'] }}" style="height: {{ $item['size'] }}; object-fit: contain;">
-            <p class="mt-2">{{ $item['label'] }}</p>
-        </div>
-        @endforeach
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="container mt-5">
-  <div class="row justify-content-center">
-
-    <!-- Dalam Kota Subang -->
-    <div class="col-md-4 mb-4">
-      <div class="card shadow custom-card text-center border-0">
-        <div class="card-header card-header-tosca">
-          Dalam Kota Subang
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Harga Paket</h5>
-          <p class="card-price">Rp 25.000.000</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Luar Kota Subang -->
-    <div class="col-md-4 mb-4">
-      <div class="card shadow custom-card text-center border-0">
-        <div class="card-header card-header-tosca" >
-          Luar Kota Subang
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Harga Paket</h5>
-          <p class="card-price">Rp 26.000.000</p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Tombol Daftar Sekarang -->
-  <div class="row justify-content-center mt-4">
-    <div class="col-md-4 text-center">
-      <!-- <a href="/daftarmitra" class="btn btn-daftar-sekarang">Daftar Sekarang</a> -->
-       <div class="btn-box">
-                  <button onclick="showPopup()" class="btn btn-daftar-sekarang">Daftar Mitra</button>
+                @foreach ($steps as $index => $step)
+                <div class="col-md-4 col-6" data-aos="fade-up" data-aos-delay="{{ 100 * ($index + 1) }}">
+                    <div class="card border-0 shadow h-100 text-center py-4 px-3">
+                        <div class="position-relative d-inline-block mb-3">
+                            <div class="position-absolute top-0 start-0 translate-middle bg-warning text-dark rounded-circle fw-bold"
+                                 style="width: 28px; height: 28px; line-height: 28px; font-size: 14px;">
+                                {{ $index + 1 }}
+                            </div>
+                            <div class="step-icon bg-primary rounded-circle d-inline-flex align-items-center justify-content-center text-white"
+                                 style="width: 60px; height: 60px;">
+                                <i class="fas {{ $step['icon'] }} fa-2x"></i>
+                            </div>
+                        </div>
+                        <h5>{{ $step['title'] }}</h5>
+                        <p class="text-muted mb-0">{{ $step['desc'] }}</p>
+                    </div>
                 </div>
-
-                <div id="overlay" onclick="closePopup()"></div>
-                <div id="popup" class="popup">
-                  <h6>Anda harus login terlebih dahulu untuk mendaftar sebagai mitra.</h6>
-                  <button onclick="closePopup()">Tutup</button>
-                  <button onclick="location.href='/login'">Login</button>
-                </div>
-              </div>
+                @endforeach
             </div>
-    </div>
-  </div>
-</div>
+        </div>
 
+        <!-- Paket Mitra -->
+        <div class="mt-5">
+            <h3 class="text-center mb-5" data-aos="fade-up">Paket Mitra</h3>
+            <div class="row g-4">
+                @php
+                    $paket = [
+                        ['img' => 'booth.png', 'nama' => 'Booth (120x65x220)'],
+                        ['img' => 'seal.png', 'nama' => 'Mesin Seal Cup'],
+                        ['img' => 'coolerbox.png', 'nama' => 'Cooler Box'],
+                        ['img' => 'dispenser.png', 'nama' => 'Dispenser Tea Barrel'],
+                        ['img' => 'cup.png', 'nama' => 'Cup (100 pcs)'],
+                        ['img' => 'apron.png', 'nama' => 'Apron/Celemek'],
+                        ['img' => 'varianrasa.png', 'nama' => 'Serbuk Varian Rasa'],
+                        ['img' => 'https://images.unsplash.com/photo-1605190557070-9a1b5d191719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80', 'nama' => 'Sirup Marjan'],
+                    ];
+                @endphp
+
+                @foreach ($paket as $i => $item)
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="{{ 100 * ($i + 1) }}">
+                    <div class="package-card">
+                        <img src="{{ Str::startsWith($item['img'], 'http') ? $item['img'] : asset('gambar/' . $item['img']) }}" class="package-img w-100" alt="{{ $item['nama'] }}">
+                        <div class="package-overlay">
+                            <h5 class="text-white mb-0">{{ $item['nama'] }}</h5>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+
+            <!-- Harga dan tombol -->
+            <div class="text-center mt-5" data-aos="fade-up">
+                <h4 class="mb-4">Harga Paket: <span class="text-primary fw-bold">Rp 25.000.000</span></h4>
+                <button id="btn-daftar-page" class="btn btn-primary btn-lg px-5">Daftar Menjadi Mitra</button>
+            </div>
+        </div>
+    </div>
 </section>
 
-  </section>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <!-- end about section -->
-  @include('layouts.footerindex')
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById('btn-daftar-page').addEventListener('click', function (e) {
+            e.preventDefault();
 
-  <!-- jQery -->
- <!-- jQuery -->
- <script>
-  function animateCurrentSlide() {
-    // Hapus animasi dari semua detail-box
-    document.querySelectorAll('.detail-box').forEach(el => el.classList.remove('animate-up'));
-
-    // Tambahkan animasi ke slide yang aktif
-    const activeSlide = document.querySelector('.carousel-item.active .detail-box');
-    if (activeSlide) {
-      activeSlide.classList.add('animate-up');
-    }
-  }
-
-  // Saat halaman dimuat
-  window.addEventListener('load', animateCurrentSlide);
-
-  // Saat slide selesai berganti
-  $('#customCarousel1').on('slid.bs.carousel', function () {
-    animateCurrentSlide();
-  });
-</script>
-
-
-  <!-- jQery -->
-  <script type="text/javascript" src="{{ asset('finexo-html/js/jquery-3.4.1.min.js') }}"></script>
-  <!-- popper js -->
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <!-- bootstrap js -->
-  <script type="text/javascript" src="{{ asset('finexo-html/js/bootstrap.js') }}"></script>
-  <!-- owl slider -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-  <!-- custom js -->
-  <script type="text/javascript" src="{{ asset('finexo-html/js/custom.js') }}"></script>
-  <!-- Google Map -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
-  <!-- End Google Map -->
-
-  <script>
-  function handleScrollAnimation() {
-    document.querySelectorAll('.fade-up').forEach(el => {
-      const rect = el.getBoundingClientRect();
-      const inView = rect.top < window.innerHeight - 50 && rect.bottom > 0;
-      if (inView) {
-        el.classList.add('fade-up-visible');
-      } else {
-        el.classList.remove('fade-up-visible'); // Agar bisa muncul ulang saat scroll balik
-      }
+            Swal.fire({
+                icon: 'warning',
+                title: 'Login Dulu!',
+                text: 'Anda harus login terlebih dahulu sebelum mendaftar mitra.',
+                confirmButtonText: 'Login Sekarang',
+                confirmButtonColor: '#3085d6',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/login';
+                }
+            });
+        });
     });
-  }
-
-  // Trigger saat scroll dan saat halaman dimuat
-  window.addEventListener('scroll', handleScrollAnimation);
-  window.addEventListener('load', handleScrollAnimation);
 </script>
-
-
-  <script>
-  window.addEventListener('load', function () {
-    const header = document.querySelector('.header_section');
-    if (header) {
-      header.classList.add('animate-down');
-    }
-  });
-
-  const header = document.querySelector('.header_section');
-  let lastScrollTop = 0;
-  let ticking = false;
-
-  // Fungsi untuk memicu animasi ulang
-  function triggerHeaderAnimation() {
-    header.classList.remove('animate-down');
-    void header.offsetWidth; // reflow agar animasi bisa diulang
-    header.classList.add('animate-down');
-  }
-
-  // Saat halaman dimuat pertama kali
-  window.addEventListener('load', triggerHeaderAnimation);
-
-  // Saat di-scroll ke atas
-  window.addEventListener('scroll', function () {
-    if (!ticking) {
-      window.requestAnimationFrame(function () {
-        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-        if (currentScroll < lastScrollTop && currentScroll > 0) {
-          // Scroll ke atas, bukan di paling atas
-          triggerHeaderAnimation();
-        }
-
-        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-        ticking = false;
-      });
-
-      ticking = true;
-    }
-  });
-</script>
-
-<script>
-        function showPopup() {
-            document.getElementById('popup').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-        }
-
-        function closePopup() {
-            document.getElementById('popup').style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-        }
-
-        
-    </script>
-
-<script>
-  function animateCurrentSlide() {
-    document.querySelectorAll('.detail-box').forEach(el => el.classList.remove('animate-up'));
-
-    const activeSlide = document.querySelector('.carousel-item.active .detail-box');
-    if (activeSlide) {
-      void activeSlide.offsetWidth; // reflow untuk reset animasi
-      activeSlide.classList.add('animate-up');
-    }
-  }
-
-  // Saat halaman dimuat
-  window.addEventListener('load', animateCurrentSlide);
-
-  // Saat slide berubah
-  $('#customCarousel1').on('slid.bs.carousel', function () {
-    animateCurrentSlide();
-  });
-
-  // Saat scroll ke atas dan slider terlihat
-  let lastScrollTopSlider = 0;
-  window.addEventListener('scroll', function () {
-    const sliderSection = document.querySelector('.slider_section');
-    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-    if (currentScroll < lastScrollTopSlider && isInViewport(sliderSection)) {
-      animateCurrentSlide();
-    }
-
-    lastScrollTopSlider = currentScroll <= 0 ? 0 : currentScroll;
-  });
-
-  function isInViewport(element) {
-    const rect = element.getBoundingClientRect();
-    return rect.top < window.innerHeight && rect.bottom > 0;
-  }
-</script>
-
-
-</body>
-
-</html>
+@endsection

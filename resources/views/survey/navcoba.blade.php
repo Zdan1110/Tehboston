@@ -22,9 +22,7 @@
         <i class="fas fa-chevron-down text-xs transition-transform" :class="open ? 'rotate-180' : ''" x-show="sidebarOpen"></i>
       </button>
       <div x-show="open" x-transition class="ml-8 mt-1 space-y-1" x-cloak>
-        <a href="/laporansurvey" class="block px-3 py-2 rounded-md hover:bg-green-700 transition">
-          <i class="fas fa-chart-line mr-2"></i> <span x-show="sidebarOpen">Laporan</span>
-        </a>
+      
         <a href="/survey/tabelcalon" class="block px-3 py-2 rounded-md hover:bg-green-700 transition {{ Request::is('admin/tabelcalon') ? 'bg-green-700 font-medium' : '' }}">
           <i class="fas fa-user-group mr-2"></i> <span x-show="sidebarOpen">Data Calon</span>
         </a>

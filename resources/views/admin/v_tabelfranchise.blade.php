@@ -22,7 +22,6 @@ Tabel Franchise
                             <th>Kode Pos</th>
                             <th>Titik Koordinat</th>
                             <th>Foto Lokasi Usaha</th>
-                            <th>Status</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -43,9 +42,8 @@ Tabel Franchise
                                   </a>
                                 </td>
                                   <td><img src="{{ url('uploads/lokasi/'. $data->lokasi_usaha) }}" width="100px"></td>
-                                  <td>{{ $data->status ?? '-' }}</td>
                                   <td>
-                                      <a href="/franchise/edit/{{ $data->id_franchise }}" class="btn btn-sm btn-warning">Edit</a>
+                                      
                                       <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete{{ $data->id_franchise }}">
                                         Delete
                                       </button>

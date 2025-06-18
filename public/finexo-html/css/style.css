@@ -11,14 +11,14 @@ body {
 }
 
 .card-header-tosca {
-  background-color: #20c997;
+  background-color: #8BA49A; /* Menggunakan warna hijau keabu-abuan dari palet */
   color: #fff;
   font-weight: bold;
 }
 
 .btn-daftar-sekarang {
   display: inline-block;
-  background-color: #20c997;
+  background-color: #3B6255; /* Menggunakan warna hijau gelap dari palet */
   color: white;
   padding: 15px 30px;
   font-size: 18px;
@@ -27,12 +27,12 @@ body {
   transition: 0.3s ease;
   text-decoration: none;
   font-weight: bold;
-  box-shadow: 0 4px 12px rgba(32, 201, 151, 0.4);
+  box-shadow: 0 4px 12px rgba(59, 98, 85, 0.4); /* Sesuaikan bayangan */
 }
 
 .btn-daftar-sekarang:hover {
-  background-color: #17b28c;
-  box-shadow: 0 6px 16px rgba(23, 178, 140, 0.5);
+  background-color: #2D4A40; /* Sedikit lebih gelap dari hijau gelap */
+  box-shadow: 0 6px 16px rgba(45, 74, 64, 0.5); /* Sesuaikan bayangan */
   transform: scale(1.05);
 }
 
@@ -50,8 +50,6 @@ body {
     transform: translateY(-12px) rotate(-8deg);
   }
 }
-
-
 
 .img-alur {
   width: 100%;
@@ -77,8 +75,6 @@ body {
     text-align: center;
   }
 }
-
-
 
 @keyframes fadeUp {
   from {
@@ -142,7 +138,6 @@ body {
   transform: translateY(0);
 }
 
-
 .popup {
   display: none;
   position: fixed;
@@ -204,11 +199,11 @@ body {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+          -ms-flex-direction: column;
+              flex-direction: column;
   -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+          -ms-flex-align: start;
+              align-items: flex-start;
 }
 
 .heading_container h2 {
@@ -218,7 +213,7 @@ body {
 }
 
 .heading_container h2 span {
-  color: #0d5d22;
+  color: #3B6255; /* Menggunakan warna hijau gelap dari palet */
 }
 
 .heading_container p {
@@ -228,8 +223,8 @@ body {
 
 .heading_container.heading_center {
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+          -ms-flex-align: center;
+              align-items: center;
   text-align: center;
 }
 
@@ -260,8 +255,8 @@ a:focus {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+          -ms-flex-direction: column;
+              flex-direction: column;
 }
 
 .hero_area .hero_bg_box {
@@ -274,11 +269,11 @@ a:focus {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+          -ms-flex-pack: center;
+              justify-content: center;
   -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
+          -ms-flex-align: end;
+              align-items: flex-end;
   overflow: hidden;
   z-index: -1;
 }
@@ -295,7 +290,7 @@ a:focus {
 
 .sub_page .hero_area {
   min-height: auto;
-  background: #0d5d22;
+  background: #3B6255; /* Menggunakan warna hijau gelap dari palet */
 }
 
 .sub_page .hero_area .hero_bg_box {
@@ -336,7 +331,7 @@ a:focus {
 }
 
 .custom_nav-container .navbar-nav .nav-item:hover .nav-link, .custom_nav-container .navbar-nav .nav-item.active .nav-link {
-  color: #FFF999;
+  color: #D2C49E; /* Menggunakan warna beige dari palet */
 }
 
 .custom_nav-container .navbar-nav .nav-item.active .nav-link {
@@ -352,7 +347,7 @@ a:focus {
 }
 
 .custom_nav-container .nav_search-btn:hover {
-  color: #00bbf0;
+  color: #8BA49A; /* Menggunakan warna hijau keabu-abuan dari palet */
 }
 
 .custom_nav-container .navbar-toggler {
@@ -417,22 +412,22 @@ a:focus {
 /* slider section */
 .slider_section {
   -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+          -ms-flex: 1;
+              flex: 1;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+          -ms-flex-align: center;
+              align-items: center;
   position: relative;
   padding: 45px 0 145px 0;
 }
 
 .slider_section .row {
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+          -ms-flex-align: center;
+              align-items: center;
 }
 
 .slider_section #customCarousel1 {
@@ -441,7 +436,7 @@ a:focus {
 }
 
 .slider_section .detail-box {
-  color: #00204a;
+  color: #3B6255; /* Menggunakan warna hijau gelap dari palet */
 }
 
 .slider_section .detail-box h1 {
@@ -474,7 +469,7 @@ a:focus {
 .slider_section .detail-box .btn-box .btn1 {
   display: inline-block;
   padding: 10px 15px;
-  background-color: #84ab61;
+  background-color: #8BA49A; /* Menggunakan warna hijau keabu-abuan dari palet */
   color: #ffffff;
   border-radius: 0;
   -webkit-transition: all 0.3s;
@@ -483,7 +478,7 @@ a:focus {
 }
 
 .slider_section .detail-box .btn-box .btn1:hover {
-  background-color: #91cf57;
+  background-color: #6D8278; /* Sedikit lebih gelap dari hijau keabu-abuan */
 }
 
 .slider_section .detail-box .btn-box .btn2 {
@@ -544,11 +539,11 @@ a:focus {
   position: unset;
   margin: 0;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+          -ms-flex-pack: center;
+              justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+          -ms-flex-align: center;
+              align-items: center;
 }
 
 .slider_section .carousel-indicators li {
@@ -562,7 +557,7 @@ a:focus {
 .slider_section .carousel-indicators li.active {
   width: 20px;
   height: 20px;
-  background-color: #0a3b17;
+  background-color: #3B6255; /* Menggunakan warna hijau gelap dari palet */
 }
 
 .service_section {
@@ -575,11 +570,11 @@ a:focus {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+          -ms-flex-direction: column;
+              flex-direction: column;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+          -ms-flex-align: center;
+              align-items: center;
   text-align: center;
   margin-top: 45px;
 
@@ -592,11 +587,11 @@ a:focus {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+          -ms-flex-pack: center;
+              justify-content: center;
   -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+          -ms-flex-align: start;
+              align-items: flex-start;
   width: 200px;
   min-width: 75px;
   height:200px;
@@ -626,12 +621,12 @@ a:focus {
 }
 
 .service_section .box .detail-box a {
-  color: #00204a;
+  color: #3B6255; /* Menggunakan warna hijau gelap dari palet */
   font-weight: 600;
 }
 
 .service_section .box .detail-box a:hover {
-  color: #1f4b07;
+  color: #2D4A40; /* Sedikit lebih gelap dari hijau gelap */
 }
 
 .service_section .btn-box {
@@ -639,15 +634,15 @@ a:focus {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+          -ms-flex-pack: center;
+              justify-content: center;
   margin-top: 45px;
 }
 
 .service_section .btn-box a {
   display: inline-block;
   padding: 10px 45px;
-  background-color: rgb(132, 171, 97);
+  background-color: #8BA49A; /* Menggunakan warna hijau keabu-abuan dari palet */
   color: #ffffff;
   border-radius: 0;
   -webkit-transition: all 0.3s;
@@ -656,11 +651,11 @@ a:focus {
 }
 
 .service_section .btn-box a:hover {
-  background-color: #6a8d4a;
+  background-color: #6D8278; /* Sedikit lebih gelap dari hijau keabu-abuan */
 }
 
 .about_section {
-  background: #0d5d22;
+  background: #3B6255; /* Menggunakan warna hijau gelap dari palet */
   color: #ffffff;
 }
 
@@ -670,8 +665,8 @@ a:focus {
 
 .about_section .row {
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+          -ms-flex-align: center;
+              align-items: center;
 }
 
 .about_section .img-box img {
@@ -689,8 +684,8 @@ a:focus {
 .about_section .detail-box a {
   display: inline-block;
   padding: 10px 45px;
-  background-color: #1f4b07;
-  color: #ffffff;
+  background-color: #D2C49E; /* Menggunakan warna beige dari palet */
+  color: #3B6255; /* Menggunakan warna hijau gelap untuk teks tombol */
   border-radius: 0px;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
@@ -700,7 +695,7 @@ a:focus {
 }
 
 .about_section .detail-box a:hover {
-  background-color: #007fa4;
+  background-color: #B8A88E; /* Sedikit lebih gelap dari beige */
 }
 
 .why_section .box {
@@ -710,11 +705,11 @@ a:focus {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+          -ms-flex-direction: column;
+              flex-direction: column;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+          -ms-flex-align: center;
+              align-items: center;
   text-align: center;
 }
 
@@ -725,22 +720,22 @@ a:focus {
   min-width: 120px;
   min-height: 120px;
   border-radius: 100%;
-  border: 5px solid #00204a;
+  border: 5px solid #3B6255; /* Menggunakan warna hijau gelap dari palet */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+          -ms-flex-pack: center;
+              justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+          -ms-flex-align: center;
+              align-items: center;
 }
 
 .why_section .box .img-box img {
   width: 55px;
   height: auto;
-  fill: #00204a;
+  fill: #3B6255; /* Menggunakan warna hijau gelap dari palet */
 }
 
 .why_section .box h5 {
@@ -757,15 +752,15 @@ a:focus {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+          -ms-flex-pack: center;
+              justify-content: center;
   margin-top: 45px;
 }
 
 .why_section .btn-box a {
   display: inline-block;
   padding: 10px 45px;
-  background-color: #1f4b07;
+  background-color: #3B6255; /* Menggunakan warna hijau gelap dari palet */
   color: #ffffff;
   border-radius: 0;
   -webkit-transition: all 0.3s;
@@ -774,20 +769,20 @@ a:focus {
 }
 
 .why_section .btn-box a:hover {
-  background-color: #007fa4;
+  background-color: #2D4A40; /* Sedikit lebih gelap dari hijau gelap */
 }
 
 /*team section */
 .team_section {
   text-align: center;
-  background-color: #00204a;
+  background-color: #3B6255; /* Menggunakan warna hijau gelap dari palet */
   color: #ffffff;
 }
 
 .team_section .heading_container {
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+          -ms-flex-pack: center;
+              justify-content: center;
 }
 
 .team_section .team_container {
@@ -801,8 +796,8 @@ a:focus {
   -webkit-transition: all .1s;
   transition: all .1s;
   margin-top: 45px;
-  background: -webkit-gradient(linear, left top, left bottom, from(#002759), to(#002b64));
-  background: linear-gradient(to bottom, #002759, #002b64);
+  background: -webkit-gradient(linear, left top, left bottom, from(#3B6255), to(#4C756B)); /* Gradien hijau gelap */
+  background: linear-gradient(to bottom, #3B6255, #4C756B); /* Gradien hijau gelap */
 }
 
 .team_section .team_container .box .img-box {
@@ -810,11 +805,11 @@ a:focus {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+          -ms-flex-pack: center;
+              justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+          -ms-flex-align: center;
+              align-items: center;
 }
 
 .team_section .team_container .box .img-box img {
@@ -828,7 +823,7 @@ a:focus {
 }
 
 .team_section .team_container .box .detail-box h5 {
-  color: #091303;
+  color: #E2DFDA; /* Menggunakan warna putih keabu-abuan dari palet untuk teks */
   font-weight: 600;
   position: relative;
 }
@@ -839,8 +834,8 @@ a:focus {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+          -ms-flex-pack: justify;
+              justify-content: space-between;
 }
 
 .team_section .team_container .box .social_box a {
@@ -849,7 +844,7 @@ a:focus {
 }
 
 .team_section .team_container .box .social_box a:hover {
-  color: #1f4b07;
+  color: #D2C49E; /* Menggunakan warna beige dari palet */
 }
 
 /*team section end*/
@@ -864,8 +859,8 @@ a:focus {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+          -ms-flex-direction: column;
+              flex-direction: column;
   margin: 15px;
 }
 
@@ -875,11 +870,11 @@ a:focus {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+          -ms-flex-pack: center;
+              justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+          -ms-flex-align: center;
+              align-items: center;
   width: 100px;
   margin-bottom: -50px;
   margin-left: 25px;
@@ -895,8 +890,8 @@ a:focus {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+          -ms-flex-pack: justify;
+              justify-content: space-between;
 }
 
 .client_section .box .client_id .client_info h6 {
@@ -919,7 +914,7 @@ a:focus {
 }
 
 .client_section .box .detail-box i {
-  color: #00204a;
+  color: #3B6255; /* Menggunakan warna hijau gelap dari palet */
   margin-bottom: 10px;
 }
 
@@ -928,8 +923,8 @@ a:focus {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+          -ms-flex-pack: center;
+              justify-content: center;
   margin-top: 45px;
 }
 
@@ -948,12 +943,12 @@ a:focus {
 
 .client_section .owl-carousel .owl-nav .owl-prev:hover,
 .client_section .owl-carousel .owl-nav .owl-next:hover {
-  color: #00204a;
+  color: #3B6255; /* Menggunakan warna hijau gelap dari palet */
 }
 
 /* client section end */
 .info_section {
-  background-color: #569c6b;
+  background-color: #3B6255; /* Menggunakan warna hijau gelap dari palet */
   color: #ffffff;
   padding: 45px 0 15px 0;
 }
@@ -973,8 +968,8 @@ a:focus {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+          -ms-flex-direction: column;
+              flex-direction: column;
 }
 
 .info_section .info_contact .contact_link_box a {
@@ -987,7 +982,7 @@ a:focus {
 }
 
 .info_section .info_contact .contact_link_box a:hover {
-  color: #1f4b07;
+  color: #D2C49E; /* Menggunakan warna beige dari palet */
 }
 
 .info_section .info_social {
@@ -1003,11 +998,11 @@ a:focus {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+          -ms-flex-pack: center;
+              justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+          -ms-flex-align: center;
+              align-items: center;
   color: #ffffff;
   border-radius: 100%;
   margin-right: 10px;
@@ -1015,7 +1010,7 @@ a:focus {
 }
 
 .info_section .info_social a:hover {
-  color: #1f4b07;
+  color: #D2C49E; /* Menggunakan warna beige dari palet */
 }
 
 .info_section .info_links {
@@ -1024,10 +1019,10 @@ a:focus {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+          -ms-flex-direction: column;
+              flex-direction: column;
   -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+          flex-wrap: wrap;
 }
 
 .info_section .info_links a {
@@ -1035,14 +1030,14 @@ a:focus {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+          -ms-flex-align: center;
+              align-items: center;
   margin-bottom: 15px;
   color: #ffffff;
 }
 
 .info_section .info_links a:hover {
-  color: #1f4b07;
+  color: #D2C49E; /* Menggunakan warna beige dari palet */
 }
 
 .info_section form input {
@@ -1076,7 +1071,7 @@ a:focus {
   text-align: center;
   display: inline-block;
   padding: 10px 55px;
-  background-color: #1f4b07;
+  background-color: #3B6255; /* Menggunakan warna hijau gelap dari palet */
   color: #ffffff;
   border-radius: 0;
   -webkit-transition: all 0.3s;
@@ -1086,7 +1081,7 @@ a:focus {
 }
 
 .info_section form button:hover {
-  background-color: #007fa4;
+  background-color: #2D4A40; /* Sedikit lebih gelap dari hijau gelap */
 }
 
 /* footer section*/
@@ -1097,7 +1092,7 @@ a:focus {
 }
 
 .footer_section p {
-  color: #00204a;
+  color: #3B6255; /* Menggunakan warna hijau gelap dari palet */
   padding: 25px 0;
   margin: 0;
 }
@@ -1148,23 +1143,22 @@ a:focus {
 /*# sourceMappingURL=style.css.map */
 
 :root {
-  --primary-green: #1e8449; /* Hijau utama yang elegan */
-  --secondary-green: #27ae60; /* Hijau sekunder lebih terang */
-  --dark-green: #186a3b; /* Hijau gelap untuk aksen */
-  --light-green: #e8f8ef; /* Hijau sangat muda untuk background */
-  --accent-green: #2ecc71; /* Hijau terang untuk aksen */
-  --button-hover: #219653; /* Warna hover tombol */
+  --primary-light-green: #CBDED3; /* Hijau paling terang */
+  --secondary-green-gray: #8BA49A; /* Hijau keabu-abuan */
+  --beige: #D2C49E; /* Warna beige */
+  --dark-green: #3B6255; /* Hijau gelap */
+  --light-gray: #E2DFDA; /* Abu-abu sangat terang */
 }
 
 body {
   font-family: "Open Sans", sans-serif;
   color: #333;
-  background-color: #f9f9f9;
+  background-color: var(--light-gray); /* Menggunakan abu-abu sangat terang untuk background */
 }
 
 /* Header dan Navbar */
 .header_section {
-  background-color: var(--primary-green);
+  background-color: var(--dark-green); /* Menggunakan hijau gelap */
 }
 
 .navbar-brand span {
@@ -1177,56 +1171,56 @@ body {
 
 .custom_nav-container .navbar-nav .nav-item:hover .nav-link, 
 .custom_nav-container .navbar-nav .nav-item.active .nav-link {
-  color: white;
+  color: var(--beige); /* Menggunakan warna beige */
   background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Tombol */
 .btn-daftar-sekarang {
-  background-color: var(--accent-green);
-  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.4);
+  background-color: var(--dark-green); /* Menggunakan hijau gelap */
+  box-shadow: 0 4px 12px rgba(59, 98, 85, 0.4); /* Sesuaikan bayangan */
 }
 
 .btn-daftar-sekarang:hover {
-  background-color: var(--button-hover);
-  box-shadow: 0 6px 16px rgba(33, 150, 83, 0.5);
+  background-color: #2D4A40; /* Sedikit lebih gelap dari hijau gelap */
+  box-shadow: 0 6px 16px rgba(45, 74, 64, 0.5); /* Sesuaikan bayangan */
 }
 
 /* Card dan Section */
 .card-header-tosca {
-  background-color: var(--secondary-green);
+  background-color: var(--secondary-green-gray); /* Menggunakan hijau keabu-abuan */
 }
 
 .service_section .box {
   background-color: white;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--primary-light-green); /* Menggunakan hijau paling terang untuk border */
   transition: all 0.3s;
 }
 
 .service_section .box:hover {
-  box-shadow: 0 5px 15px rgba(30, 132, 73, 0.1);
+  box-shadow: 0 5px 15px rgba(59, 98, 85, 0.1); /* Sesuaikan bayangan */
   transform: translateY(-5px);
 }
 
 .about_section {
-  background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+  background: linear-gradient(135deg, var(--dark-green), var(--secondary-green-gray)); /* Gradien hijau gelap ke hijau keabu-abuan */
 }
 
 .client_section {
-  background-color: var(--light-green);
+  background-color: var(--primary-light-green); /* Menggunakan hijau paling terang */
 }
 
 /* Info Section */
 .info_section {
-  background-color: var(--dark-green);
+  background-color: var(--dark-green); /* Menggunakan hijau gelap */
 }
 
 .info_section form button {
-  background-color: var(--primary-green);
+  background-color: var(--secondary-green-gray); /* Menggunakan hijau keabu-abuan */
 }
 
 .info_section form button:hover {
-  background-color: var(--button-hover);
+  background-color: #6D8278; /* Sedikit lebih gelap dari hijau keabu-abuan */
 }
 
 /* Animasi dan Efek */
@@ -1242,21 +1236,22 @@ body {
 /* Responsive */
 @media (max-width: 768px) {
   .header_section {
-    background-color: var(--primary-green);
+    background-color: var(--dark-green); /* Menggunakan hijau gelap */
   }
 }
 
 /* Popup */
 .popup {
   background: white;
-  border: 2px solid var(--accent-green);
+  border: 2px solid var(--secondary-green-gray); /* Menggunakan hijau keabu-abuan */
+  color: black; /* Ubah warna teks menjadi hitam */
 }
 
 .popup button {
-  background-color: var(--primary-green);
+  background-color: var(--dark-green); /* Menggunakan hijau gelap */
   color: white;
 }
 
 .popup button:hover {
-  background-color: var(--dark-green);
+  background-color: #2D4A40; /* Sedikit lebih gelap dari hijau gelap */
 }

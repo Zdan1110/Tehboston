@@ -18,6 +18,11 @@ class M_Admin extends Model
         return DB::table('tb_calonmitra')->where('id_calon', $id_calonmitra)->first();
     }
 
+    public function datafranchisepindah($id_franchisebaru)
+    {
+        return DB::table('tb_franchisebaru')->where('id_franchisebaru', $id_franchisebaru)->first();
+    }
+
     public function dataakun()
     {
         return DB::table('tb_akun')->where('type_akun', 'user')->get();

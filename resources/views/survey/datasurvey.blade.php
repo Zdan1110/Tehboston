@@ -20,7 +20,6 @@ Tabel Calon
                         <th>ID Calon</th>
                         <th>ID Akun</th>
                         <th>Nama Lengkap</th>
-                        <th>Nomor KTP</th>
                         <th>Panjang</th>
                         <th>Lebar</th>
                         <th>Total Luas</th>
@@ -37,11 +36,10 @@ Tabel Calon
                         <td>{{ $data->id_calon }}</td>
                         <td>{{ $data->id_akun }}</td>
                         <td>{{ $data->nama_lengkap }}</td>
-                        <td>{{ $data->nomor_ktp }}</td>
                         <td>{{ $data->panjang }}</td>
                         <td>{{ $data->lebar }}</td>
                         <td>{{ $data->total_luas }}</td>
-                        <td><img src="{{ url('uploads/photo/' . $data->pas_photo) }}" width="100px" alt="Foto Lokasi"></td>
+                        <td><img src="{{ url('uploads/survey/' . $data->foto) }}" width="100px" alt="Foto Lokasi"></td>
                         <td>{{ $data->catatan }}</td>
                         <td>
                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete{{ $data->id_calon }}">

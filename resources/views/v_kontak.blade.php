@@ -1,285 +1,131 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <link rel="shortcut icon" href="{{ asset('finexo-html/images/favicon.png') }}" type="">
+@extends('layouts.app')
 
-  <!-- External Fonts & Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+@section('title', 'Kontak & Ulasan - Teh Boston')
 
-  <!-- Project CSS -->
-  <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
+@section('content')
+<section class="section">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">Kontak & Beri Ulasan</h2>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="contact-form" data-aos="fade-up">
+                    {{-- Form Method POST dan Action ke route yang telah didefinisikan --}}
+                    <form action="{{ route('kontak.storeUlasan') }}" method="POST">
+                        @csrf {{-- CSRF token untuk keamanan Laravel --}}
 
+                        {{-- Menampilkan pesan sukses atau error --}}
+                        @if (session('success'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ session('success') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+                        @if (session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{ session('error') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+                        
+                        <div class="mb-4">
+                            <label for="name" class="form-label">Nama Lengkap</label>
+                            <input type="text" class="form-control @error('nama_lengkap') is-invalid @enderror" id="name" name="nama_lengkap" placeholder="Masukkan nama lengkap" value="{{ old('nama_lengkap') }}" required>
+                            @error('nama_lengkap')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Masukkan email" value="{{ old('email') }}" required>
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label">Rating Produk</label>
+                            <div class="rating-group @error('rating') is-invalid @enderror">
+                                <input type="radio" id="star5" name="rating" value="5" {{ old('rating') == '5' ? 'checked' : '' }} />
+                                <label for="star5" class="rating-star"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star4" name="rating" value="4" {{ old('rating') == '4' ? 'checked' : '' }} />
+                                <label for="star4" class="rating-star"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star3" name="rating" value="3" {{ old('rating') == '3' ? 'checked' : '' }} />
+                                <label for="star3" class="rating-star"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star2" name="rating" value="2" {{ old('rating') == '2' ? 'checked' : '' }} />
+                                <label for="star2" class="rating-star"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star1" name="rating" value="1" {{ old('rating') == '1' ? 'checked' : '' }} required />
+                                <label for="star1" class="rating-star"><i class="fas fa-star"></i></label>
+                            </div>
+                            @error('rating')
+                                <div class="text-danger mt-1" style="font-size: 0.875em;">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="subject" class="form-label">Subjek</label>
+                            <input type="text" class="form-control @error('subjek') is-invalid @enderror" id="subject" name="subjek" placeholder="Masukkan subjek" value="{{ old('subjek') }}" required>
+                            @error('subjek')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-4">
+                            <label for="message" class="form-label">Ulasan/Pesan</label>
+                            <textarea class="form-control @error('ulasan_pesan') is-invalid @enderror" id="message" name="ulasan_pesan" rows="5" placeholder="Tulis ulasan atau pesan Anda" required>{{ old('ulasan_pesan') }}</textarea>
+                            @error('ulasan_pesan')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary px-5">Kirim Ulasan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <!-- Finexo template CSS -->
-  <link rel="stylesheet" href="{{ asset('finexo-html/css/bootstrap.css') }}" />
-  <link rel="stylesheet" href="{{ asset('finexo-html/css/font-awesome.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('finexo-html/css/style.css') }}" />
-  <link rel="stylesheet" href="{{ asset('finexo-html/css/responsive.css') }}" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-  
-  <style>
-        body {
-      background: #f9f9f9;
-      font-family: 'Roboto', sans-serif;
+{{-- Pastikan style ini ada di public/css/style.css, bukan di sini. --}}
+{{-- Jika tetap ingin di sini, pertahankan. Tapi rekomendasi: pindahkan ke style.css --}}
+<style>
+    .rating-group {
+        display: flex;
+        flex-direction: row-reverse; /* Untuk menampilkan bintang dari kanan ke kiri */
+        justify-content: flex-end; /* Untuk rata kiri */
     }
-
-    .contact-section {
-      padding: 60px 20px;
+    .rating-group input {
+        display: none; /* Sembunyikan radio button asli */
     }
-
-    .contact-card {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-      transition: all 0.4s ease;
-      opacity: 0;
-      transform: translateY(50px);
+    .rating-group label {
+        color: #ccc; /* Warna default bintang */
+        cursor: pointer;
+        font-size: 1.5rem; /* Ukuran bintang */
+        padding: 0 0.2rem; /* Jarak antar bintang */
+        transition: color 0.2s ease-in-out; /* Transisi warna */
     }
-
-    .contact-card.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .rating-group input:checked ~ label, /* Bintang yang dipilih dan bintang setelahnya */
+    .rating-group input:hover ~ label { /* Bintang saat dihover dan bintang setelahnya */
+        color: #ffc107; /* Warna bintang saat aktif (kuning) */
     }
-
-    .form-control:focus {
-      box-shadow: none;
-      border-color: #28a745;
+    .rating-group label:hover, /* Bintang yang sedang dihover */
+    .rating-group label:hover ~ label { /* Bintang setelah bintang yang dihover */
+        color: #ffc107;
     }
-
-    .btn-success {
-      border-radius: 50px;
-      padding-left: 30px;
-      padding-right: 30px;
+    /* Untuk error validasi di rating group */
+    .rating-group.is-invalid + .text-danger {
+        display: block; /* Tampilkan pesan error */
     }
 </style>
 
-  <title>Teh Boston</title>
-</head>
-
-<body class="sub_page">
-
-  <div class="hero_area">
-
-    <div class="hero_bg_box">
-      <div class="bg_img_box">
-        <img src="images/hero-bg.png" alt="">
-      </div>
-    </div>
-
-    <!-- header section strats -->
-    @include('layouts.navbarindex')
-    <!-- end header section -->
-  </div>
-
-  <div class="container contact-section">
-    <div class="text-center mb-5">
-      <h2 class="fw-bold text-success">Hubungi Kami</h2>
-      <p class="text-muted">Kami siap membantu Anda, silakan kirim pesan melalui form di bawah ini.</p>
-    </div>
-
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card contact-card p-4" id="contactCard">
-          <form>
-            <div class="mb-3">
-              <label for="name" class="form-label">Nama Lengkap</label>
-              <input type="text" class="form-control" id="name" placeholder="Masukkan nama Anda">
-            </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Alamat Email</label>
-              <input type="email" class="form-control" id="email" placeholder="email@example.com">
-            </div>
-            <div class="mb-3">
-              <label for="message" class="form-label">Pesan</label>
-              <textarea class="form-control" id="message" rows="5" placeholder="Tuliskan pesan Anda..."></textarea>
-            </div>
-            <div class="text-end">
-              <button type="submit" class="btn btn-success">Kirim</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-  <!-- end about section -->
-  @include('layouts.footerindex')
-
-  <!-- jQery -->
- <!-- jQuery -->
-
- <script src="{{ asset('finexo-html/js/jquery-3.4.1.min.js') }}"></script>
-  <script src="{{ asset('finexo-html/js/bootstrap.js') }}"></script>
-
-  <!-- Intersection Observer for Animation -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const card = document.getElementById("contactCard");
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.2 });
-
-      observer.observe(card);
-    });
-  </script>
-
- <script>
-  function animateCurrentSlide() {
-    // Hapus animasi dari semua detail-box
-    document.querySelectorAll('.detail-box').forEach(el => el.classList.remove('animate-up'));
-
-    // Tambahkan animasi ke slide yang aktif
-    const activeSlide = document.querySelector('.carousel-item.active .detail-box');
-    if (activeSlide) {
-      activeSlide.classList.add('animate-up');
-    }
-  }
-
-  // Saat halaman dimuat
-  window.addEventListener('load', animateCurrentSlide);
-
-  // Saat slide selesai berganti
-  $('#customCarousel1').on('slid.bs.carousel', function () {
-    animateCurrentSlide();
-  });
-</script>
-
-
-  <!-- jQery -->
-  <script type="text/javascript" src="{{ asset('finexo-html/js/jquery-3.4.1.min.js') }}"></script>
-  <!-- popper js -->
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <!-- bootstrap js -->
-  <script type="text/javascript" src="{{ asset('finexo-html/js/bootstrap.js') }}"></script>
-  <!-- owl slider -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-  <!-- custom js -->
-  <script type="text/javascript" src="{{ asset('finexo-html/js/custom.js') }}"></script>
-  <!-- Google Map -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
-  <!-- End Google Map -->
-
-  <script>
-  function handleScrollAnimation() {
-    document.querySelectorAll('.fade-up').forEach(el => {
-      const rect = el.getBoundingClientRect();
-      const inView = rect.top < window.innerHeight - 50 && rect.bottom > 0;
-      if (inView) {
-        el.classList.add('fade-up-visible');
-      } else {
-        el.classList.remove('fade-up-visible'); // Agar bisa muncul ulang saat scroll balik
-      }
-    });
-  }
-
-  // Trigger saat scroll dan saat halaman dimuat
-  window.addEventListener('scroll', handleScrollAnimation);
-  window.addEventListener('load', handleScrollAnimation);
-</script>
-
-
-  <script>
-  window.addEventListener('load', function () {
-    const header = document.querySelector('.header_section');
-    if (header) {
-      header.classList.add('animate-down');
-    }
-  });
-
-  const header = document.querySelector('.header_section');
-  let lastScrollTop = 0;
-  let ticking = false;
-
-  // Fungsi untuk memicu animasi ulang
-  function triggerHeaderAnimation() {
-    header.classList.remove('animate-down');
-    void header.offsetWidth; // reflow agar animasi bisa diulang
-    header.classList.add('animate-down');
-  }
-
-  // Saat halaman dimuat pertama kali
-  window.addEventListener('load', triggerHeaderAnimation);
-
-  // Saat di-scroll ke atas
-  window.addEventListener('scroll', function () {
-    if (!ticking) {
-      window.requestAnimationFrame(function () {
-        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-        if (currentScroll < lastScrollTop && currentScroll > 0) {
-          // Scroll ke atas, bukan di paling atas
-          triggerHeaderAnimation();
-        }
-
-        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-        ticking = false;
-      });
-
-      ticking = true;
-    }
-  });
-</script>
-
-<script>
-  function animateCurrentSlide() {
-    document.querySelectorAll('.detail-box').forEach(el => el.classList.remove('animate-up'));
-
-    const activeSlide = document.querySelector('.carousel-item.active .detail-box');
-    if (activeSlide) {
-      void activeSlide.offsetWidth; // reflow untuk reset animasi
-      activeSlide.classList.add('animate-up');
-    }
-  }
-
-  // Saat halaman dimuat
-  window.addEventListener('load', animateCurrentSlide);
-
-  // Saat slide berubah
-  $('#customCarousel1').on('slid.bs.carousel', function () {
-    animateCurrentSlide();
-  });
-
-  // Saat scroll ke atas dan slider terlihat
-  let lastScrollTopSlider = 0;
-  window.addEventListener('scroll', function () {
-    const sliderSection = document.querySelector('.slider_section');
-    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-    if (currentScroll < lastScrollTopSlider && isInViewport(sliderSection)) {
-      animateCurrentSlide();
-    }
-
-    lastScrollTopSlider = currentScroll <= 0 ? 0 : currentScroll;
-  });
-
-  function isInViewport(element) {
-    const rect = element.getBoundingClientRect();
-    return rect.top < window.innerHeight && rect.bottom > 0;
-  }
-</script>
-
-
-</body>
-
-</html>
+@endsection

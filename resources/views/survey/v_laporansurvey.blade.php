@@ -341,14 +341,38 @@
             <h1><i class="fas fa-store"></i> Laporan Survey Franchise</h1>
             <p>Form untuk menambahkan laporan hasil survey lokasi franchise baru</p>
         </div>
-        
+        @if (session('error'))
+        <div 
+            class="alert alert-danger fixed top-5 left-1/2 transform -translate-x-1/2 z-50 px-4 py-2 bg-red-600 text-black rounded shadow"
+        >
+            {{ session('error') }}
+        </div>
+        @endif
         <div class="form-container">
-            <form id="surveyForm">
+            <form action="{{ route('membuat.laporan', ['id_calon' => $data->id_calon]) }}" method="POST" enctype="multipart/form-data">
+            @csrf    
+                <input type="hidden" name="id_akun" value="{{ Auth::user()->id_akun }}">
                 <div class="form-group">
-                    <label for="franchiseName">Nama Franchise</label>
+                    <label for="id_calon">ID Calon</label>
                     <div class="input-icon">
                         <i class="fas fa-signature"></i>
-                        <input type="text" id="franchiseName" placeholder="Masukkan nama franchise" required>
+                        <input type="text" id="id_calon" name="id_calon" placeholder="Masukkan nama franchise" value="{{ $data->id_calon }}" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_akun">ID Akun Calon</label>
+                    <div class="input-icon">
+                        <i class="fas fa-signature"></i>
+                        <input type="text" id="id_akun" name="id_akun" placeholder="Masukkan nama franchise" value="{{ $data->id_akun }}" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="namacalon">Nama Lengkap Calon</label>
+                    <div class="input-icon">
+                        <i class="fas fa-signature"></i>
+                        <input type="text" id="namacalon" name="nama_lengkap" placeholder="Masukkan nama franchise" value="{{ $data->nama_lengkap }}" readonly>
                     </div>
                 </div>
                 
@@ -357,15 +381,15 @@
                     <div class="size-inputs">
                         <div>
                             <label for="length">Panjang (m)</label>
-                            <input type="number" id="length" placeholder="0.0" step="0.1" min="0" required>
+                            <input type="number" name="panjang" id="length" placeholder="0.0" step="0.1" min="0" required>
                         </div>
                         <div>
                             <label for="width">Lebar (m)</label>
-                            <input type="number" id="width" placeholder="0.0" step="0.1" min="0" required>
+                            <input type="number" name="lebar" id="width" placeholder="0.0" step="0.1" min="0" required>
                         </div>
                         <div>
                             <label for="totalArea">Total Luas (m²)</label>
-                            <input type="number" id="totalArea" placeholder="0.0" step="0.1" min="0" readonly>
+                            <input type="number" name="total_luas" id="totalArea" placeholder="0.0" step="0.1" min="0" readonly>
                         </div>
                     </div>
                 </div>
@@ -377,7 +401,7 @@
                         <h3>Klik atau tarik file ke sini</h3>
                         <p>Format yang didukung: JPG, PNG (Maks. 5MB)</p>
                         <button type="button" class="upload-btn">Pilih File</button>
-                        <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                        <input type="file" name="foto" id="fileInput" accept="image/*" style="display: none;">
                     </div>
                     <div class="preview-container" id="previewContainer">
                         <div class="preview-title">Pratinjau Foto</div>
@@ -387,7 +411,7 @@
                 
                 <div class="form-group">
                     <label for="notes">Catatan Tambahan</label>
-                    <textarea id="notes" rows="4" placeholder="Tambahkan catatan mengenai lokasi, kondisi lingkungan, atau hal penting lainnya..."></textarea>
+                    <textarea id="notes" rows="4" name="catatan" placeholder="Tambahkan catatan mengenai lokasi, kondisi lingkungan, atau hal penting lainnya..."></textarea>
                 </div>
                 
                 <button type="submit" class="submit-btn">
@@ -485,12 +509,6 @@
             
             surveyForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                
-                // Validasi sederhana
-                if (!document.getElementById('franchiseName').value) {
-                    alert('Harap masukkan nama franchise');
-                    return;
-                }
                 
                 if (!document.getElementById('franchiseType').value) {
                     alert('Harap pilih jenis franchise');

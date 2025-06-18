@@ -1,105 +1,177 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <link rel="shortcut icon" href="{{ asset('finexo-html/images/favicon.png') }}" type="">
-
-  <!-- External Fonts & Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-
-  <!-- Project CSS -->
-  <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
-
-  <!-- Finexo template CSS -->
-  <link rel="stylesheet" href="{{ asset('finexo-html/css/bootstrap.css') }}" />
-  <link rel="stylesheet" href="{{ asset('finexo-html/css/font-awesome.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('finexo-html/css/style.css') }}" />
-  <link rel="stylesheet" href="{{ asset('finexo-html/css/responsive.css') }}" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
-   />
-   <script src="https://cdn.tailwindcss.com"></script>
-
-  <title>Teh Boston</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - Teh Boston</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            boston: {
+              dark: '#1a1a1a',
+              green: '#2e7d32',  // Warna hijau khas Teh Boston
+              gold: '#D4AF37',
+              light: '#f5f5f5'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .profile-card {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+    }
+    .divider {
+      height: 2px;
+      background: linear-gradient(to right, transparent, #D4AF37, transparent);
+    }
+  </style>
 </head>
-<body>
-<div class="max-w-md mx-auto mt-6 bg-white rounded-xl shadow-md overflow-hidden">
-    <div class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 p-4 relative">
-        <div class="flex justify-center">
-            <div class="w-20 h-20 bg-pink-600 text-white flex items-center justify-center text-3xl font-bold rounded-full border-4 border-white">
-                @if(isset($foto->pas_photo))
-                    <img src="{{ asset('uploads/photo/'.$foto->pas_photo) }}" alt="Profile" class="w-full h-full rounded-full object-cover">
-                @else
-                    <i class="fas fa-user-circle fa-2x"></i>
-                @endif
-            </div>
-        </div>
-    </div>
-    <div class="p-4 text-center">
-        <h2 class="text-lg font-semibold">{{ Session::get('user')['username'] ?? 'Guest' }}</h2>
-        <p class="text-sm text-gray-600">{{ Session::get('user')['email'] ?? '-' }}</p>
-    </div>
-
-    @foreach ($mitra as $data)
-    <div class="px-4 py-2">
-        <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-            <div class="w-full rounded-md border border-gray-300 px-3 py-2 bg-gray-100">
-                {{ $data->nama_lengkap ?? '-' }}
-            </div>
+<body class="bg-boston-light">
+  <div class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-5xl">
+      <!-- Horizontal Profile Card -->
+      <div class="flex flex-col lg:flex-row profile-card overflow-hidden bg-white">
+        <!-- Profile Sidebar -->
+        <div class="w-full lg:w-1/3 bg-boston-dark p-8 flex flex-col items-center text-center relative">
+          <!-- Tea Leaf Decoration -->
+          <div class="absolute top-4 right-4 text-boston-green opacity-20">
+            <i class="fas fa-leaf text-6xl"></i>
+          </div>
+          
+          <!-- Profile Picture -->
+          <div class="w-36 h-36 border-4 border-boston-gold rounded-full bg-white shadow-lg overflow-hidden mb-6 mt-4">
+            @if(isset($foto->pas_photo))
+              <img src="{{ asset('uploads/photo/'.$foto->pas_photo) }}" alt="Profile" class="w-full h-full object-cover">
+            @else
+              <div class="w-full h-full flex items-center justify-center bg-gray-200 text-gray-500">
+                <i class="fas fa-user text-5xl"></i>
+              </div>
+            @endif
+          </div>
+          
+          <!-- User Info -->
+          <div class="mb-8">
+            <h1 class="text-2xl font-bold text-boston-gold mb-1">{{ Session::get('user')['username'] ?? 'Guest' }}</h1>
+            <p class="text-boston-green">{{ Session::get('user')['email'] ?? '-' }}</p>
+          </div>
+          
+          <!-- Divider -->
+          <div class="divider w-full my-4"></div>
+          
+          <!-- Brand Logo -->
+          <div class="mt-auto">
+            <div class="text-3xl font-bold text-boston-green mb-1">TEH BOSTON</div>
+            <p class="text-xs text-boston-gold">Minuman Berkualitas, Rasa Istimewa</p>
+          </div>
         </div>
         
-        <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 mb-1">Provinsi</label>
-            <div class="w-full rounded-md border border-gray-300 px-3 py-2 bg-gray-100">
-                {{ $data->provinsi ?? '-' }}
+        <!-- Profile Details -->
+        <div class="w-full lg:w-2/3 p-8 bg-white">
+          <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-bold text-boston-dark">
+              <span class="text-boston-green">PROFIL</span> MITRA
+            </h2>
+            <a href="/home" class="px-4 py-2 bg-boston-green text-white rounded-full text-sm hover:bg-boston-dark transition flex items-center">
+              <i class="fas fa-arrow-left mr-2"></i> Kembali
+            </a>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            @foreach ($mitra as $data)
+            <!-- Column 1 -->
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-boston-green mb-1">
+                  <i class="fas fa-user mr-2"></i>Nama Lengkap
+                </label>
+                <div class="p-3 bg-boston-light rounded-lg text-boston-dark border-l-4 border-boston-green">
+                  {{ $data->nama_lengkap ?? '-' }}
+                </div>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-boston-green mb-1">
+                  <i class="fas fa-map-marker-alt mr-2"></i>Provinsi
+                </label>
+                <div class="p-3 bg-boston-light rounded-lg text-boston-dark border-l-4 border-boston-green">
+                  {{ $data->provinsi ?? '-' }}
+                </div>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-boston-green mb-1">
+                  <i class="fas fa-city mr-2"></i>Kota
+                </label>
+                <div class="p-3 bg-boston-light rounded-lg text-boston-dark border-l-4 border-boston-green">
+                  {{ $data->kota ?? '-' }}
+                </div>
+              </div>
             </div>
-        </div>
-        
-        <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 mb-1">Kota</label>
-            <div class="w-full rounded-md border border-gray-300 px-3 py-2 bg-gray-100">
-                {{ $data->kota ?? '-' }}
+            
+            <!-- Column 2 -->
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-boston-green mb-1">
+                  <i class="fas fa-map-marked-alt mr-2"></i>Kelurahan
+                </label>
+                <div class="p-3 bg-boston-light rounded-lg text-boston-dark border-l-4 border-boston-green">
+                  {{ $data->kelurahan ?? '-' }}
+                </div>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-boston-green mb-1">
+                  <i class="fas fa-home mr-2"></i>Alamat Lengkap
+                </label>
+                <div class="p-3 bg-boston-light rounded-lg text-boston-dark border-l-4 border-boston-green">
+                  {{ $data->alamat_lengkap ?? '-' }}
+                </div>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-boston-green mb-1">
+                  <i class="fas fa-phone-alt mr-2"></i>Nomor Handphone
+                </label>
+                <div class="p-3 bg-boston-light rounded-lg text-boston-dark border-l-4 border-boston-green">
+                  {{ $data->no_hp ?? '-' }}
+                </div>
+              </div>
             </div>
-        </div>
-
-        <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 mb-1">Kelurahan</label>
-            <div class="w-full rounded-md border border-gray-300 px-3 py-2 bg-gray-100">
-                {{ $data->kelurahan ?? '-' }}
+            @endforeach
+          </div>
+          
+          <!-- Membership Info -->
+          <div class="mt-8 pt-6 flex flex-wrap justify-between items-center">
+            <div class="flex items-center mb-3 md:mb-0">
+              <div class="w-10 h-10 rounded-full bg-boston-gold flex items-center justify-center mr-3">
+                <i class="fas fa-award text-boston-dark text-lg"></i>
+              </div>
+              <div>
+                <div class="text-xs text-boston-green">Status Member</div>
+                <div class="font-medium text-boston-dark">Mitra Premium</div>
+              </div>
             </div>
-        </div>
-
-        <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 mb-1">Alamat Lengkap</label>
-            <div class="w-full rounded-md border border-gray-300 px-3 py-2 bg-gray-100">
-                {{ $data->alamat_lengkap ?? '-' }}
+            
+            <div class="flex items-center">
+              <div class="w-10 h-10 rounded-full bg-boston-green flex items-center justify-center mr-3">
+                <i class="fas fa-calendar-alt text-white text-lg"></i>
+              </div>
+              <div class="text-right">
+                <div class="text-xs text-boston-green">Member Since</div>
+                <div class="font-medium text-boston-dark">2023</div>
+              </div>
             </div>
+          </div>
         </div>
-
-        <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 mb-1">Nomor Handphone</label>
-            <div class="w-full rounded-md border border-gray-300 px-3 py-2 bg-gray-100">
-                {{ $data->no_hp ?? '-' }}
-            </div>
-        </div>
+      </div>
     </div>
-    @endforeach
-
-    <div class="bg-indigo-900 text-white text-center py-4 mt-4 rounded-b-xl">
-        <div class="text-xl font-bold mb-1">Teh Boston</div>
-        <a href="/home" class="inline-flex items-center text-red-300 hover:text-white text-sm">
-            <i class="fas fa-arrow-left mr-1"></i> Kembali
-        </a>
-    </div>
-</div>
+  </div>
 </body>
 </html>

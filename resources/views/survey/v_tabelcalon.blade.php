@@ -16,7 +16,7 @@ Tabel Calon
                             <th>No</th>
                             <th>ID Calon</th>
                             <th>ID Akun</th>
-                            
+                            <th>Nama Lengkap Calon</th>
                             <th>Nomor HP</th>
                             
                             <th>Pas Photo</th>
@@ -38,7 +38,7 @@ Tabel Calon
                               <td>{{ $no++ }}</td>
                               <td>{{ $data->id_calon }}</td>
                               <td>{{ $data->id_akun }}</td>
-                              
+                              <td>{{ $data->nama_lengkap }}</td>
                               <td>{{ $data->no_hp }}</td>
                               
                               <td><img src="{{ url('uploads/photo/'. $data->pas_photo) }}" width="100px"></td>
@@ -54,41 +54,13 @@ Tabel Calon
                                   </a>
                                 </td>
                               <td><img src="{{ url('uploads/lokasi/'. $data->lokasi_usaha) }}" width="100px"></td>
-
                               <td>
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete{{ $data->id_calon }}">
-                                    Delete
-                                </button>
-                              </td>
+                              <a href="/survey/laporansurvey/{{ $data->id_calon }}" class="btn btn-sm btn-warning">Buat Laporan</a>
+                              </td
                           </tr>
                           @endforeach
                       </tbody>
                       </table>
-                      @foreach ($survey as $data)
-                      <div class="modal fade" id="delete{{ $data->id_calon }}">
-                          <div class="modal-dialog modal-sm">
-                              <div class="modal-content bg-danger">
-                                  <div class="modal-header">
-                                      <h6 class="modal-title">Nama Lengkap : {{ $data->nama_lengkap }}</h6>
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
-                                      </button>
-                                  </div>
-                                  <div class="modal-body">
-                                    <p>Apakah anda ingin menghapus data ini?</p>
-                                </div>
-                                <div class="modal-footer justify-content-between">
-                                    <form action="/survey/calonmitra/{{ $data->id_calon }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-outline-light">Yes</button>
-                                    </form>
-                                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">No</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        @endforeach
                     </div>
                   </div>
                 </div>

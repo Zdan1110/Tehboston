@@ -9,10 +9,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
 class CalonMitraController extends Controller
 {
+
     public function __construct()
     {
         $this->M_Admin = new M_Admin();
@@ -105,7 +107,7 @@ class CalonMitraController extends Controller
                 Log::info('Data calon mitra berhasil disimpan.', $datacalon);
     
                 // Redirect ke /home jika sukses
-                return redirect('/home')->with('success', 'Pendaftaran berhasil!.');
+                return redirect('/qrcode')->with('success', 'Pendaftaran berhasil!.');
             } catch (\Exception $e) {
                 Log::error('Gagal menyimpan data calon mitra: ' . $e->getMessage());
     
@@ -249,6 +251,44 @@ class CalonMitraController extends Controller
         {
             return view('v_preview');
         }
+
+        public function qrcode()
+        {   
+            $id_akun = Session::get('user')['id_akun'];
+            $idcalon = DB::table('tb_calonmitra')
+                        ->where('id_akun', $id_akun)
+                        ->first();
+                        
+            if (!$idcalon) {
+                return back()->with('error', 'Data calon mitra tidak ditemukan!');
+            }
+
+            $qrdata = url('/cekstatus?id=' . $idcalon->id_calon);
+            $path = public_path('uploads/qrcode/'.$idcalon->id_calon.'.png');
+            QrCode::format('png')->size(300)->generate($qrdata, $path);
+            return view('v_qrcode', compact('idcalon', 'id_akun', 'qrdata', 'qrImage', 'path'));
+        }
+
+        public function downloadQrCode()
+        {
+            $id_akun = Session::get('user')['id_akun'];
+            $idcalon = DB::table('tb_calonmitra')
+                        ->where('id_akun', $id_akun)
+                        ->first();
+                        
+            if (!$idcalon) {
+                return back()->with('error', 'Data calon mitra tidak ditemukan!');
+            }
+            $qrdata = $idcalon->id_calon;
+            $image = QrCode::format('png')
+                        ->size(400)
+                        ->margin(2)
+                        ->generate($qrdata);
+
+            return response($image)
+                ->header('Content-Type', 'image/png')
+                ->header('Content-Disposition', 'attachment; filename="qrcode.png"');
+        }
         
         public function indextambahfranchise()
         {
@@ -257,73 +297,57 @@ class CalonMitraController extends Controller
 
         public function tambahfranchise(Request $request)
         {
-            // Validasi Input
-            $request->validate([    
-                // Data Lokasi Usaha
+            $request->validate([
                 'provinsi_usaha' => 'required|string|max:100',
-                'kota_usaha' => 'required|string|max:100',
-                'kelurahan_usaha' => 'required|string|max:100',
-                'kecamatan_usaha' => 'required|string|max:100',
-                'alamat_usaha' => 'required|string',
-                'kode_pos' => 'required|string|max:10',
-                'titik_koordinat' => 'required|string|max:255',
-                'lokasi_usaha' => 'nullable|file|mimes:jpg,jpeg,png,pdf',
+                'kota_usaha'     => 'required|string|max:100',
+                'kelurahan_usaha'=> 'required|string|max:100',
+                'kecamatan_usaha'=> 'required|string|max:100',
+                'alamat_usaha'   => 'required|string',
+                'kode_pos'       => 'required|string|max:10',
+                'titik_koordinat'=> 'required|string|max:255',
+                'lokasi_usaha'   => 'nullable|file|mimes:jpg,jpeg,png,pdf',
             ]);
-    
-                if (Auth::check()) {
-                    $id_akun = Auth::user()->id_akun;
-                }
-            
-                
-                // Di Controller saat insert:
-                $lastFBaru = DB::table('tb_franchisebaru')
-                ->select('id_franchisebaru')
-                ->orderByDesc('id_franchisebaru')
-                ->first();
-
-                $idMitra = DB::table('tb_mitra')
-                ->where('id_akun', $id_akun)
-                ->first();
-    
-                if ($lastFBaru) {
-                $lastNumFBaru = (int) substr($lastFBaru->id_franchisebaru, 1); // ambil angka setelah 'C'
-                $idFBaru = 'FB' . str_pad($lastNumFBaru + 1, 4, '0', STR_PAD_LEFT);
-                } else {
-                $idFBaru = 'FB0001'; // Kalau belum ada data
-                }
         
-                $filelokasi = Request()->file('lokasi_usaha');
+            $id_akun = Auth::user()->id_akun;
+            $lastFBaru = DB::table('tb_franchisebaru')->orderByDesc('id_franchisebaru')->first();
+            $idFBaru = $lastFBaru
+                ? 'FB' . str_pad(((int)substr($lastFBaru->id_franchisebaru, 2)) + 1, 4, '0', STR_PAD_LEFT)
+                : 'FB0001';
+        
+            $fileNamelokasi = null;
+            if ($filelokasi = $request->file('lokasi_usaha')) {
                 $fileNamelokasi = $idFBaru . '.' . $filelokasi->extension();
                 $filelokasi->move(public_path('uploads/lokasi'), $fileNamelokasi);
-    
-                // Simpan Data ke Database
-                $datacalon = [
-                    // Data Calon Mitra
-                    'id_franchisebaru' => $idFBaru,
-                    'id_mitra' => $idMitra->id_mitra,
-                    'nama_franchise' => $idMitra->nama_lengkap,
-                    'provinsi_usaha' => $request->provinsi_usaha,
-                    'kota_usaha' => $request->kota_usaha,
-                    'kelurahan_usaha' => $request->kelurahan_usaha,
-                    'kecamatan_usaha' => $request->kecamatan_usaha,
-                    'alamat_usaha' => $request->alamat_usaha,
-                    'kode_pos' => $request->kode_pos,
-                    'titik_koordinat' => $request->titik_koordinat,
-                    'lokasi_usaha' => $fileNamelokasi,
-                ];
-    
-                try {
-                    DB::table('tb_franchisebaru')->insert($datacalon);
-                    Log::info('Data Franchise Baru berhasil disimpan.', $datacalon);
-        
-                    // Redirect ke /home jika sukses
-                    return redirect('/home')->with('success', 'Pendaftaran berhasil!.');
-                } catch (\Exception $e) {
-                    Log::error('Gagal menyimpan data calon mitra: ' . $e->getMessage());
-        
-                    // Redirect balik ke /daftarmitra dengan pesan error
-                    return redirect('/home')->with('error', 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
-                }
-                
             }
+        
+            $mitra = DB::table('tb_mitra')->where('id_akun', $id_akun)->first();
+            if (!$mitra) {
+                return redirect()->back()->with('error', 'User belum terdaftar sebagai mitra.');
+            }
+        
+            $data = [
+                'id_franchisebaru' => $idFBaru,
+                'id_mitra'         => $mitra->id_mitra,
+                'nama_franchise'   => $mitra->nama_lengkap,
+                'provinsi_usaha'   => $request->provinsi_usaha,
+                'kota_usaha'       => $request->kota_usaha,
+                'kelurahan_usaha'  => $request->kelurahan_usaha,
+                'kecamatan_usaha'  => $request->kecamatan_usaha,
+                'alamat_usaha'     => $request->alamat_usaha,
+                'kode_pos'         => $request->kode_pos,
+                'titik_koordinat'  => $request->titik_koordinat,
+                'lokasi_usaha'     => $fileNamelokasi,
+                'status'           => 'Proses',
+            ];
+        
+            try {
+                DB::table('tb_franchisebaru')->insert($data);
+                Log::info('Franchise Baru disimpan', $data);
+                return redirect('/home')->with('success', 'Pendaftaran franchise berhasil!');
+            } catch (\Exception $e) {
+                Log::error('Gagal simpan franchise baru: '.$e->getMessage());
+                return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan. Silakan coba lagi.');
+            }
+        }
+        
 }

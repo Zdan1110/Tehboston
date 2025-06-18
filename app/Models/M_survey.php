@@ -18,6 +18,11 @@ class M_survey extends Model
         return DB::table('tb_calonmitra')->get();
     }
 
+    public function buatlaporan($id_calon)
+    {
+        return DB::table('tb_calonmitra')->where('id_calon', $id_calon)->first();
+    }
+
     public static function allData()
     {
         return DB::table('tb_survey')->get();
@@ -25,11 +30,6 @@ class M_survey extends Model
 
     public static function dataAkun()
     {
-       return DB::table('tb_calonmitra')->get();
-    }
-
-    public static function dataProduk()
-    {
-        return self::whereNotNull('total_luas')->get();
+       return DB::table('tb_calonmitra')->where('status', 'Proses')->get();
     }
 }

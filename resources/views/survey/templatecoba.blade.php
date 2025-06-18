@@ -2,7 +2,7 @@
 <html lang="en" x-data="{ sidebarOpen: true }" x-cloak>
 <head>
   <meta charset="UTF-8">
-  <title>@yield('title', 'Admin Panel')</title>
+  <title>@yield('title', 'Team Survey Panel')</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
@@ -42,7 +42,7 @@
             <div class="relative" x-data="{ open: false }">
               <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
                 <img src="https://i.pravatar.cc/32" class="w-8 h-8 rounded-full border" alt="Profile">
-                <span class="text-sm font-medium text-gray-700">{{ Auth::user()->name ?? 'Admin' }}</span>
+                <span class="text-sm font-medium text-gray-700">{{ Auth::user()->name ?? 'Team Survey' }}</span>
                 <i class="fas fa-chevron-down text-xs text-gray-500 transition-transform" :class="{'transform rotate-180': open}"></i>
               </button>
               <div x-show="open" 
@@ -55,9 +55,9 @@
                   x-transition:leave-end="transform opacity-0 scale-95"
                   class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-50">
                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profil</a>
-                <form method="POST" action="{{ route('logout') }}">
+                
                   @csrf
-                  <button type="submit" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                  <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="{{ route('logout') }}">Logout</a>
                 </form>
               </div>
             </div>

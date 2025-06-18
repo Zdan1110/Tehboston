@@ -1,292 +1,60 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <link rel="shortcut icon" href="{{ asset('finexo-html/images/favicon.png') }}" type="">
+<!-- File: resources/views/profile.blade.php -->
+@extends('layouts.app')
 
-  <!-- External Fonts & Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+@section('title', 'Profil - Teh Boston')
 
-  <!-- Project CSS -->
-  <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
-
-  <!-- Finexo template CSS -->
-  <link rel="stylesheet" href="{{ asset('finexo-html/css/bootstrap.css') }}" />
-  <link rel="stylesheet" href="{{ asset('finexo-html/css/font-awesome.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('finexo-html/css/style.css') }}" />
-  <link rel="stylesheet" href="{{ asset('finexo-html/css/responsive.css') }}" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-  
-  <style>
-
-        .container {
-            text-align: left;
-            padding: 20px;
-        }
-
-        .heading {
-            font-size: 2rem;
-            margin-bottom: 15px;
-        }
-
-        h3 {
-            font-size: 1.5rem;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-
-        p {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-            .heading {
-            text-align: center;
-            color:rgb(53, 57, 35);
-            margin-bottom: 20px;
-        }
-        .mission-item {
-            display: flex;
-            align-items: center;
-            margin: 50px 0;
-        }
-        .mission-item i {
-            margin-right: 10px;
-            font-size: 54px;
-        }
-
-        .heading {
-    font-size: 2rem;
-    text-align: center;
-    color: rgb(53, 57, 35);
-    margin-bottom: 20px;
-  }
-
+@section('content')
+<section class="section bg-light">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">Profil Kami</h2>
         
-    </style>
-
-  <title>Teh Boston</title>
-</head>
-
-<body class="sub_page">
-
-  <div class="hero_area">
-
-    <div class="hero_bg_box">
-      <div class="bg_img_box">
-        <img src="images/hero-bg.png" alt="">
-      </div>
-    </div>
-
-    <!-- header section strats -->
-    @include('layouts.navbarindex')
-    <!-- end header section -->
-  </div>
-
-  <div class="container">
-  <h2 class="heading fw-bold">VISI MISI</h2>
-
-    <h3>VISI</h3>
-    <p>"MENJADI SALAH SATU PRODUK MINUMAN TEH TERBAIK DAN MEMILIKI BANYAK SERTIFIKAT PENGHARGAAN DI INDONESIA"</p>
-    
-    <h3>MISI</h3>
-    <div class="mission-item"><i class="fas fa-chart-line"></i> Mendukung Orang Yang Punya Keinginan Untuk Usaha</div>
-    <div class="mission-item"><i class="fas fa-leaf"></i> Membuat Olahan Daun Teh Berkualitas Dengan Konsisten</div>
-    <div class="mission-item"><i class="fas fa-coins"></i> Menjadikan Wadah Untuk Menopang Ekonomi Masyarakat</div>
-</div>
-
-
-
-  <!-- about section -->
-
-  <section class="about_section layout_padding"> 
-  <div class="container">
-    <div class="heading_container heading_center">
-     
-    </div>
-  </div>
-
-
-      <div class="row">
-        <div class="col-md-6 ">
-          <div class="img-box">
-            <img src="images/about-img.png" alt="">
-          </div>
+        <div class="row g-5 mb-5">
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="vm-card">
+                    <div class="text-center">
+                        <div class="vm-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3 class="mb-4">VISI</h3>
+                        <p class="mb-0">"MENJADI SALAH SATU PRODUK MINUMAN TEH TERBAIK DAN MEMILIKI BANYAK SERTIFIKAT PENGHARGAAN DI INDONESIA"</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="vm-card">
+                    <div class="text-center">
+                        <div class="vm-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3 class="mb-4">MISI</h3>
+                        <ul class="text-start ps-4">
+                            <li class="mb-3">Mendukung Orang Yang Punya Keinginan Untuk Usaha</li>
+                            <li class="mb-3">Membuat Olahan Daun Teh Berkualitas Dengan Konsisten</li>
+                            <li>Menjadikan Wadah Untuk Menopang Ekonomi Masyarakat</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-6">
-          <div class="detail-box">
-            <h3>
-              Sejarah Teh Boston
-            </h3>
-            <p>
-              Teh Boston adalah brand minuman teh yang berdiri sejak tahun 2023 di Subang. 
-              Dalam waktu satu tahun, kami telah membuka lebih dari 10 cabang dan dipercaya oleh banyak 
-              pelanggan karena kualitas rasa dan pelayanan kami.
-            </p>
-            <p>
-            Kami menggunakan teh berkualitas tinggi yang diolah secara profesional, menghadirkan rasa yang segar dan menyegarkan. 
-              Teh Boston memiliki beragam varian rasa, kemasan modern, harga terjangkau, dan selalu menjaga kebersihan serta 
-              kepuasan pelanggan.
-            </p>
-            <a href="">
-              Read More
-            </a>
-          </div>
+        
+        <div class="row g-5">
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="card border-0 shadow h-100">
+                    <div class="card-body p-4">
+                        <h3 class="card-title mb-4">Sejarah Teh Boston</h3>
+                        <p class="card-text">Teh Boston didirikan pada tahun 2023 dengan misi membantu masyarakat yang memiliki keinginan untuk berwirausaha di bidang minuman. Bermula dari sebuah gerobak kecil di kota Subang, Teh Boston tumbuh dengan pesat berkat komitmen terhadap kualitas dan rasa yang konsisten.</p>
+                        <p class="card-text">Dengan semangat gotong royong, Teh Boston tidak hanya menawarkan minuman berkualitas tetapi juga membuka peluang kemitraan bagi masyarakat yang ingin memiliki usaha sendiri. Setiap produk Teh Boston dibuat dengan bahan pilihan dan proses yang higienis, menjamin kepuasan pelanggan.</p>
+                        <p class="card-text">Hingga saat ini, Teh Boston terus berinovasi menciptakan varian rasa baru dan memperluas jaringan mitra di seluruh Indonesia. Keberhasilan Teh Boston tidak lepas dari dukungan para mitra dan konsumen setia yang telah mempercayai kualitas produk kami.</p>
+                        <p class="card-text">Kami berkomitmen untuk terus memberikan yang terbaik dan menjadi mitra terpercaya bagi siapa saja yang ingin memulai usaha minuman dengan modal terjangkau dan keuntungan menjanjikan.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="card border-0 shadow h-100 overflow-hidden">
+                    <img src="gambar/sejarah.png" alt="Booth Teh Boston" class="w-100 h-100 object-cover">
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </section>
-
-  <!-- end about section -->
-  @include('layouts.footerindex')
-
-  <!-- jQery -->
- <!-- jQuery -->
- <script>
-  function animateCurrentSlide() {
-    // Hapus animasi dari semua detail-box
-    document.querySelectorAll('.detail-box').forEach(el => el.classList.remove('animate-up'));
-
-    // Tambahkan animasi ke slide yang aktif
-    const activeSlide = document.querySelector('.carousel-item.active .detail-box');
-    if (activeSlide) {
-      activeSlide.classList.add('animate-up');
-    }
-  }
-
-  // Saat halaman dimuat
-  window.addEventListener('load', animateCurrentSlide);
-
-  // Saat slide selesai berganti
-  $('#customCarousel1').on('slid.bs.carousel', function () {
-    animateCurrentSlide();
-  });
-</script>
-
-
-  <!-- jQery -->
-  <script type="text/javascript" src="{{ asset('finexo-html/js/jquery-3.4.1.min.js') }}"></script>
-  <!-- popper js -->
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <!-- bootstrap js -->
-  <script type="text/javascript" src="{{ asset('finexo-html/js/bootstrap.js') }}"></script>
-  <!-- owl slider -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-  <!-- custom js -->
-  <script type="text/javascript" src="{{ asset('finexo-html/js/custom.js') }}"></script>
-  <!-- Google Map -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
-  <!-- End Google Map -->
-
-  <script>
-  function handleScrollAnimation() {
-    document.querySelectorAll('.fade-up').forEach(el => {
-      const rect = el.getBoundingClientRect();
-      const inView = rect.top < window.innerHeight - 50 && rect.bottom > 0;
-      if (inView) {
-        el.classList.add('fade-up-visible');
-      } else {
-        el.classList.remove('fade-up-visible'); // Agar bisa muncul ulang saat scroll balik
-      }
-    });
-  }
-
-  // Trigger saat scroll dan saat halaman dimuat
-  window.addEventListener('scroll', handleScrollAnimation);
-  window.addEventListener('load', handleScrollAnimation);
-</script>
-
-
-  <script>
-  window.addEventListener('load', function () {
-    const header = document.querySelector('.header_section');
-    if (header) {
-      header.classList.add('animate-down');
-    }
-  });
-
-  const header = document.querySelector('.header_section');
-  let lastScrollTop = 0;
-  let ticking = false;
-
-  // Fungsi untuk memicu animasi ulang
-  function triggerHeaderAnimation() {
-    header.classList.remove('animate-down');
-    void header.offsetWidth; // reflow agar animasi bisa diulang
-    header.classList.add('animate-down');
-  }
-
-  // Saat halaman dimuat pertama kali
-  window.addEventListener('load', triggerHeaderAnimation);
-
-  // Saat di-scroll ke atas
-  window.addEventListener('scroll', function () {
-    if (!ticking) {
-      window.requestAnimationFrame(function () {
-        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-        if (currentScroll < lastScrollTop && currentScroll > 0) {
-          // Scroll ke atas, bukan di paling atas
-          triggerHeaderAnimation();
-        }
-
-        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-        ticking = false;
-      });
-
-      ticking = true;
-    }
-  });
-</script>
-
-<script>
-  function animateCurrentSlide() {
-    document.querySelectorAll('.detail-box').forEach(el => el.classList.remove('animate-up'));
-
-    const activeSlide = document.querySelector('.carousel-item.active .detail-box');
-    if (activeSlide) {
-      void activeSlide.offsetWidth; // reflow untuk reset animasi
-      activeSlide.classList.add('animate-up');
-    }
-  }
-
-  // Saat halaman dimuat
-  window.addEventListener('load', animateCurrentSlide);
-
-  // Saat slide berubah
-  $('#customCarousel1').on('slid.bs.carousel', function () {
-    animateCurrentSlide();
-  });
-
-  // Saat scroll ke atas dan slider terlihat
-  let lastScrollTopSlider = 0;
-  window.addEventListener('scroll', function () {
-    const sliderSection = document.querySelector('.slider_section');
-    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-    if (currentScroll < lastScrollTopSlider && isInViewport(sliderSection)) {
-      animateCurrentSlide();
-    }
-
-    lastScrollTopSlider = currentScroll <= 0 ? 0 : currentScroll;
-  });
-
-  function isInViewport(element) {
-    const rect = element.getBoundingClientRect();
-    return rect.top < window.innerHeight && rect.bottom > 0;
-  }
-</script>
-
-
-</body>
-
-</html>
+</section>
+@endsection

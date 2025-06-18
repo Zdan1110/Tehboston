@@ -1,54 +1,240 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Form ID Pendaftar</title>
+  <title>Cek Status Pendaftaran - Teh Boston</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/html5-qrcode"></script>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary: #2e7d32;
+      --primary-light: #4CAF50;
+      --primary-dark: #1b5e20;
+      --accent: #FFC107;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    }
+    
+    .card {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    
+    .wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      transform: rotate(180deg);
+      z-index: 0;
+    }
+    
+    .wave svg {
+      position: relative;
+      display: block;
+      width: calc(100% + 1.3px);
+      height: 100px;
+    }
+    
+    .wave .shape-fill {
+      fill: #2e7d32;
+    }
+    
+    .tealeaf {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      opacity: 0.1;
+      z-index: 0;
+    }
+    
+    .tealeaf-1 {
+      top: 10%;
+      left: 5%;
+      transform: rotate(15deg);
+    }
+    
+    .tealeaf-2 {
+      bottom: 20%;
+      right: 5%;
+      transform: rotate(-25deg);
+    }
+    
+    .input-highlight {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+    
+    .input-highlight::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 0;
+      background-color: var(--primary);
+      transition: width 0.3s ease;
+    }
+    
+    .input-highlight:focus-within::after {
+      width: 100%;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(to right, var(--primary), var(--primary-dark));
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(46, 125, 50, 0.4);
+    }
+    
+    .btn-outline {
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      transition: all 0.3s ease;
+    }
+    
+    .btn-outline:hover {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .qr-modal {
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+    }
+    
+    .qr-container {
+      animation: scaleIn 0.3s ease;
+    }
+    
+    @keyframes scaleIn {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    
+    .logo-container {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto;
+    }
+    
+    .logo-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--primary);
+      border-radius: 50%;
+      z-index: 1;
+    }
+    
+    .logo-img {
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+    }
+  </style>
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-cyan-200 to-teal-600 p-6">
+<body class="flex flex-col items-center justify-center min-h-screen p-6 relative overflow-hidden">
+  <!-- Background elements -->
+  <div class="tealeaf tealeaf-1">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#2e7d32" d="M10,50 Q40,10 90,50 Q40,90 10,50 Z" />
+    </svg>
+  </div>
+  
+  <div class="tealeaf tealeaf-2">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#2e7d32" d="M10,50 Q40,10 90,50 Q40,90 10,50 Z" />
+    </svg>
+  </div>
+  
+  <!-- Wave background -->
+  <div class="wave">
+    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+    </svg>
+  </div>
+  
   <!-- Card Form -->
-  <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative z-10">
-    <div class="flex justify-center mb-6">
+  <div class="bg-white card p-8 w-full max-w-md relative z-10">
+    <div class="logo-container mb-6">
+      <div class="logo-bg"></div>
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8W7oiRio5Eh4_ppE0Pour4OVey07Wh2W8Ag&s"
-           alt="Logo"
-           class="w-20 h-20 object-contain drop-shadow-md" />
+           alt="Logo Teh Boston"
+           class="logo-img w-20 h-20 object-contain mx-auto" />
     </div>
-    <h1 class="text-3xl font-extrabold text-teal-700 mb-8 text-center">Cek Status Pendaftaran</h1>
-      @if (session('error'))
-          <div class="alert alert-danger">
-              {{ session('error') }}
+    
+    <h1 class="text-3xl font-extrabold text-center text-gray-800 mb-2">Cek Status Pendaftaran</h1>
+    <p class="text-center text-gray-600 mb-8">Masukkan ID Pendaftar atau Scan QR Code</p>
+    
+    @if (session('error'))
+      <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+            </svg>
           </div>
-      @endif
+          <div class="ml-3">
+            <p class="text-sm text-red-700">{{ session('error') }}</p>
+          </div>
+        </div>
+      </div>
+    @endif
+    
     <form action="{{ route('cek.status') }}" method="POST" class="flex flex-col space-y-6">
       @csrf
       <!-- Input ID -->
-      <div class="relative w-full">
+      <div class="input-highlight">
+        <div class="relative w-full">
         <input
           type="text"
           id="id_pendaftar"
           name="id_pendaftar"
           placeholder=" "
-          class="peer h-12 w-full border-b-2 border-gray-300 bg-transparent text-gray-900 placeholder-transparent outline-none transition-all duration-300 focus:border-teal-600"
+          class="peer floating-label h-12 w-full border-b-2 border-gray-300 bg-transparent text-gray-900 placeholder-transparent outline-none transition-all duration-300 focus:border-green-600"
           required
         />
+
         <label
           for="id_pendaftar"
-          class="absolute left-0 top-3 text-gray-500 text-sm transition-all duration-300
-                 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                 peer-focus:top-0 peer-focus:text-sm peer-focus:text-teal-600 cursor-text"
+          class="label-floating absolute left-0 top-3 text-gray-500 text-sm transition-all duration-300
+                peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                peer-focus:top-0 peer-focus:text-sm peer-focus:text-green-600 cursor-text"
         >
           Masukan ID Pendaftar
         </label>
-        <div class="absolute bottom-0 left-0 h-0.5 w-0 bg-teal-600 transition-all duration-300 peer-focus:w-full"></div>
+          <div class="absolute bottom-0 left-0 h-0.5 w-0 bg-green-600 transition-all duration-300 peer-focus:w-full"></div>
+        </div>
       </div>
 
       <!-- Tombol Lihat Status -->
       <button
         type="submit"
-        class="px-6 py-3 rounded-full bg-teal-600 text-white font-semibold
-               transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:bg-teal-700"
+        class="px-6 py-3 rounded-full btn-primary text-white font-semibold"
       >
         Lihat Status
       </button>
@@ -57,35 +243,54 @@
       <button
         type="button"
         onclick="startQrScanner()"
-        class="px-6 py-2 rounded-full bg-white border border-teal-600 text-teal-700 font-medium
-               transition-all duration-300 hover:bg-teal-50 hover:shadow-sm hover:scale-105"
+        class="px-6 py-2.5 rounded-full btn-outline font-medium flex items-center justify-center"
       >
-        📷 Scan QR
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
+        </svg>
+        Scan QR
       </button>
 
       <!-- Kembali -->
       <a href="/home"
-         class="text-center px-6 py-2 rounded-full bg-white border border-teal-600 text-teal-700 font-medium
-                transition-all duration-300 hover:bg-teal-50 hover:shadow-sm hover:scale-105">
-        ← Kembali ke Beranda
+         class="text-center px-6 py-2.5 rounded-full bg-white border border-green-600 text-green-700 font-medium
+                transition-all duration-300 hover:bg-green-50 hover:shadow-sm flex items-center justify-center">
+        <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Kembali ke Beranda
       </a>
     </form>
   </div>
 
   <!-- Modal QR Scanner -->
-  <div id="qr-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-    <div class="bg-white p-6 rounded-lg shadow-xl w-80">
+  <div id="qr-modal" class="fixed inset-0 qr-modal flex items-center justify-center hidden z-50">
+    <div class="bg-white p-6 rounded-xl shadow-2xl w-80 qr-container">
       <div class="flex justify-between items-center mb-4">
-        <h2 class="text-lg font-semibold text-teal-700">Scan QR Code</h2>
+        <h2 class="text-lg font-semibold text-green-700">Scan QR Code</h2>
+        <button onclick="stopQrScanner()" class="text-gray-500 hover:text-gray-700">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
       </div>
-      <div id="reader" class="w-full"></div>
+      <div id="reader" class="w-full rounded-lg overflow-hidden"></div>
+      <p class="text-center text-sm text-gray-500 mt-3">Arahkan kamera ke QR Code</p>
+      <div class="flex items-center justify-between mt-4">
+      <hr class="w-full border-gray-300">
+      <span class="mx-2 text-gray-400 text-sm">atau</span>
+      <hr class="w-full border-gray-300">
+      </div>
+
+      <label for="qr-file-input" class="mt-4 flex items-center justify-center text-sm font-medium text-green-700 cursor-pointer hover:underline">
+        📁 Unggah Gambar QR Code
+      </label>
+      <input type="file" accept="image/*" id="qr-file-input" class="hidden">
     </div>
   </div>
 
   <!-- QR Code Scanner Script -->
-<script src="https://unpkg.com/html5-qrcode@2.3.7/html5-qrcode.min.js"></script>
-
-<script>
+  <script>
   let html5QrCode;
 
   function startQrScanner() {
@@ -93,29 +298,21 @@
     qrModal.classList.remove('hidden');
 
     html5QrCode = new Html5Qrcode("reader");
+
     Html5Qrcode.getCameras().then(devices => {
       if (devices && devices.length) {
-        const cameraId = devices[0].id;
         html5QrCode.start(
-          cameraId,
-          {
-            fps: 10,
-            qrbox: 250
-          },
+          devices[0].id,
+          { fps: 10, qrbox: 250 },
           qrCodeMessage => {
             document.getElementById('id_pendaftar').value = qrCodeMessage;
             stopQrScanner();
-          },
-          errorMessage => {
-            // Ignore read errors
           }
-        ).catch(err => {
-          alert("Camera error: " + err);
-        });
+        );
       }
     });
 
-    // Event listener klik di luar area scanner untuk menutup kamera
+    // Tutup modal jika klik luar
     qrModal.addEventListener('click', (event) => {
       if (event.target === qrModal) {
         stopQrScanner();
@@ -125,8 +322,9 @@
 
   function stopQrScanner() {
     if (html5QrCode) {
-      html5QrCode.stop().then(() => {
+      return html5QrCode.stop().then(() => {
         html5QrCode.clear();
+        html5QrCode = null;
         document.getElementById('qr-modal').classList.add('hidden');
       }).catch(err => {
         console.error("Stop failed", err);
@@ -134,29 +332,59 @@
     }
   }
 
-  // Fungsi startScan() yang lain, kalau kamu pakai, tidak aku ubah di sini
-  function startScan() {
-    document.getElementById('reader').style.display = 'block';
-    const html5QrCode = new Html5Qrcode("reader");
-    html5QrCode.start(
-      { facingMode: "environment" },
-      {
-        fps: 10,
-        qrbox: { width: 250, height: 250 }
-      },
-      qrCodeMessage => {
-        window.location.href = qrCodeMessage; // Arahkan ke link dari QR
-        html5QrCode.stop();
-      },
-      errorMessage => {
-        // Ignore errors
-      })
-    .catch(err => {
-      console.error('Gagal memulai kamera:', err);
+  document.addEventListener('DOMContentLoaded', function () {
+    const inputFile = document.getElementById("qr-file-input");
+    inputFile.addEventListener("change", async function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      try {
+        if (html5QrCode && html5QrCode._isScanning) {
+          await html5QrCode.stop();
+          await html5QrCode.clear();
+        }
+
+        html5QrCode = new Html5Qrcode("reader");
+
+        const result = await html5QrCode.scanFile(file, true);
+        document.getElementById('id_pendaftar').value = result;
+
+        html5QrCode.clear();
+        html5QrCode = null;
+        document.getElementById('qr-modal').classList.add('hidden');
+      } catch (err) {
+        alert("Gagal membaca QR: " + err);
+        if (html5QrCode) {
+          html5QrCode.clear();
+          html5QrCode = null;
+        }
+      }
+
+      // Reset input agar bisa upload ulang file yang sama
+      e.target.value = '';
     });
-  }
+  });
 </script>
+  <script>
+    const input = document.querySelector('#id_pendaftar');
+    const label = document.querySelector('.label-floating');
+
+    function checkValue() {
+      if (input.value.trim() !== '') {
+        label.classList.add('peer-focus:text-green-600', 'text-sm', 'top-0');
+      } else {
+        label.classList.remove('peer-focus:text-green-600', 'text-sm', 'top-0');
+      }
+    }
+
+    // Cek saat load
+    window.addEventListener('DOMContentLoaded', checkValue);
+
+    // Cek saat user ketik
+    input.addEventListener('input', checkValue);
+  </script>
 
 
+  
 </body>
 </html>
