@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth; // Pastikan ini ada di sini
 use App\Http\Controllers\C_Home;
 use App\Http\Controllers\C_Dosen;
 use App\Http\Controllers\C_Mahasiswa;
@@ -147,7 +148,19 @@ Route::get('/menu', function () {
 
 
 Route::get('/register', [UserController::class, 'showRegisterForm'])->name('register');
-Route::post('/register', [UserController::class, 'register']);
+Route::post('/register', [UserController::class, 'register'])->name('register.proses'); // <<< Tambahkan .name('register.proses')
+
+
+// =============================================================
+// >>>>>>>>>> BARIS YANG DITAMBAHKAN/DIPERBAIKI DI SINI <<<<<<<<<<<<<<<
+// =============================================================
+Auth::routes([
+    'reset' => true,      // Mengaktifkan rute untuk reset password (termasuk password.request)
+    'verify' => false,    // Nonaktifkan verifikasi email, sesuai kebutuhan Anda
+    'login' => false,     // Nonaktifkan rute login bawaan Laravel karena Anda punya rute kustom
+    'register' => false   // Nonaktifkan rute register bawaan Laravel karena Anda punya rute kustom
+]);
+// =============================================================
 
 
 Route::post('/login', [AuthController::class, 'login'])->name('login.proses');
@@ -167,7 +180,7 @@ Route::get('/kasir/akun', [KasirController::class, 'showakun'])->name('kasirakun
 Route::get('/kasir/akun/edit/{id_akun}', [KasirController::class, 'editakun'])->name('editakun');
 Route::post('/kasir/akun/update/{id_akun}', [KasirController::class, 'updateakun'])->name('updateakun');
 
-
+Route::get('/admin/datasurvey', [C_Survey::class, 'indexadmin'])->name('datasurvey');
 Route::get('/datasurvey', [C_Survey::class, 'index'])->name('datasurvey');
 Route::get('/survey/tabelcalon', [C_Survey::class, 'index2'])->name('survey.calon');
 Route::get('/survey/laporansurvey/{id_calon}', [C_Survey::class, 'index3'])->name('survey.laporan');
@@ -177,3 +190,40 @@ Route::delete('/survey/delete/{id_calon}', [C_Survey::class, 'destroy'])->name('
 Route::post('/kirim-ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
 Route::post('/kontak/kirim-ulasan', [KontakController::class, 'storeUlasan'])->name('kontak.storeUlasan');
 
+// Tampilkan form edit (tanpa parameter)
+Route::get('/editakun', [UserController::class, 'showEditForm'])->name('user.edit')->middleware('auth');
+
+// Proses update data (tanpa parameter)
+Route::put('/update-akun', [UserController::class, 'update'])->name('user.update')->middleware('auth');
+
+// Rute yang Dilindungi (Membutuhkan Login)
+Route::middleware(['auth'])->group(function () {
+    // Tampilkan form edit profil
+    Route::get('/profile/edit', [UserController::class, 'showEditForm'])->name('user.edit-profile');
+
+    // Tangani permintaan update (akan mengirim OTP)
+    // Pastikan ini menggunakan metode PUT
+    Route::put('/profile/update', [UserController::class, 'update'])->name('user.update');
+
+    // Tampilkan form verifikasi OTP
+    Route::get('/profile/verify-otp', [UserController::class, 'showOtpForm'])->name('user.show-otp-form');
+
+    // Verifikasi OTP dan selesaikan update
+    Route::post('/profile/verify-otp', [UserController::class, 'verifyOtpAndUpdate'])->name('user.verify-otp');
+
+    // Rute untuk mengirim ulang OTP (via AJAX)
+    Route::post('/profile/resend-otp', [UserController::class, 'resendOtp'])->name('user.resend-otp');
+});
+
+
+Route::get('/test-email', function () {
+    try {
+        Mail::raw('Ini adalah email test dari Laravel', function ($message) {
+            $message->to('your@email.com') // Ganti dengan email tujuan
+                    ->subject('Test Kirim Email');
+        });
+        return 'Berhasil kirim email.';
+    } catch (\Exception $e) {
+        return 'Gagal: ' . $e->getMessage();
+    }
+});

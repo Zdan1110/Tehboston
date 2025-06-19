@@ -44,7 +44,12 @@
                         <li><a class="dropdown-item d-flex align-items-center py-2" href="/login"><i class="fas fa-cash-register me-2"></i>Kasir</a></li>
                         <li><a class="dropdown-item d-flex align-items-center py-2" href="/status"><i class="fas fa-clipboard-list me-2"></i>Status Pendaftaran</a></li>
                         <li><hr class="dropdown-divider my-2"></li>
-                        <li><a class="dropdown-item d-flex align-items-center py-2" href="/settingakun"><i class="fas fa-cog me-2"></i>Account Setting</a></li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" 
+                            href="{{ route('user.edit', Auth::user()->id_akun) }}">
+                                <i class="fas fa-cog me-2"></i>Account Setting
+                            </a>
+                        </li>
                         <li><hr class="dropdown-divider my-2"></li>
                         <li><a class="dropdown-item d-flex align-items-center py-2" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                     </ul>

@@ -266,7 +266,7 @@ class CalonMitraController extends Controller
             $qrdata = url('/cekstatus?id=' . $idcalon->id_calon);
             $path = public_path('uploads/qrcode/'.$idcalon->id_calon.'.png');
             QrCode::format('png')->size(300)->generate($qrdata, $path);
-            return view('v_qrcode', compact('idcalon', 'id_akun', 'qrdata', 'qrImage', 'path'));
+            return view('v_qrcode', compact('idcalon', 'id_akun', 'qrdata', 'path'));
         }
 
         public function downloadQrCode()

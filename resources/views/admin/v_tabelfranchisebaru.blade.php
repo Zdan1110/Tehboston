@@ -3,7 +3,7 @@ Tabel Calon
 @endsection
 @extends('admin.templatecoba')
 @section('content')
-<div class="card" style="margin-top:70px">
+<div class="card">
                   <div class="card-header">
                     <div class="card-title">Data Franchise Baru</div>
                   </div>

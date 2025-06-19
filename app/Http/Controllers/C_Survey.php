@@ -22,6 +22,12 @@ class C_Survey extends Controller
         return view('survey.datasurvey', compact('survey'));
     }
 
+    public function indexadmin()
+    {
+        $survey = $this->M_survey->allData();
+        return view('admin.datasurvey', compact('survey'));
+    }
+
     public function index2()
     {
         $survey = $this->M_survey->dataAkun();

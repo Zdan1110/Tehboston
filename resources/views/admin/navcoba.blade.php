@@ -93,7 +93,7 @@
             <i class="fas fa-store text-sm w-5 text-center"></i>
             <span class="ml-2" x-show="sidebarOpen" x-transition>Franchise</span>
           </a>
-          <a href="/admin/laporan/survey" class="flex items-center px-3 py-2 rounded-lg hover:bg-green-700 transition-all duration-200">
+          <a href="/admin/datasurvey" class="flex items-center px-3 py-2 rounded-lg hover:bg-green-700 transition-all duration-200">
             <i class="fas fa-poll text-sm w-5 text-center"></i>
             <span class="ml-2" x-show="sidebarOpen" x-transition>Hasil Survey</span>
           </a>

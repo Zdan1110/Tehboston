@@ -35,7 +35,7 @@ public function index(Request $request, BostonAdminChart $chart)
 
     $pendapatan = $totalditerima * 25000000;
 
-    $bulanAwal = $request->input('bulan_awal'); // format: 2025-04
+    $bulanAwal = $request->input('bulan_awal');     
     $bulanAkhir = $request->input('bulan_akhir');
                     
     $chart = $chart->build($bulanAwal, $bulanAkhir);
