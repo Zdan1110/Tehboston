@@ -252,6 +252,11 @@
                 </div>
 
                 <button type="submit" class="btn-update">Perbarui Profil</button>
+
+                <a href="/home" class="btn-update" style="background: #ccc; color: #333; margin-top: 15px; text-align: center; display: inline-block; text-decoration: none;">
+                    ← Kembali
+                </a>
+
             </form>
         </div>
     </div>

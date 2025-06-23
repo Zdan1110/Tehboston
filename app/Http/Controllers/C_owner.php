@@ -40,6 +40,14 @@ class C_owner extends Controller
         return view('owner.v_tabelproduk', $owner);
     }
 
+    public function index4()
+    {
+        $owner = [
+            'owner' => $this->M_owner->datafranchisebaru()
+        ];
+        return view('owner.v_tabelfranchisebaru', $owner);
+    }
+
     public function deletecalon($id_calon)
     {
         // Hapus atau delete foto

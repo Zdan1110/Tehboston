@@ -62,4 +62,9 @@ class M_owner extends Model
     {
         DB::table('tb_produk')->insert($data);
     }
+
+    public function datafranchisebaru()
+    {
+        return DB::table('tb_franchisebaru')->get();
+    }
 }

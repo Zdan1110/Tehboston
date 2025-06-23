@@ -228,7 +228,6 @@
                 <button type="submit" class="btn-verify">Verifikasi OTP</button>
 
                 <div class="resend-otp">
-                    Belum menerima kode? <span id="resendTimer" class="resend-timer"></span>
                     <a href="#" id="resendOtpLink" style="display: none;">Kirim ulang OTP</a>
                 </div>
             </form>

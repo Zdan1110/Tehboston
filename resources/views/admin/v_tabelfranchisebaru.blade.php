@@ -51,7 +51,10 @@ Tabel Calon
                                   @csrf
                                   @method('PUT')
                                   <select name="status" onchange="this.form.submit()" class="form-control form-control-sm">
-                                    <option value="Proses" {{ $data->status == 'Proses' ? 'selected' : '' }}>Proses</option>
+                                    <option value="Review Dokumen" {{ $data->status == 'Review Dokumen' ? 'selected' : '' }}>Review Dokumen</option>
+                                    <option value="Survey Lokasi" {{ $data->status == 'Survey Lokasi' ? 'selected' : '' }}>Survey Lokasi</option>
+                                    <option value="Pembayaran" {{ $data->status == 'Pembayaran' ? 'selected' : '' }}>Pembayaran</option>
+                                    <option value="Pembuatan Booth" {{ $data->status == 'Pembuatan Booth' ? 'selected' : '' }}>Pembuatan Booth</option>
                                     <option value="Diterima" {{ $data->status == 'Diterima' ? 'selected' : '' }}>Diterima</option>
                                     <option value="Ditolak" {{ $data->status == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
                                   </select>

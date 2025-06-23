@@ -127,9 +127,9 @@ class CalonMitraController extends Controller
         public function updateStatus(Request $request, $id_calonmitra)
         {
             $request->validate([
-                'status' => 'required|in:Proses,Diterima,Ditolak'
+                'status' => 'required'
             ]);
-        
+            
             try {
                 DB::table('tb_calonmitra')
                     ->where('id_calon', $id_calonmitra)
@@ -137,7 +137,7 @@ class CalonMitraController extends Controller
                         'status' => $request->status
                     ]);
 
-                if ($request->status == 'Diterima') {
+                if ($request->status == 'Pembuatan Booth') {
 
                     $ubah = $this->M_Admin->datacalonpindah($id_calonmitra);
 
@@ -269,6 +269,22 @@ class CalonMitraController extends Controller
             return view('v_qrcode', compact('idcalon', 'id_akun', 'qrdata', 'path'));
         }
 
+        public function qrcodefranchise($id_franchisebaru)
+        {   
+            $idcalon = DB::table('tb_franchisebaru')
+                        ->where('id_franchisebaru', $id_franchisebaru)
+                        ->first();
+                        
+            if (!$idcalon) {
+                return back()->with('error', 'Data tidak ditemukan!');
+            }
+
+            $qrdata = url('/cekstatus?id=' . $idcalon->id_franchisebaru);
+            $path = public_path('uploads/qrcode/'.$idcalon->id_franchisebaru.'.png');
+            QrCode::format('png')->size(300)->generate($qrdata, $path);
+            return view('v_qrcodefranchise', compact('idcalon', 'qrdata', 'path'));
+        }
+
         public function downloadQrCode()
         {
             $id_akun = Session::get('user')['id_akun'];
@@ -289,6 +305,26 @@ class CalonMitraController extends Controller
                 ->header('Content-Type', 'image/png')
                 ->header('Content-Disposition', 'attachment; filename="qrcode.png"');
         }
+
+        public function downloadQrCodefranchise($id_franchisebaru)
+        {
+            $idcalon = DB::table('tb_franchisebaru')
+                        ->where('id_franchisebaru', $id_franchisebaru)
+                        ->first();
+                        
+            if (!$idcalon) {
+                return back()->with('error', 'Data calon mitra tidak ditemukan!');
+            }
+            $qrdata = $idcalon->id_franchisebaru;
+            $image = QrCode::format('png')
+                        ->size(400)
+                        ->margin(2)
+                        ->generate($qrdata);
+
+            return response($image)
+                ->header('Content-Type', 'image/png')
+                ->header('Content-Disposition', 'attachment; filename="qrcode.png"');
+        }
         
         public function indextambahfranchise()
         {
@@ -298,14 +334,14 @@ class CalonMitraController extends Controller
         public function tambahfranchise(Request $request)
         {
             $request->validate([
-                'provinsi_usaha' => 'required|string|max:100',
-                'kota_usaha'     => 'required|string|max:100',
-                'kelurahan_usaha'=> 'required|string|max:100',
-                'kecamatan_usaha'=> 'required|string|max:100',
-                'alamat_usaha'   => 'required|string',
-                'kode_pos'       => 'required|string|max:10',
-                'titik_koordinat'=> 'required|string|max:255',
-                'lokasi_usaha'   => 'nullable|file|mimes:jpg,jpeg,png,pdf',
+                'provinsi_usaha' => 'required',
+                'kota_usaha'     => 'required',
+                'kelurahan_usaha'=> 'required',
+                'kecamatan_usaha'=> 'required',
+                'alamat_usaha'   => 'required',
+                'kode_pos'       => 'required',
+                'titik_koordinat'=> 'required',
+                'lokasi_usaha'   => 'file|mimes:jpg,jpeg,png,pdf',
             ]);
         
             $id_akun = Auth::user()->id_akun;
@@ -337,17 +373,79 @@ class CalonMitraController extends Controller
                 'kode_pos'         => $request->kode_pos,
                 'titik_koordinat'  => $request->titik_koordinat,
                 'lokasi_usaha'     => $fileNamelokasi,
-                'status'           => 'Proses',
+                'status'           => 'Review Dokumen',
             ];
-        
             try {
                 DB::table('tb_franchisebaru')->insert($data);
                 Log::info('Franchise Baru disimpan', $data);
-                return redirect('/home')->with('success', 'Pendaftaran franchise berhasil!');
+                return redirect()->route('qrcode.franchise', ['id_franchisebaru' => $idFBaru])->with('success', 'Pendaftaran franchise berhasil!');
             } catch (\Exception $e) {
                 Log::error('Gagal simpan franchise baru: '.$e->getMessage());
                 return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan. Silakan coba lagi.');
             }
         }
         
+        public function uploadtransaksi(Request $request, $id_calon)
+        {
+            $request->validate([
+                'via_pembayaran' => 'required',
+                'bukti' => 'required|file|mimes:jpg,jpeg,png,pdf'
+            ]);
+
+            if (!$request->via_pembayaran){
+                return back()->with('error', 'Tolong isi via pembayaran!');
+            }
+
+            if (!$request->bukti){
+                return back()->with('error', 'Tolong isi Bukti pembayaran!');
+            }
+            $fileNamelokasi = null;
+            if ($filelokasi = $request->file('bukti')) {
+                $fileNamelokasi = $id_calon . '.' . $filelokasi->extension();
+                $filelokasi->move(public_path('uploads/bukti'), $fileNamelokasi);
+            }
+            $data = [
+                'id_calon' => $id_calon,
+                'via_pembayaran' => $request->via_pembayaran,
+                'bukti' => $fileNamelokasi,
+            ];
+
+            DB::table('tb_calonmitra')->where('id_calon', $id_calon)->update($data);
+            return redirect('/home')->with('success', 'Upload bukti pembayaran berhasil!.');
+        }
+        
+        public function uploadtransaksifranchise(Request $request, $id_franchisebaru)
+        {
+            $request->validate([
+                'via_pembayaran' => 'required',
+                'bukti' => 'required|file|mimes:jpg,jpeg,png,pdf'
+            ]);
+
+            if (!$request->via_pembayaran){
+                return back()->with('error', 'Tolong isi via pembayaran!');
+            }
+
+            if (!$request->bukti){
+                return back()->with('error', 'Tolong isi Bukti pembayaran!');
+            }
+            $fileNamelokasi = null;
+            if ($filelokasi = $request->file('bukti')) {
+                $fileNamelokasi = $id_franchisebaru . '.' . $filelokasi->extension();
+                $filelokasi->move(public_path('uploads/bukti'), $fileNamelokasi);
+            }
+            $data = [
+                'id_franchisebaru' => $id_franchisebaru,
+                'via_pembayaran' => $request->via_pembayaran,
+                'bukti' => $fileNamelokasi,
+            ];
+
+            try {
+                DB::table('tb_franchisebaru')->where('id_franchisebaru', $id_franchisebaru)->update($data);
+                Log::info('Bukti pembayaran disimpan disimpan', $data);
+                return redirect('/home')->with('success', 'Upload Bukti pembayaran berhasil!');
+            } catch (\Exception $e) {
+                Log::error('Gagal simpan bukti pembayaran: '.$e->getMessage());
+                return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan. Silakan coba lagi.');
+            }
+        }
 }

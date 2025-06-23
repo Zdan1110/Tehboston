@@ -114,7 +114,7 @@ function checkoutOrder() {
       document.getElementById("bayar").value = "";
       document.getElementById("kembalian-input").value = "";
       total = 0;
-      location.reload();
+      window.location.href = res.redirect;
     } else {
       alert("Gagal menyimpan pesanan.");
     }

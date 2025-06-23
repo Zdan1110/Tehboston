@@ -3,7 +3,7 @@ Tabel Produk
 @endsection
 @extends('owner.v_templateowner')
 @section('content')
-<div class="card" style="margin-top:70px">
+<div class="card" style="margin-top:8px">
                   <div class="card-header">
                     <div class="card-title">Data Produk</div>
                     <div align="right">

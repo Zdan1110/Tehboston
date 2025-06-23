@@ -5,6 +5,19 @@
 @section('content')
 
 <!-- HERO -->
+ @if (session('success'))
+<div class="alert alert-success alert-dismissible popup-top fade show" role="alert">
+    <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+
+@if (session('error'))
+<div class="alert alert-danger alert-dismissible popup-top fade show" role="alert">
+    <i class="fas fa-times-circle me-2"></i> {{ session('error') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 <section class="hero-section">
     <div class="container">
         <div class="row align-items-center">
@@ -79,43 +92,35 @@
     <div class="container">
         <h2 class="section-title text-center mb-4" data-aos="fade-up">Apa Kata Pelanggan Kami</h2>
 
-        <!-- Swiper -->
         <div class="swiper testimonial-swiper" data-aos="fade-up">
             <div class="swiper-wrapper">
-                @php
-                    $testimonials = [
-                        ['nama' => 'Rina', 'bintang' => 5, 'ulasan' => 'Rasa tehnya enak banget! Seger dan ga bikin eneg.'],
-                        ['nama' => 'Andi', 'bintang' => 4, 'ulasan' => 'Konsep booth-nya keren dan bersih.'],
-                        ['nama' => 'Dewi', 'bintang' => 5, 'ulasan' => 'Paket franchise-nya lengkap dan mudah dijalankan.'],
-                        ['nama' => 'Budi', 'bintang' => 3, 'ulasan' => 'Tehnya enak, cuma pelayanannya agak lama.'],
-                        ['nama' => 'Sarah', 'bintang' => 5, 'ulasan' => 'Favoritku teh yakult rasa stroberi!'],
-                        ['nama' => 'Yoga', 'bintang' => 4, 'ulasan' => 'Harga produk terjangkau, cocok buat mahasiswa.'],
-                        ['nama' => 'Ayu', 'bintang' => 5, 'ulasan' => 'Brand lokal yang rasa dan kualitasnya internasional.'],
-                        ['nama' => 'Riko', 'bintang' => 4, 'ulasan' => 'Cocok banget buat usaha sampingan. Modalnya kecil.'],
-                    ];
-                @endphp
-
-                @foreach ($testimonials as $t)
+                @forelse ($testimonials as $t)
                 <div class="swiper-slide">
                     <div class="card shadow-sm p-4 h-100 border-0">
                         <div class="d-flex align-items-center mb-2">
                             <img src="{{ asset('gambar/user.png') }}" alt="user" width="50" class="me-3 rounded-circle">
                             <div>
-                                <h6 class="mb-0 fw-bold">{{ $t['nama'] }}</h6>
+                                <h6 class="mb-0 fw-bold">{{ $t->nama_lengkap }}</h6>
                                 <div class="text-warning">
-                                    @for ($i = 0; $i < $t['bintang']; $i++)
+                                    @for ($i = 0; $i < $t->rating; $i++)
                                         <i class="fas fa-star"></i>
                                     @endfor
-                                    @for ($i = $t['bintang']; $i < 5; $i++)
+                                    @for ($i = $t->rating; $i < 5; $i++)
                                         <i class="far fa-star"></i>
                                     @endfor
                                 </div>
                             </div>
                         </div>
-                        <p class="mb-0 fst-italic">{{ $t['ulasan'] }}</p>
+                        <p class="mb-0 fst-italic">{{ $t->ulasan_pesan }}</p>
                     </div>
                 </div>
-                @endforeach
+                @empty
+                <div class="swiper-slide">
+                    <div class="card shadow-sm p-4 h-100 border-0 text-center">
+                        <p class="fst-italic mb-0">Belum ada testimoni.</p>
+                    </div>
+                </div>
+                @endforelse
             </div>
         </div>
     </div>

@@ -507,27 +507,24 @@
         </div>
         
         <div class="container-auth" id="authContainer">
-            {{-- Alert Messages --}}
-            @if(session('success'))
-                <div class="alert-message alert-success" id="successAlert">
-                    {{ session('success') }}
-                </div>
-            @endif
-            @if(session('error'))
-                <div class="alert-message alert-danger" id="errorAlert">
-                    {{ session('error') }}
-                </div>
-            @endif
-            @if(session('status'))
-                <div class="alert-message alert-success" id="statusAlert">
-                    {{ session('status') }}
-                </div>
-            @endif
-
+            
             <div class="auth-card login-card" id="loginCard">
                 <div class="card-header">
                     <h2>Login</h2>
                 </div>
+                @if (session('success'))
+                <div class="alert alert-success alert-dismissible popup-top fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endif
+
+                @if (session('error'))
+                <div class="alert alert-danger alert-dismissible popup-top fade show" role="alert">
+                    <i class="fas fa-times-circle me-2"></i> {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endif
                 <div class="card-body">
                     <form action="{{ route('login.proses') }}" method="POST" id="loginForm">
                         @csrf

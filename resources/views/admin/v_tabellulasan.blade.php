@@ -10,6 +10,7 @@ Tabel Ulasan
     <div class="card-title">Data Ulasan</div>
   </div>
   <div class="card-body">
+
     <div class="table-responsive">
       <table class="table table-bordered table-hover">
         <thead class="thead-dark">
@@ -22,6 +23,7 @@ Tabel Ulasan
             <th>Rating</th>
             <th>Subjek</th>
             <th>Pesan Ulasan</th>
+            <th>Status Tampil</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -38,6 +40,23 @@ Tabel Ulasan
             <td>{{ $u->subjek }}</td>
             <td>{{ $u->ulasan_pesan }}</td>
             <td>
+              @if($u->status_tampil == 1)
+                <span class="badge badge-success">Tampil</span>
+              @else
+                <span class="badge badge-secondary">Disembunyikan</span>
+              @endif
+            </td>
+            <td>
+              {{-- Tombol Tambah (Tampilkan) --}}
+              @if($u->status_tampil == 0)
+              <form action="{{ url('/admin/ulasan/tampilkan/' . $u->id_ulasan) }}" method="POST" style="display:inline;">
+                @csrf
+                @method('PATCH')
+                <button type="submit" class="btn btn-sm btn-success mb-1">Tambah</button>
+              </form>
+              @endif
+
+              {{-- Tombol Hapus --}}
               <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete{{ $u->id_ulasan }}">
                 Delete
               </button>

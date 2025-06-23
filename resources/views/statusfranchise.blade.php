@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Status Pendaftar</title>
+  <title>Status Franchise Baru</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -191,8 +191,8 @@
 
   <div class="bg-white p-6 sm:p-8 rounded-xl shadow-md w-full max-w-md">
     <div class="mb-6">
-      <p class="mb-2 text-gray-700"><strong class="text-gray-800">ID:</strong> {{ $calon->id_calon }}</p>
-      <p class="text-gray-700"><strong class="text-gray-800">Nama Lengkap:</strong> {{ $calon->nama_lengkap }}</p>
+      <p class="mb-2 text-gray-700"><strong class="text-gray-800">ID:</strong> {{ $franchise->id_franchisebaru }}</p>
+      <p class="text-gray-700"><strong class="text-gray-800">Nama Lengkap:</strong> {{ $franchise->nama_lengkap }}</p>
     </div>
 
     <!-- Tracking container -->
@@ -200,7 +200,7 @@
       <div class="flex items-start min-w-max">
         <!-- Review Dokumen -->
         <div class="status-item">
-          <svg xmlns="http://www.w3.org/2000/svg" class="status-icon {{ $calon->status == 'Review Dokumen' ? 'pulse-icon' : '' }}"
+          <svg xmlns="http://www.w3.org/2000/svg" class="status-icon {{ $franchise->status == 'Review Dokumen' ? 'pulse-icon' : '' }}"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
@@ -208,8 +208,8 @@
             stroke-linecap="round"
             stroke-linejoin="round"
             style="
-              color: {{ $calon->status == 'Review Dokumen' ? '#ca8a04' : '#9ca3af' }};
-              opacity: {{ in_array($calon->status, ['Review Dokumen', 'Survey Lokasi', 'Diterima', 'Pembayaran', 'Pembuatan Booth']) ? '1' : '0.4' }};
+              color: {{ $franchise->status == 'Review Dokumen' ? '#ca8a04' : '#9ca3af' }};
+              opacity: {{ in_array($franchise->status, ['Review Dokumen', 'Survey Lokasi', 'Diterima', 'Pembayaran', 'Pembuatan Booth']) ? '1' : '0.4' }};
             "
             title="Review Dokumen"
           >
@@ -221,8 +221,8 @@
           </svg>
           <span class="status-label"
             style="
-              color: {{ $calon->status == 'Review Dokumen' ? '#ca8a04' : '#6b7280' }};
-              opacity: {{ in_array($calon->status, ['Review Dokumen', 'Survey Lokasi', 'Diterima', 'Pembayaran', 'Pembuatan Booth']) ? '1' : '0.6' }};
+              color: {{ $franchise->status == 'Review Dokumen' ? '#ca8a04' : '#6b7280' }};
+              opacity: {{ in_array($franchise->status, ['Review Dokumen', 'Survey Lokasi', 'Diterima', 'Pembayaran', 'Pembuatan Booth']) ? '1' : '0.6' }};
             "
           >Review Dokumen</span>
         </div>
@@ -231,7 +231,7 @@
 
         <!-- Survey Lokasi -->
         <div class="status-item">
-          <svg xmlns="http://www.w3.org/2000/svg" class="status-icon {{ $calon->status == 'Survey Lokasi' ? 'pulse-icon' : '' }}"
+          <svg xmlns="http://www.w3.org/2000/svg" class="status-icon {{ $franchise->status == 'Survey Lokasi' ? 'pulse-icon' : '' }}"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
@@ -239,8 +239,8 @@
             stroke-linecap="round"
             stroke-linejoin="round"
             style="
-              color: {{ $calon->status == 'Survey Lokasi' ? '#3b82f6' : '#9ca3af' }};
-              opacity: {{ in_array($calon->status, ['Survey Lokasi', 'Diterima', 'Pembayaran', 'Pembuatan Booth']) ? '1' : '0.4' }};
+              color: {{ $franchise->status == 'Survey Lokasi' ? '#3b82f6' : '#9ca3af' }};
+              opacity: {{ in_array($franchise->status, ['Survey Lokasi', 'Diterima', 'Pembayaran', 'Pembuatan Booth']) ? '1' : '0.4' }};
             "
             title="Survey Lokasi"
           >
@@ -249,8 +249,8 @@
           </svg>
           <span class="status-label"
             style="
-              color: {{ $calon->status == 'Survey Lokasi' ? '#3b82f6' : '#6b7280' }};
-              opacity: {{ in_array($calon->status, ['Survey Lokasi', 'Diterima', 'Pembayaran', 'Pembuatan Booth']) ? '1' : '0.6' }};
+              color: {{ $franchise->status == 'Survey Lokasi' ? '#3b82f6' : '#6b7280' }};
+              opacity: {{ in_array($franchise->status, ['Survey Lokasi', 'Diterima', 'Pembayaran', 'Pembuatan Booth']) ? '1' : '0.6' }};
             "
           >Survey Lokasi</span>
         </div>
@@ -259,7 +259,7 @@
 
         <!-- Diterima -->
         <div class="status-item">
-          <svg xmlns="http://www.w3.org/2000/svg" class="status-icon {{ $calon->status == 'Diterima' ? 'pulse-icon' : '' }}"
+          <svg xmlns="http://www.w3.org/2000/svg" class="status-icon {{ $franchise->status == 'Diterima' ? 'pulse-icon' : '' }}"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
@@ -267,8 +267,8 @@
             stroke-linecap="round"
             stroke-linejoin="round"
             style="
-              color: {{ $calon->status == 'Diterima' ? '#16a34a' : '#9ca3af' }};
-              opacity: {{ in_array($calon->status, ['Diterima', 'Pembayaran', 'Pembuatan Booth']) ? '1' : '0.4' }};
+              color: {{ $franchise->status == 'Diterima' ? '#16a34a' : '#9ca3af' }};
+              opacity: {{ in_array($franchise->status, ['Diterima', 'Pembayaran', 'Pembuatan Booth']) ? '1' : '0.4' }};
             "
             title="Diterima"
           >
@@ -277,8 +277,8 @@
           </svg>
           <span class="status-label"
             style="
-              color: {{ $calon->status == 'Diterima' ? '#16a34a' : '#6b7280' }};
-              opacity: {{ in_array($calon->status, ['Diterima', 'Pembayaran', 'Pembuatan Booth']) ? '1' : '0.6' }};
+              color: {{ $franchise->status == 'Diterima' ? '#16a34a' : '#6b7280' }};
+              opacity: {{ in_array($franchise->status, ['Diterima', 'Pembayaran', 'Pembuatan Booth']) ? '1' : '0.6' }};
             "
           >Diterima</span>
         </div>
@@ -287,7 +287,7 @@
 
         <!-- Pembayaran -->
         <div class="status-item">
-          <svg xmlns="http://www.w3.org/2000/svg" class="status-icon {{ $calon->status == 'Pembayaran' ? 'pulse-icon' : '' }}"
+          <svg xmlns="http://www.w3.org/2000/svg" class="status-icon {{ $franchise->status == 'Pembayaran' ? 'pulse-icon' : '' }}"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
@@ -295,8 +295,8 @@
             stroke-linecap="round"
             stroke-linejoin="round"
             style="
-              color: {{ $calon->status == 'Pembayaran' ? '#8b5cf6' : '#9ca3af' }};
-              opacity: {{ in_array($calon->status, ['Pembayaran', 'Pembuatan Booth']) ? '1' : '0.4' }};
+              color: {{ $franchise->status == 'Pembayaran' ? '#8b5cf6' : '#9ca3af' }};
+              opacity: {{ in_array($franchise->status, ['Pembayaran', 'Pembuatan Booth']) ? '1' : '0.4' }};
             "
             title="Pembayaran"
           >
@@ -305,8 +305,8 @@
           </svg>
           <span class="status-label"
             style="
-              color: {{ $calon->status == 'Pembayaran' ? '#8b5cf6' : '#6b7280' }};
-              opacity: {{ in_array($calon->status, ['Pembayaran', 'Pembuatan Booth']) ? '1' : '0.6' }};
+              color: {{ $franchise->status == 'Pembayaran' ? '#8b5cf6' : '#6b7280' }};
+              opacity: {{ in_array($franchise->status, ['Pembayaran', 'Pembuatan Booth']) ? '1' : '0.6' }};
             "
           >Pembayaran</span>
         </div>
@@ -315,7 +315,7 @@
 
         <!-- Pembuatan Booth -->
         <div class="status-item">
-          <svg xmlns="http://www.w3.org/2000/svg" class="status-icon {{ $calon->status == 'Pembuatan Booth' ? 'pulse-icon' : '' }}"
+          <svg xmlns="http://www.w3.org/2000/svg" class="status-icon {{ $franchise->status == 'Pembuatan Booth' ? 'pulse-icon' : '' }}"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
@@ -323,8 +323,8 @@
             stroke-linecap="round"
             stroke-linejoin="round"
             style="
-              color: {{ $calon->status == 'Pembuatan Booth' ? '#ec4899' : '#9ca3af' }};
-              opacity: {{ $calon->status == 'Pembuatan Booth' ? '1' : '0.4' }};
+              color: {{ $franchise->status == 'Pembuatan Booth' ? '#ec4899' : '#9ca3af' }};
+              opacity: {{ $franchise->status == 'Pembuatan Booth' ? '1' : '0.4' }};
             "
             title="Pembuatan Booth"
           >
@@ -333,8 +333,8 @@
           </svg>
           <span class="status-label"
             style="
-              color: {{ $calon->status == 'Pembuatan Booth' ? '#ec4899' : '#6b7280' }};
-              opacity: {{ $calon->status == 'Pembuatan Booth' ? '1' : '0.6' }};
+              color: {{ $franchise->status == 'Pembuatan Booth' ? '#ec4899' : '#6b7280' }};
+              opacity: {{ $franchise->status == 'Pembuatan Booth' ? '1' : '0.6' }};
             "
           >Pembuatan Booth</span>
         </div>
@@ -344,7 +344,7 @@
     <!-- Status Ditolak -->
     <div class="flex flex-col items-center mt-6 pt-4 border-t border-gray-200">
       <div class="status-item">
-        <svg xmlns="http://www.w3.org/2000/svg" class="status-icon {{ $calon->status == 'Ditolak' ? 'pulse-icon' : '' }}"
+        <svg xmlns="http://www.w3.org/2000/svg" class="status-icon {{ $franchise->status == 'Ditolak' ? 'pulse-icon' : '' }}"
           fill="none"
           stroke="currentColor"
           stroke-width="2"
@@ -352,8 +352,8 @@
           stroke-linecap="round"
           stroke-linejoin="round"
           style="
-            color: {{ $calon->status == 'Ditolak' ? '#dc2626' : '#9ca3af' }};
-            opacity: {{ $calon->status == 'Ditolak' ? '1' : '0.4' }};
+            color: {{ $franchise->status == 'Ditolak' ? '#dc2626' : '#9ca3af' }};
+            opacity: {{ $franchise->status == 'Ditolak' ? '1' : '0.4' }};
           "
           title="Ditolak"
         >
@@ -363,8 +363,8 @@
         </svg>
         <span class="status-label"
           style="
-            color: {{ $calon->status == 'Ditolak' ? '#dc2626' : '#6b7280' }};
-            opacity: {{ $calon->status == 'Ditolak' ? '1' : '0.6' }};
+            color: {{ $franchise->status == 'Ditolak' ? '#dc2626' : '#6b7280' }};
+            opacity: {{ $franchise->status == 'Ditolak' ? '1' : '0.6' }};
           "
         >Ditolak</span>
       </div>
@@ -374,19 +374,19 @@
     <div class="mt-6 py-3 px-4 rounded-lg text-center font-medium 
         @php
             $statusClass = 'status-default';
-            if ($calon->status == 'Review Dokumen') $statusClass = 'status-review';
-            elseif ($calon->status == 'Survey Lokasi') $statusClass = 'status-survey';
-            elseif ($calon->status == 'Diterima') $statusClass = 'status-diterima';
-            elseif ($calon->status == 'Pembayaran') $statusClass = 'status-pembayaran';
-            elseif ($calon->status == 'Pembuatan Booth') $statusClass = 'status-booth';
-            elseif ($calon->status == 'Ditolak') $statusClass = 'status-ditolak';
+            if ($franchise->status == 'Review Dokumen') $statusClass = 'status-review';
+            elseif ($franchise->status == 'Survey Lokasi') $statusClass = 'status-survey';
+            elseif ($franchise->status == 'Diterima') $statusClass = 'status-diterima';
+            elseif ($franchise->status == 'Pembayaran') $statusClass = 'status-pembayaran';
+            elseif ($franchise->status == 'Pembuatan Booth') $statusClass = 'status-booth';
+            elseif ($franchise->status == 'Ditolak') $statusClass = 'status-ditolak';
             echo $statusClass;
         @endphp">
-      Status saat ini: <span class="font-bold">{{ $calon->status }}</span>
+      Status saat ini: <span class="font-bold">{{ $franchise->status }}</span>
     </div>
 
     <!-- Tombol Upload Bukti Pembayaran -->
-    @if($calon->status == 'Pembayaran')
+    @if($franchise->status == 'Pembayaran')
     <div class="mt-6">
       <!-- Informasi Transfer Bank -->
       <div class="bank-info">
@@ -445,9 +445,9 @@
       
       <!-- Form Upload -->
       <div class="mt-4">
-        <form id="uploadForm" action="/uploadbukti/{{ $calon->id_calon }}" method="POST" enctype="multipart/form-data">
+        <form id="uploadForm" action="/uploadbuktifranchise/{{ $franchise->id_franchisebaru }}" method="POST" enctype="multipart/form-data">
           @csrf
-          <input type="hidden" name="id_calon" value="{{ $calon->id_calon }}">
+          <input type="hidden" name="id_franchisebaru" value="{{ $franchise->id_franchisebaru }}">
           
           <!-- Dropdown Pilihan Bank -->
           <div class="bank-selector mb-4">

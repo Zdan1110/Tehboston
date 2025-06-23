@@ -181,7 +181,7 @@ class KasirController extends Controller
             }
 
             DB::commit();
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'redirect' => url('/print/{id_penjualan}')]);
         } catch (\Exception $e) {
             DB::rollback();
             Log::error("Checkout failed: " . $e->getMessage());
@@ -225,5 +225,11 @@ class KasirController extends Controller
         $this->kasir->updateAkun($id_akun, $data);
 
         return redirect()->route('editakun', ['id_akun' => $id_akun])->with('pesan', 'Akun kasir berhasil diperbarui!');
+    }
+
+    public function print()
+    {
+        
+        return view('kasir.v_print');
     }
 }

@@ -3,7 +3,7 @@ Tambah Produk
 @endsection
 @extends('owner.v_templateowner')
 @section('content')
-<div class="container-fluid" style="margin-top:70px">
+<div class="container-fluid" style="margin-top:8px">
     <div class="row">
         <div class="col-md-6">
 

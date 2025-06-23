@@ -167,7 +167,7 @@ Kasir
       <input type="text" id="kembalian-input" placeholder="Rp0" readonly>
     </div>
 
-    <button type="button" class="checkout-btn" onclick="checkoutOrder()" href="/kasir">Checkout</button>
+    <button type="button" class="checkout-btn" onclick="checkoutOrder()" href="/print">Checkout</button>
 
     <table>
       <thead>

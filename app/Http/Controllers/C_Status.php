@@ -17,9 +17,21 @@ class C_Status extends Controller
 
             if ($calon) {
                 return view('status', ['calon' => $calon]); // ⬅ ini harus cocok
-            } else {
-                return redirect()->back()->with('error', 'ID tidak ditemukan.');
             }
+
+            // Jika tidak ditemukan, coba cari di tb_franchisebaru
+            $franchise = DB::table('tb_franchisebaru')
+            ->leftJoin('tb_mitra', 'tb_franchisebaru.id_mitra', '=', 'tb_mitra.id_mitra')
+            ->where('id_franchisebaru', $id)
+            ->select('tb_franchisebaru.*', 'tb_mitra.nama_lengkap')
+            ->first();
+
+            if ($franchise) {
+                return view('statusfranchise', ['franchise' => $franchise]); // pakai view yang sama
+            }
+
+            // Jika tidak ditemukan di keduanya
+            return redirect()->back()->with('error', 'ID tidak ditemukan.');
         }
 
 }
