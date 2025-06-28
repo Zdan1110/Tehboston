@@ -3,7 +3,26 @@
 @section('title', 'Home - Teh Boston')
 
 @section('content')
+<style>
+    .custom-btn {
+    background: linear-gradient(135deg, #FFB74D,rgb(158, 135, 74));
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 25px;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
 
+.custom-btn:hover {
+    background: linear-gradient(135deg,rgb(244, 185, 96),rgb(226, 193, 144));
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+}
+
+</style>
 <!-- HERO -->
 <section class="hero-section">
     <div class="container">
@@ -46,7 +65,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $produk['title'] }}</h5>
                         <p class="card-text">{{ $produk['desc'] }}</p>
-                        <a href="#" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#menuModal">Lihat Produk</a>
+                        <a href="#" class="btn custom-btn" data-bs-toggle="modal" data-bs-target="#menuModal">Lihat Produk</a>
                     </div>
                 </div>
             </div>

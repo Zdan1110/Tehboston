@@ -105,8 +105,8 @@ function checkoutOrder() {
     })
   })
   .then(response => response.json())
-  .then(res => {
-    if (res.success) {
+  .then(response => {
+    if (response.success) {
       alert("Pesanan berhasil disimpan!");
       // Reset form
       document.getElementById("order-list").innerHTML = "";
@@ -114,7 +114,7 @@ function checkoutOrder() {
       document.getElementById("bayar").value = "";
       document.getElementById("kembalian-input").value = "";
       total = 0;
-      window.location.href = res.redirect;
+      window.location.href = response.redirect;
     } else {
       alert("Gagal menyimpan pesanan.");
     }

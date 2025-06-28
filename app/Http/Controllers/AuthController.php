@@ -53,7 +53,7 @@ class AuthController extends Controller
         } else if ($user->type_akun === 'kasir') {
             return redirect('/kasir')->with('success', 'Login berhasil sebagai kasir');
         } else if ($user->type_akun === 'survey') {
-            return redirect('/datasurvey')->with('success', 'Login berhasil sebagai kasir');
+            return redirect('/survey/datasurvey')->with('success', 'Login berhasil sebagai kasir');
         }
     }
 

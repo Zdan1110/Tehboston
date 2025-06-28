@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+
 
 class Transaksi extends Model
 {
@@ -31,4 +33,9 @@ class Transaksi extends Model
         'supplier',
         'keterangan',
     ];
+
+    public static function allData()
+    {
+        return DB::table('tb_transaksi')->get();
+    }
 }

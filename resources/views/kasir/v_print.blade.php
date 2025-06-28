@@ -23,21 +23,17 @@
         }
         
         .nota-container {
-            width: 100%;
-            max-width: 500px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
-            position: relative;
+            background:rgb(240, 240, 240);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact; /* untuk browser non-Webkit */
         }
         
         .nota-header {
-            background: linear-gradient(135deg, #2c7744 0%, #5a9e6f 100%);
+            background:rgb(240, 240, 240);
             padding: 25px 30px;
             text-align: center;
             position: relative;
-            color: white;
+            color: black;
         }
         
         .logo {
@@ -70,7 +66,7 @@
         .customer-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #5a9e6f 0%, #2c7744 100%);
+            background: linear-gradient(135deg,rgb(0, 0, 0) 0%,rgb(0, 0, 0) 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -88,7 +84,7 @@
         .customer-name {
             font-size: 1.4rem;
             font-weight: 600;
-            color: #2c7744;
+            color:rgb(0, 0, 0);
             margin-bottom: 5px;
         }
         
@@ -109,14 +105,14 @@
         .info-item {
             margin: 8px 0;
             font-size: 0.95rem;
-            color: #4a5568;
+            color:rgb(0, 0, 0);
             display: flex;
             align-items: center;
         }
         
         .info-item i {
             margin-right: 8px;
-            color: #5a9e6f;
+            color:rgb(0, 0, 0);
             width: 20px;
             text-align: center;
         }
@@ -151,19 +147,20 @@
         }
         
         .nota-total {
-            padding: 20px 30px;
-            text-align: right;
+            padding: 10px 20px;
             background: #f1f8e9;
-            font-size: 1.2rem;
+            font-size: 10px;
             font-weight: 700;
-            color: #2c7744;
+            color: #000;
             border-top: 2px dashed #c5e1a5;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
         
         .total-label {
+            background: rgb(255, 255, 255)
             display: flex;
             align-items: center;
         }
@@ -174,7 +171,7 @@
         }
         
         .total-amount {
-            font-size: 1.5rem;
+            font-size: 0.5rem;
         }
         
         .payment-method {
@@ -195,13 +192,14 @@
         .nota-footer {
             padding: 20px 30px;
             text-align: center;
-            background: #2c7744;
-            color: white;
+            background:rgb(255, 255, 255);
+            color: black;
         }
         
         .footer-text {
-            font-size: 0.95rem;
-            letter-spacing: 0.5px;
+            font-size: 10px;
+            white-space: nowrap;
+            letter-spacing: 0.2px;
             margin-bottom: 10px;
         }
         
@@ -230,22 +228,53 @@
             display: inline-block;
         }
         
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-            
-            .nota-container {
-                box-shadow: none;
-                border-radius: 0;
-                max-width: 100%;
-            }
-            
-            .social-icons {
-                display: none;
-            }
+
+        @page {
+            size: 10cm auto; /* Lebar 10cm, tinggi fleksibel */
+            margin: 0;
         }
+
+
+        @media print {
+    html, body {
+        width: 10cm;
+        margin: 0;
+        padding: 0;
+        background: white;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        font-size: 10px;
+    }
+
+    .nota-container {
+        width: 10cm !important;
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+        background: white;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    .nota-header,
+    .customer-info,
+    .transaction-info,
+    .nota-total,
+    .nota-footer,
+    .nota-table th,
+    .nota-table tr:nth-child(even) {
+        background: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .social-icons,
+    .qr-code {
+        display: none;
+    }
+}
+
+
         
         @media (max-width: 500px) {
             .customer-info {
@@ -281,151 +310,92 @@
     </style>
 </head>
 <body>
-    <div class="nota-container">
+    <div class="nota-container" style="width:100%; max-width:58mm;">
         <div class="nota-header">
             <div class="logo">
-                <i class="fas fa-mug-hot"></i>
+                <i class="fas fa-mug-hot" style="color:black"></i>
             </div>
             <h1>TEH BOSTON</h1>
-            <p>Jl. Anggrek No. 56, Jakarta Selatan | Telp: (021) 5678-9012</p>
+            <p>{{ $data->alamat_usaha ?? 'Alamat tidak ditemukan' }} | Telp: (021) 5678-9012</p>
         </div>
         
         <div class="customer-info">
-            <div class="customer-icon">
-                <i class="fas fa-user"></i>
+            <div class="customer-icon" style="color:black">
+                <i class="fas fa-user" style="color:white"></i>
             </div>
+
             <div class="customer-details">
-                <div class="customer-name">Budi Santoso</div>
-                <div class="customer-id">ID Pelanggan: BOS-789012</div>
+                <div class="customer-name">{{ $data->pelanggan }}</div>
             </div>
         </div>
         
+        @php
+            use Carbon\Carbon;
+
+            Carbon::setLocale('id');
+            $tanggal = Carbon::parse($data->tanggal);
+        @endphp
         <div class="transaction-info">
             <div class="info-item">
                 <i class="far fa-calendar"></i>
-                <span id="tanggal"></span>
+                <span>{{ $tanggal->translatedFormat('d F Y') }}</span>
             </div>
             <div class="info-item">
                 <i class="far fa-clock"></i>
-                <span id="waktu"></span>
+                <span>{{ $tanggal->format('H:i') }}</span>
             </div>
             <div class="info-item">
                 <i class="far fa-calendar-check"></i>
-                <span id="hari"></span>
+                <span>{{ $tanggal->translatedFormat('l') }}</span>
             </div>
             <div class="info-item">
                 <i class="fas fa-receipt"></i>
-                No. Nota: BOS-2023-0620-001
+                No. Nota: {{ $data->id_penjualan }}
             </div>
         </div>
         
         <table class="nota-table">
             <thead>
                 <tr>
-                    <th>Produk</th>
-                    <th>Jumlah</th>
-                    <th>Harga</th>
-                    <th>Total</th>
+                    <th style="font-size: 10px;">Produk</th>
+                    <th style="font-size: 10px;">Jumlah</th>
+                    <th style="font-size: 10px;">Harga</th>
+                    <th style="font-size: 10px;">Total</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach ($datadetail as $detail)
                 <tr>
-                    <td>
-                        <i class="fas fa-wine-bottle" style="color: #5a9e6f; margin-right: 8px;"></i>
-                        Teh Botol Original
-                    </td>
-                    <td>2</td>
-                    <td>Rp 10.000</td>
-                    <td>Rp 20.000</td>
+                    <td style="font-size: 10px;">{{ $detail->nama_produk }}</td>
+                    <td style="font-size: 10px;">{{ $detail->jumlah }}</td>
+                    <td style="font-size: 10px; white-space: nowrap;">Rp {{ number_format($detail->harga / $detail->jumlah, 0, ',', '.') }}</td>
+                    <td style="font-size: 10px; white-space: nowrap;">Rp {{ number_format($detail->harga, 0, ',', '.') }}</td>
                 </tr>
-                <tr>
-                    <td>
-                        <i class="fas fa-cube" style="color: #5a9e6f; margin-right: 8px;"></i>
-                        Teh Kotak Lemon
-                    </td>
-                    <td>3</td>
-                    <td>Rp 8.000</td>
-                    <td>Rp 24.000</td>
-                </tr>
-                <tr>
-                    <td>
-                        <i class="fas fa-box" style="color: #5a9e6f; margin-right: 8px;"></i>
-                        Teh Tarik Kemasan
-                    </td>
-                    <td>5</td>
-                    <td>Rp 5.000</td>
-                    <td>Rp 25.000</td>
-                </tr>
-                <tr>
-                    <td>
-                        <i class="fas fa-wine-bottle" style="color: #5a9e6f; margin-right: 8px;"></i>
-                        Teh Hijau Botol
-                    </td>
-                    <td>1</td>
-                    <td>Rp 12.000</td>
-                    <td>Rp 12.000</td>
-                </tr>
+                @endforeach
             </tbody>
         </table>
         
         <div class="nota-total">
-            <div class="total-label">
-                <i class="fas fa-money-bill-wave"></i>
-                <span>TOTAL PEMBAYARAN:</span>
-            </div>
-            <div class="total-amount">Rp 81.000</div>
-        </div>
+    <span>TOTAL PEMBAYARAN:</span>
+    <span>Rp {{ number_format($data->harga, 0, ',', '.') }}</span>
+    </div>
+
         
         
         <div class="nota-footer">
             <p class="footer-text">Terima kasih atas kunjungan Anda!</p>
             <p class="footer-text">Teh Boston - Menyegarkan Sejak 1995</p>
-            
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-            </div>
-            
-            <div class="qr-code">
-                <div style="width: 80px; height: 80px; background: #f0f0f0; display: grid; grid-template-columns: repeat(5, 1fr); grid-gap: 2px; padding: 5px;">
-                    <!-- Simple QR Code Representation -->
-                    <div style="background: #000;"></div><div style="background: #000;"></div><div style="background: #000;"></div><div style="background: #000;"></div><div style="background: #000;"></div>
-                    <div style="background: #000;"></div><div style="background: #fff;"></div><div style="background: #fff;"></div><div style="background: #fff;"></div><div style="background: #000;"></div>
-                    <div style="background: #000;"></div><div style="background: #fff;"></div><div style="background: #000;"></div><div style="background: #fff;"></div><div style="background: #000;"></div>
-                    <div style="background: #000;"></div><div style="background: #fff;"></div><div style="background: #fff;"></div><div style="background: #fff;"></div><div style="background: #000;"></div>
-                    <div style="background: #000;"></div><div style="background: #000;"></div><div style="background: #000;"></div><div style="background: #000;"></div><div style="background: #000;"></div>
-                </div>
-            </div>
         </div>
     </div>
 
     <script>
-        // Fungsi untuk mengisi tanggal, waktu, dan hari
-        function isiTanggal() {
-            const sekarang = new Date();
-            
-            // Format tanggal: DD MMMM YYYY
-            const optionsTanggal = { 
-                day: 'numeric', 
-                month: 'long', 
-                year: 'numeric' 
-            };
-            document.getElementById('tanggal').textContent = sekarang.toLocaleDateString('id-ID', optionsTanggal);
-            
-            // Format waktu: HH:MM:SS
-            const jam = sekarang.getHours().toString().padStart(2, '0');
-            const menit = sekarang.getMinutes().toString().padStart(2, '0');
-            const detik = sekarang.getSeconds().toString().padStart(2, '0');
-            document.getElementById('waktu').textContent = `${jam}:${menit}:${detik} WIB`;
-            
-            // Format hari
-            const optionsHari = { weekday: 'long' };
-            document.getElementById('hari').textContent = sekarang.toLocaleDateString('id-ID', optionsHari);
-        }
-        
-        // Panggil fungsi saat halaman dimuat
-        window.onload = isiTanggal;
+        window.onload = function () {
+            window.print(); // otomatis buka dialog print
+        };
+
+        window.onafterprint = function () {
+        window.location.href = "/kasir"; // ganti sesuai route halaman kasir kamu
+        };
     </script>
 </body>
 </html>

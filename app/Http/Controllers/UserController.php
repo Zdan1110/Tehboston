@@ -61,6 +61,7 @@ class UserController extends Controller
         'type_akun' => 'user',
     ];
 
+
     try {
         User::create($data);
         Log::info('User berhasil ditambahkan', $data);

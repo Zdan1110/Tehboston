@@ -87,7 +87,7 @@ class TransaksiController extends Controller
         try {
             $transaksi = Transaksi::findOrFail($id);
             $transaksi->delete();
-            return response()->json(['success' => true, 'message' => 'Transaksi berhasil dihapus!'], 200);
+            return redirect('/admin/transaksi')->with('success', 'Transaksi berhasil dihapus!');
         } catch (\Exception $e) {
             Log::error('Error deleting transaction: ' . $e->getMessage());
             return response()->json([

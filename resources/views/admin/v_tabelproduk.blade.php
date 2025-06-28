@@ -12,6 +12,16 @@ Tabel Produk
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
+                      <!-- Search -->
+                      <form action="{{ route('adminproduk') }}" method="GET" class="mb-3 w-full max-w-md">
+                        <input
+                          type="text"
+                          name="search"
+                          value="{{ request('search') }}"
+                          placeholder="Cari calon mitra..."
+                          class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-green-700 focus:outline-none transition"
+                        >
+                      </form>
                       <table class="table table-bordered">
                         <thead>
                           <tr>
@@ -42,31 +52,31 @@ Tabel Produk
                           @endforeach
                       </tbody>
                       </table>
-                      @foreach ($admin as $data)
-                      <div class="modal fade" id="delete{{ $data->id_produk }}">
-                          <div class="modal-dialog modal-sm">
-                              <div class="modal-content bg-danger">
-                                  <div class="modal-header">
-                                      <h6 class="modal-title">Produk : {{ $data->nama_produk }}</h6>
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
-                                      </button>
-                                  </div>
-                                  <div class="modal-body">
-                                    <p>Apakah anda yakin ingin menghapus produk ini ?</p>
-                                </div>
-                                <div class="modal-footer justify-content-between">
-                                    <form  action="/admin/produk/{{ $data->id_produk }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-outline-light">Yes</button>
-                                    </form>
-                                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">No</button>
-                                </div>
-                              </div>
+                      {{-- Delete Modals --}}
+                    @foreach ($admin as $data)
+                    <div class="modal fade" id="delete{{ $data->id_produk }}" tabindex="-1" role="dialog">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content border-0 shadow">
+                          <div class="modal-body text-center py-4">
+                            <div class="mb-3">
+                              <i class="fas fa-exclamation-triangle fa-3x text-danger"></i>
+                            </div>
+                            <h5 class="mb-2">Hapus Data Ini?</h5>
+                            <p class="text-muted">Nama produk: <strong>{{ $data->nama_produk }}</strong></p>
+                            <div class="d-flex justify-content-center gap-2 mt-4">
+                              <form action="/admin/produk/{{ $data->id_produk }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-outline-danger px-4">Ya</button>
+                              </form>
+                              <button type="button" class="btn btn-outline-secondary px-4" data-dismiss="modal">Batal</button>
                             </div>
                           </div>
-                        @endforeach
+                        </div>
+                      </div>
+                    </div>
+                    @endforeach
+
                     </div>
                   </div>
                 </div>

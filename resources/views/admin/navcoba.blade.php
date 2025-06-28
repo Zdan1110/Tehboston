@@ -6,9 +6,7 @@
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8W7oiRio5Eh4_ppE0Pour4OVey07Wh2W8Ag&s" class="h-10 rounded-full border-2 border-green-300" alt="Logo">
         <span class="text-xl font-bold tracking-wide whitespace-nowrap" x-show="sidebarOpen" x-transition>Admin Panel</span>
       </div>
-      <button @click="sidebarOpen = !sidebarOpen" class="text-white hover:text-green-200 transition-colors p-1 rounded-full hover:bg-green-700">
-        <i :class="sidebarOpen ? 'fas fa-angle-left' : 'fas fa-angle-right'"></i>
-      </button>
+    
     </div>
 
     <!-- Navigation -->
@@ -102,11 +100,11 @@
 
       <!-- Additional Menu Items -->
       <div class="mt-4 border-t border-green-700 pt-2">
-        <a href="#" class="flex items-center px-4 py-3 rounded-lg mx-2 hover:bg-green-700 transition-all duration-200">
-          <i class="fas fa-cog text-lg w-6 text-center"></i>
-          <span class="ml-3" x-show="sidebarOpen" x-transition>Pengaturan</span>
+        <a href="/home" class="flex items-center px-4 py-3 rounded-lg mx-2 hover:bg-green-700 transition-all duration-200">
+          <i class="fas fa-home text-lg w-6 text-center"></i>
+          <span class="ml-3" x-show="sidebarOpen" x-transition>Ke Halaman Home</span>
         </a>
-        <a href="#" class="flex items-center px-4 py-3 rounded-lg mx-2 hover:bg-green-700 transition-all duration-200">
+        <a href="{{ route('logout') }}" class="flex items-center px-4 py-3 rounded-lg mx-2 hover:bg-green-700 transition-all duration-200">
           <i class="fas fa-sign-out-alt text-lg w-6 text-center"></i>
           <span class="ml-3" x-show="sidebarOpen" x-transition>Keluar</span>
         </a>

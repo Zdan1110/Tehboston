@@ -506,7 +506,7 @@
                     </div>
                     <div class="info-row">
                         <div class="info-label">Status:</div>
-                        <div class="info-value">Aktif</div>
+                        <div class="info-value">{{ $data->status ?? '-' }}</div>
                     </div>
                     <button class="btn" onclick="showDetail('{{ $data->id_franchise }}')">
                         <i class="fas fa-info-circle"></i> Lihat Detail

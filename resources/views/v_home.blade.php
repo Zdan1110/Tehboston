@@ -4,20 +4,43 @@
 
 @section('content')
 
-<!-- HERO -->
- @if (session('success'))
-<div class="alert alert-success alert-dismissible popup-top fade show" role="alert">
-    <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
+<style>
+    .custom-btn {
+    background: linear-gradient(135deg, #FFB74D,rgb(158, 135, 74));
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 25px;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
 
-@if (session('error'))
-<div class="alert alert-danger alert-dismissible popup-top fade show" role="alert">
-    <i class="fas fa-times-circle me-2"></i> {{ session('error') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
+.custom-btn:hover {
+    background: linear-gradient(135deg,rgb(244, 185, 96),rgb(226, 193, 144));
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+}
+
+</style>
+<!-- HERO -->
+@if (session('success'))
+      <div 
+          x-data="{ show: true }" 
+          x-init="setTimeout(() => show = false, 3000)" 
+          x-show="show"
+          x-transition
+          class="alert alert-succes fixed top-5 left-1/2 transform -translate-x-1/2 z-50 px-4 py-2 bg-red-600 text-black rounded shadow"
+      >
+        {{ session('success') }}
+      </div>
+    @endif
+      @if (session('error'))
+          <div class="alert alert-danger">
+              {{ session('error') }}
+          </div>
+      @endif
 <section class="hero-section">
     <div class="container">
         <div class="row align-items-center">
@@ -43,7 +66,6 @@
     <div class="container">
         <h2 class="section-title" data-aos="fade-up">Produk Series Kami</h2>
         <div class="row g-4">
-            <!-- Card Produk -->
             @php
                 $produkList = [
                     ['img' => 'teaseries.png', 'title' => 'Tea Series', 'desc' => '8 varian minuman teh klasik dan modern dengan rasa autentik.'],
@@ -60,7 +82,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $produk['title'] }}</h5>
                         <p class="card-text">{{ $produk['desc'] }}</p>
-                        <a href="#" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#menuModal">Lihat Produk</a>
+                        <a href="#" class="btn custom-btn" data-bs-toggle="modal" data-bs-target="#menuModal">Lihat Produk</a>
                     </div>
                 </div>
             </div>
@@ -92,35 +114,43 @@
     <div class="container">
         <h2 class="section-title text-center mb-4" data-aos="fade-up">Apa Kata Pelanggan Kami</h2>
 
+        <!-- Swiper -->
         <div class="swiper testimonial-swiper" data-aos="fade-up">
             <div class="swiper-wrapper">
-                @forelse ($testimonials as $t)
+                @php
+                    $testimonials = [
+                        ['nama' => 'Rina', 'bintang' => 5, 'ulasan' => 'Rasa tehnya enak banget! Seger dan ga bikin eneg.'],
+                        ['nama' => 'Andi', 'bintang' => 4, 'ulasan' => 'Konsep booth-nya keren dan bersih.'],
+                        ['nama' => 'Dewi', 'bintang' => 5, 'ulasan' => 'Paket franchise-nya lengkap dan mudah dijalankan.'],
+                        ['nama' => 'Budi', 'bintang' => 3, 'ulasan' => 'Tehnya enak, cuma pelayanannya agak lama.'],
+                        ['nama' => 'Sarah', 'bintang' => 5, 'ulasan' => 'Favoritku teh yakult rasa stroberi!'],
+                        ['nama' => 'Yoga', 'bintang' => 4, 'ulasan' => 'Harga produk terjangkau, cocok buat mahasiswa.'],
+                        ['nama' => 'Ayu', 'bintang' => 5, 'ulasan' => 'Brand lokal yang rasa dan kualitasnya internasional.'],
+                        ['nama' => 'Riko', 'bintang' => 4, 'ulasan' => 'Cocok banget buat usaha sampingan. Modalnya kecil.'],
+                    ];
+                @endphp
+
+                @foreach ($testimonials as $t)
                 <div class="swiper-slide">
                     <div class="card shadow-sm p-4 h-100 border-0">
                         <div class="d-flex align-items-center mb-2">
                             <img src="{{ asset('gambar/user.png') }}" alt="user" width="50" class="me-3 rounded-circle">
                             <div>
-                                <h6 class="mb-0 fw-bold">{{ $t->nama_lengkap }}</h6>
+                                <h6 class="mb-0 fw-bold">{{ $t['nama'] }}</h6>
                                 <div class="text-warning">
-                                    @for ($i = 0; $i < $t->rating; $i++)
+                                    @for ($i = 0; $i < $t['bintang']; $i++)
                                         <i class="fas fa-star"></i>
                                     @endfor
-                                    @for ($i = $t->rating; $i < 5; $i++)
+                                    @for ($i = $t['bintang']; $i < 5; $i++)
                                         <i class="far fa-star"></i>
                                     @endfor
                                 </div>
                             </div>
                         </div>
-                        <p class="mb-0 fst-italic">{{ $t->ulasan_pesan }}</p>
+                        <p class="mb-0 fst-italic">{{ $t['ulasan'] }}</p>
                     </div>
                 </div>
-                @empty
-                <div class="swiper-slide">
-                    <div class="card shadow-sm p-4 h-100 border-0 text-center">
-                        <p class="fst-italic mb-0">Belum ada testimoni.</p>
-                    </div>
-                </div>
-                @endforelse
+                @endforeach
             </div>
         </div>
     </div>

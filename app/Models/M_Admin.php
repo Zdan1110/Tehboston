@@ -28,6 +28,13 @@ class M_Admin extends Model
         return DB::table('tb_akun')->where('type_akun', 'user')->get();
     }
 
+    // Di M_Admin
+    public function dataakunadmin($id_akun)
+    {
+        return DB::table('tb_akun')->where('type_akun', 'admin')->first();
+    }
+
+
     public function dataproduk()
     {
         return DB::table('tb_produk')->get();
@@ -86,6 +93,11 @@ class M_Admin extends Model
     public function deleteDataproduk($id_produk)
     {
         DB::table('tb_produk')->where('id_produk', $id_produk)->delete();
+    }
+
+    public function deleteDatafranchisebaru($id_franchisebaru)
+    {
+        DB::table('tb_franchisebaru')->where('id_franchisebaru', $id_franchisebaru)->delete();
     }
 
     public function addData($data)

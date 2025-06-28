@@ -20,10 +20,17 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/loading.css') }}">
 
+    
     @yield('styles')
 </head>
 <body class="bg-gray-50">
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <img src="{{ asset('gambar/logo.png') }}" alt="Loading...">
+    </div>
+
     @include('partials.nav')
     <main>
         @yield('content')
@@ -41,5 +48,7 @@
     <script src="{{ asset('js/script.js') }}"></script>
 
     @yield('scripts')
+    <script src="{{ asset('assets/js/loading.js') }}"></script>
+
 </body>
 </html>

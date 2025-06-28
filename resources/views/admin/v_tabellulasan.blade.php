@@ -1,20 +1,46 @@
+@extends('admin.templatecoba')
+
 @section('Title')
 Tabel Ulasan
 @endsection
 
-@extends('admin.templatecoba')
-
 @section('content')
-<div class="card mt-2">
-  <div class="card-header">
-    <div class="card-title">Data Ulasan</div>
+
+{{-- Notifikasi sukses --}}
+@if(session('success'))
+<div class="alert alert-success alert-dismissible fade show mt-3 shadow-sm border-0" role="alert">
+  <i class="fas fa-check-circle mr-2"></i>
+  {{ session('success') }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span>&times;</span>
+  </button>
+</div>
+@endif
+
+{{-- Notifikasi error --}}
+@if($errors->any())
+<div class="alert alert-danger alert-dismissible fade show mt-3 shadow-sm border-0" role="alert">
+  <i class="fas fa-exclamation-circle mr-2"></i>
+  <ul class="mb-0">
+    @foreach($errors->all() as $error)
+      <li>{{ $error }}</li>
+    @endforeach
+  </ul>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span>&times;</span>
+  </button>
+</div>
+@endif
+
+<div class="card mt-3 shadow-sm border-0">
+  <div class="card-header bg-white border-bottom">
+    <h5 class="card-title mb-0">Data Ulasan</h5>
   </div>
   <div class="card-body">
-
     <div class="table-responsive">
-      <table class="table table-bordered table-hover">
-        <thead class="thead-dark">
-          <tr>
+      <table class="table table-bordered table-hover align-middle">
+        <thead class="thead-light">
+          <tr class="text-center">
             <th>No</th>
             <th>ID Ulasan</th>
             <th>ID Akun</th>
@@ -24,14 +50,14 @@ Tabel Ulasan
             <th>Subjek</th>
             <th>Pesan Ulasan</th>
             <th>Status Tampil</th>
-            <th>Action</th>
+            <th>Aksi</th>
           </tr>
         </thead>
         <tbody>
           @php $no = 1; @endphp
           @foreach($ulasan as $u)
           <tr>
-            <td>{{ $no++ }}</td>
+            <td class="text-center">{{ $no++ }}</td>
             <td>{{ $u->id_ulasan }}</td>
             <td>{{ $u->id_akun ?? '-' }}</td>
             <td>{{ $u->nama_lengkap }}</td>
@@ -39,61 +65,57 @@ Tabel Ulasan
             <td>{{ $u->rating }} / 5</td>
             <td>{{ $u->subjek }}</td>
             <td>{{ $u->ulasan_pesan }}</td>
-            <td>
+            <td class="text-center">
               @if($u->status_tampil == 1)
                 <span class="badge badge-success">Tampil</span>
               @else
                 <span class="badge badge-secondary">Disembunyikan</span>
               @endif
             </td>
-            <td>
-              {{-- Tombol Tambah (Tampilkan) --}}
+            <td class="text-center">
               @if($u->status_tampil == 0)
               <form action="{{ url('/admin/ulasan/tampilkan/' . $u->id_ulasan) }}" method="POST" style="display:inline;">
                 @csrf
                 @method('PATCH')
-                <button type="submit" class="btn btn-sm btn-success mb-1">Tambah</button>
+                <button type="submit" class="btn btn-sm btn-outline-success mb-1">Tampilkan</button>
               </form>
               @endif
 
-              {{-- Tombol Hapus --}}
-              <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete{{ $u->id_ulasan }}">
-                Delete
+              <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#delete{{ $u->id_ulasan }}">
+                <i class="fas fa-trash-alt"></i>
               </button>
             </td>
           </tr>
           @endforeach
         </tbody>
       </table>
+    </div>
 
-      {{-- Modal Hapus --}}
-      @foreach($ulasan as $u)
-      <div class="modal fade" id="delete{{ $u->id_ulasan }}">
-        <div class="modal-dialog modal-sm">
-          <div class="modal-content bg-danger">
-            <div class="modal-header">
-              <h6 class="modal-title">Hapus Ulasan</h6>
-              <button type="button" class="close" data-dismiss="modal">
-                <span>&times;</span>
-              </button>
+    {{-- Delete Modals --}}
+    @foreach($ulasan as $u)
+    <div class="modal fade" id="delete{{ $u->id_ulasan }}" tabindex="-1" role="dialog" aria-labelledby="modalLabel{{ $u->id_ulasan }}" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 shadow">
+          <div class="modal-body text-center py-4">
+            <div class="mb-3">
+              <i class="fas fa-exclamation-triangle fa-3x text-danger"></i>
             </div>
-            <div class="modal-body">
-              <p>Yakin ingin menghapus ulasan dari <strong>{{ $u->nama_lengkap }}</strong>?</p>
-            </div>
-            <div class="modal-footer justify-content-between">
-              <form action="{{ url('/admin/ulasan/' . $u->id_ulasan) }}" method="POST">
+            <h5 class="mb-2">Hapus Ulasan Ini?</h5>
+            <p class="text-muted">Anda yakin ingin menghapus ulasan dari <strong>{{ $u->nama_lengkap }}</strong>?</p>
+            <div class="d-flex justify-content-center gap-2 mt-4">
+              <form action="{{ url('/admin/ulasan/' . $u->id_ulasan) }}" method="POST" class="mr-2">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-outline-light">Yes</button>
+                <button type="submit" class="btn btn-outline-danger px-4">Hapus</button>
               </form>
-              <button type="button" class="btn btn-outline-light" data-dismiss="modal">No</button>
+              <button type="button" class="btn btn-outline-secondary px-4" data-dismiss="modal">Batal</button>
             </div>
           </div>
         </div>
       </div>
-      @endforeach
-
     </div>
+    @endforeach
+
   </div>
 </div>
 @endsection

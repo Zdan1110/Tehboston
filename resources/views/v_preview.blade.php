@@ -209,26 +209,20 @@
       @csrf
       <!-- Input ID -->
       <div class="input-highlight">
-        <div class="relative w-full">
-        <input
-          type="text"
+      <div class="relative w-full">
+        <label for="id_pendaftar" class="text-gray-700 mb-1 block">ID Franchisebaru - Alamat Usaha</label>
+        <select
           id="id_pendaftar"
           name="id_pendaftar"
-          placeholder=" "
-          class="peer floating-label h-12 w-full border-b-2 border-gray-300 bg-transparent text-gray-900 placeholder-transparent outline-none transition-all duration-300 focus:border-green-600"
+          class="h-12 w-full border-b-2 border-gray-300 bg-transparent text-gray-900 outline-none focus:border-green-600"
           required
-        />
-
-        <label
-          for="id_pendaftar"
-          class="label-floating absolute left-0 top-3 text-gray-500 text-sm transition-all duration-300
-                peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
-                peer-focus:top-0 peer-focus:text-sm peer-focus:text-green-600 cursor-text"
         >
-          Masukan ID Pendaftar
-        </label>
-          <div class="absolute bottom-0 left-0 h-0.5 w-0 bg-green-600 transition-all duration-300 peer-focus:w-full"></div>
-        </div>
+          <option value="" disabled selected>( Pilih ID Franchisebaru - Alamat Usaha )</option>
+          @foreach($idfranchisebaru as $id)
+            <option value="{{ $id->id_franchisebaru }}">{{ $id->id_franchisebaru }} - {{ $id->alamat_usaha }}</option>
+          @endforeach
+        </select>
+      </div>
       </div>
 
       <!-- Tombol Lihat Status -->

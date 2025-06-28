@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
   <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }} " />
   <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
@@ -95,18 +96,21 @@
     <!-- Fixed Topbar -->
     <header class="fixed-topbar" :class="sidebarOpen ? 'left-64' : 'left-20'">
       <div class="fixed-topbar-content">
-        <!-- Search -->
-        <div class="relative w-full max-w-md min-w-[200px]">
-          <input type="text" placeholder="Cari sesuatu..." class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-green-700 focus:outline-none transition">
-        </div>
+      
 
         <!-- Profile Actions -->
         <div class="flex items-center gap-6 ml-auto shrink-0">
           <div id="liveClock" class="text-sm font-semibold text-green-900 tracking-widest"></div>
-          <button class="relative text-green-800 hover:text-green-900 transition">
-            <i class="fas fa-bell text-xl"></i>
-            <span class="absolute -top-1 -right-1 h-2 w-2 bg-red-500 rounded-full border border-white"></span>
-          </button>
+        <div class="relative">
+        <button id="bell-btn" class="relative text-green-800 hover:text-green-900 transition">
+          <i class="fas fa-bell text-xl"></i>
+          <span class="absolute -top-1 -right-1 h-2 w-2 bg-red-500 rounded-full border border-white"></span>
+        </button>
+
+        <div id="notifikasi-list" class="absolute right-0 mt-2 w-64 bg-white border rounded shadow-lg z-50 hidden">
+          <!-- Notifikasi akan muncul di sini -->
+        </div>
+      </div>
           <div class="relative" x-data="{ open: false }">
             <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
               <img src="https://i.pravatar.cc/32" class="w-8 h-8 rounded-full border" alt="Profile">
@@ -122,7 +126,7 @@
                 x-transition:leave-start="transform opacity-100 scale-100"
                 x-transition:leave-end="transform opacity-0 scale-95"
                 class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-50">
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profil</a>
+              <a href="/admin/profiles" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profil</a>
               <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="{{ route('logout') }}">Logout</a>
             </div>
           </div>
@@ -145,6 +149,14 @@
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       @endif
+
+      @if (session('delete'))
+    <div class="alert alert-warning alert-dismissible popup-top fade show" role="alert">
+        <i class="fas fa-exclamation-triangle me-2"></i> {{ session('delete') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
       
       <div class="w-full overflow-x-auto">
         @yield('content')
@@ -161,6 +173,65 @@
   }
   setInterval(updateClock, 1000);
   updateClock();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<!-- JQuery (wajib jika Bootstrap 4) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#search').on('keyup', function () {
+      let query = $(this).val();
+      $.ajax({
+        url: "{{ route('admincalon') }}", // pastikan ini sesuai route index1()
+        type: "GET",
+        data: { search: query },
+        success: function (data) {
+          $('#table-container').html(data);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const bellButton = document.getElementById("bell-btn");
+  const notifikasiContainer = document.getElementById("notifikasi-list");
+
+  bellButton.addEventListener("click", () => {
+    fetch("{{ route('admin.notifikasi') }}")
+      .then(res => res.json())
+      .then(data => {
+        notifikasiContainer.innerHTML = "";
+        if (data.length === 0) {
+          notifikasiContainer.innerHTML = "<p class='text-sm text-gray-500 p-2'>Tidak ada notifikasi</p>";
+        } else {
+          data.forEach(item => {
+            const el = document.createElement("div");
+            el.className = "p-2 border-b border-gray-200 text-sm text-gray-700";
+            el.innerHTML = `<strong>${item.judul}</strong><br><span class="text-xs text-gray-500">${item.pesan}</span>`;
+            notifikasiContainer.appendChild(el);
+          });
+        }
+      });
+  });
+});
+</script>
+
+
+<script>
+  // Tampilkan / sembunyikan dropdown
+  document.getElementById('bell-btn').addEventListener('click', function () {
+    const box = document.getElementById('notifikasi-list');
+    box.classList.toggle('hidden');
+  });
 </script>
 
 </body>

@@ -41,7 +41,6 @@
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0 py-2">
                         <li><a class="dropdown-item d-flex align-items-center py-2" href="/profiles"><i class="fas fa-user me-2"></i>Data Diri</a></li>
                         <li><a class="dropdown-item d-flex align-items-center py-2" href="/franchisee"><i class="fas fa-store me-2"></i>Franchisee</a></li>
-                        <li><a class="dropdown-item d-flex align-items-center py-2" href="/login"><i class="fas fa-cash-register me-2"></i>Kasir</a></li>
                         <li><a class="dropdown-item d-flex align-items-center py-2" href="/status"><i class="fas fa-clipboard-list me-2"></i>Status Pendaftaran</a></li>
                         <li><hr class="dropdown-divider my-2"></li>
                         <li>

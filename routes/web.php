@@ -6,7 +6,8 @@ use App\Http\Controllers\{
     C_Home, C_Dosen, C_Mahasiswa, C_Login, C_admin, C_owner,
     UserController, AuthController, CalonMitraController,
     KasirController, C_Status, C_Survey, UlasanController,
-    KontakController, TransaksiController
+    KontakController, TransaksiController, GoogleController
+    
 };
 
 // ========================
@@ -23,8 +24,17 @@ Route::view('/profile', 'v_profile');
 Route::view('/profilee', 'v_profilelog');
 Route::view('/status', 'v_preview');
 Route::view('/cek-status', 'v_status');
-Route::view('/tambah-stok', 'kasir.tambah-stok');
-Route::view('/coba', 'admin.v_dashboardcoba');
+// Forgot Password
+Route::get('/forgotpassword', [App\Http\Controllers\C_LupaPassword::class, 'showForgot'])->name('password.request');
+Route::post('/forgotpassword', [App\Http\Controllers\C_LupaPassword::class, 'sendOtp'])->name('password.send');
+
+// Reset Password
+Route::get('/resetpassword', [App\Http\Controllers\C_LupaPassword::class, 'showReset'])->name('password.reset');
+Route::post('/reset-password', [App\Http\Controllers\C_LupaPassword::class, 'resetPassword'])->name('password.update');
+
+
+
+// Route::view('/loginkasir', 'v_loginkasir');
 
 // ========================
 // ROUTE HALAMAN LOGIN/REGISTER
@@ -52,6 +62,8 @@ Route::get('/franchisee', [C_admin::class, 'indexfranchise']);
 Route::get('/home', [UlasanController::class, 'home']);
 Route::post('/kirim-ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
 Route::post('/kontak/kirim-ulasan', [KontakController::class, 'storeUlasan'])->name('kontak.storeUlasan');
+Route::get('/loginkasir/{id_franchise}',[AuthController::class, 'loginkasir']);
+Route::get('/print/{id_penjualan}', [KasirController::class, 'print'])->name('printkasir');
 
 // ========================
 // CEK STATUS & MITRA
@@ -63,6 +75,7 @@ Route::post('/cekstatus', [C_Status::class, 'cek'])->name('cek.status');
 
 Route::get('/tambahfranchise', [CalonMitraController::class, 'indextambahfranchise']);
 Route::post('/tambahfranchise/insert', [CalonMitraController::class, 'tambahfranchise'])->name('franchise.baru');
+Route::get('/daftarmitra', [CalonMitraController::class, 'indexdaftar']);
 
 Route::middleware('auth')->group(function () {
     Route::post('/daftarmitra', [CalonMitraController::class, 'store'])->name('calonmitra.store');
@@ -78,17 +91,20 @@ Route::post('/uploadbuktifranchise/{id_franchisebaru}', [CalonMitraController::c
 // =================================================
 // KASIR GROUP (dengan middleware kasir)
 // =================================================
-Route::middleware(['auth', 'kasir.only'])->group(function () {
+
     Route::get('/kasir', [KasirController::class, 'kasir']);
-    Route::get('/akun', [KasirController::class, 'showakun'])->name('kasirakun');
-    Route::get('/akun/edit/{id_akun}', [KasirController::class, 'editakun'])->name('editakun');
-    Route::post('/akun/update/{id_akun}', [KasirController::class, 'updateakun'])->name('updateakun');
-    Route::get('/dashkasir', [KasirController::class, 'index'])->name('kasir.v_dashkasir');
-    Route::post('/store', [KasirController::class, 'store'])->name('kasir.store');
-    Route::post('/checkout', [KasirController::class, 'checkout']);
-    Route::get('/pelaporan', [KasirController::class, 'laporan']);
-    Route::get('/print/{id_penjualan}', [KasirController::class, 'print'])->name('printkasir');
-});
+Route::get('/dashkasir', [KasirController::class, 'index'])->name('kasir.v_dashkasir');
+Route::post('/kasir/store', [KasirController::class, 'store'])->name('kasir.store');
+Route::post('/kasir/checkout', [KasirController::class, 'checkout']);
+Route::get('/pelaporan', [KasirController::class, 'laporan']);
+Route::get('/print/{id_penjualan}', [KasirController::class, 'print'])->name('printkasir');
+Route::get('/loginkasir/{id_franchise}', [AuthController::class, 'loginkasir']);
+Route::get('/kasir/akun', [KasirController::class, 'showakun'])->name('kasirakun');
+Route::get('/kasir/akun/edit/{id_akun}', [KasirController::class, 'editakun'])->name('editakun');
+Route::post('/kasir/akun/update/{id_akun}', [KasirController::class, 'updateakun'])->name('updateakun');
+
+    
+
 
 // Pengaturan akun kasir
 Route::get('/kasir/akun', [KasirController::class, 'showakun'])->name('kasirakun');
@@ -111,6 +127,7 @@ Route::middleware(['auth', 'owner.only'])->prefix('owner')->group(function () {
     Route::get('/produk/add', [C_owner::class, 'tambahproduk']);
     Route::post('/produk/insert', [C_owner::class, 'insertproduk'])->name('produk.insert');
     Route::get('/tabelfranchisebaru', [C_owner::class, 'index4'])->name('ownerfranchisebaru');
+    Route::resource('/transaksi', TransaksiController::class);
 });
 
 
@@ -126,6 +143,12 @@ Route::middleware(['auth', 'admin.only'])->prefix('admin')->group(function () {
     Route::get('/tabelfranchise', [C_admin::class, 'tabelfranchise'])->name('adminfranchise');
     Route::get('/tabelulasan', [UlasanController::class, 'index'])->name('admin.ulasan.index');
     Route::get('/datasurvey', [C_Survey::class, 'indexadmin'])->name('datasurvey');
+    Route::delete('/admin/franchisebaru/{id_franchisebaru}', [C_admin::class, 'deletefranchisebaru'])->name('franchisebaruadmin.delete');
+    Route::resource('/transaksi', TransaksiController::class);
+
+    Route::get('/profiles', [C_admin::class, 'indexprofileadmin']);
+    Route::get('/admin/notifikasi', [C_admin::class, 'getNotifikasi'])->name('admin.notifikasi');
+
 
     // CRUD produk
     Route::get('/produk/edit/{id_produk}', [C_admin::class, 'editproduk']);
@@ -143,6 +166,7 @@ Route::middleware(['auth', 'admin.only'])->prefix('admin')->group(function () {
 
     // Franchise Baru
     Route::put('/franchisebaru/update-status/{id_franchisebaru}', [C_admin::class, 'updateStatus'])->name('franchisebaru.updateStatus');
+    Route::delete('/franchisebaru/{id_franchisebaru}', [C_admin::class, 'deletefranchisebaru'])->name('deletefranchisebaru');
 
     // Ulasan
     Route::delete('/tabelulasan/{id}', [UlasanController::class, 'destroy']);
@@ -173,7 +197,7 @@ Route::middleware('auth')->group(function () {
 // ========================
 // SURVEY
 // ========================
-Route::get('/datasurvey', [C_Survey::class, 'index'])->name('datasurvey');
+Route::get('/survey/datasurvey', [C_Survey::class, 'index'])->name('datasurvey');
 Route::get('/survey/tabelcalon', [C_Survey::class, 'index2'])->name('survey.calon');
 Route::get('/survey/laporansurvey/{id_calon}', [C_Survey::class, 'index3'])->name('survey.laporan');
 Route::post('/survey/laporansurvey/insert/{id_calon}', [C_Survey::class, 'laporansurvey'])->name('membuat.laporan');
@@ -192,3 +216,8 @@ Route::get('/test-email', function () {
         return 'Gagal: ' . $e->getMessage();
     }
 });
+
+
+
+
+

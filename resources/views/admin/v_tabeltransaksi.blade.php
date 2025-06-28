@@ -50,30 +50,29 @@ Tabel transaksi
 
       {{-- Modal Hapus --}}
       @foreach($transaksi as $t)
-      <div class="modal fade" id="delete{{ $t->id_transaksi }}">
-        <div class="modal-dialog modal-sm">
-          <div class="modal-content bg-danger">
-            <div class="modal-header">
-              <h6 class="modal-title">Hapus Transaksi</h6>
-              <button type="button" class="close" data-dismiss="modal">
-                <span>&times;</span>
-              </button>
+      <div class="modal fade" id="delete{{ $t->id_transaksi }}" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 shadow">
+          <div class="modal-body text-center py-4">
+            <div class="mb-3">
+              <i class="fas fa-exclamation-triangle fa-3x text-danger"></i>
             </div>
-            <div class="modal-body">
-              <p>Yakin ingin menghapus transaksi dengan ID <strong>{{ $t->id_transaksi }}</strong>?</p>
-            </div>
-            <div class="modal-footer justify-content-between">
+            <h5 class="mb-2">Hapus Data Ini?</h5>
+            <p class="text-muted">Nama transaksi: <strong>{{ $t->transaksi }}</strong></p>
+            <div class="d-flex justify-content-center gap-2 mt-4">
               <form action="{{ url('/admin/transaksi/' . $t->id_transaksi) }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-outline-light">Yes</button>
+                <button type="submit" class="btn btn-outline-danger px-4">Ya</button>
               </form>
-              <button type="button" class="btn btn-outline-light" data-dismiss="modal">No</button>
+              <button type="button" class="btn btn-outline-secondary px-4" data-dismiss="modal">Batal</button>
             </div>
           </div>
         </div>
       </div>
+      </div>
       @endforeach
+
 
     </div>
   </div>

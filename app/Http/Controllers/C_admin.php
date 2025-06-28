@@ -11,12 +11,14 @@ use Illuminate\Support\Facades\Session;
 use App\Charts\BostonAdminChart;
 use App\Mail\KirimNotifikasi;
 use Illuminate\Support\Facades\Mail;
+use App\Models\NotifikasiAdmin;
 
 class C_admin extends Controller
 {
     public function __construct()
     {
         $this->M_Admin = new M_Admin();
+        $this->Transaksi = new \App\Models\Transaksi();
     }
 
     public function index(Request $request, BostonAdminChart $chart)
@@ -50,6 +52,8 @@ class C_admin extends Controller
             ->where('status', 'Review Dokumen')
             ->get();
 
+        $transaksi = $this->Transaksi->allData();
+
         // Ambil tahun dari data penjualan (otomatis)
         $tahunList = DB::table('tb_penjualan')
             ->selectRaw('YEAR(tanggal) as tahun')
@@ -60,9 +64,20 @@ class C_admin extends Controller
         return view('admin.v_dashboard', compact(
             'daftarbaru', 'chart', 'tahunList', 'bulanAkhir', 'bulanAwal', 
             'jumlahPendaftar', 'jumlahFranchise', 'totalditerima', 
-            'pendapatan', 'topFranchise'
+            'pendapatan', 'topFranchise', 'transaksi'
         ));
     }
+
+    // Fungsi mencatat notifikasi
+    private function tambahNotifikasi($pesan)
+    {
+        DB::table('notifikasi_admin')->insert([
+            'pesan' => $pesan,
+            'dibuat_pada' => now()
+        ]);
+    }
+
+    
 
     public function data()
     {
@@ -79,11 +94,27 @@ class C_admin extends Controller
         $mitra = [
             'mitra' => $this->M_Admin->datamitra($id_akun)
         ];
+
+        $admin = [
+            'admin' => $this->M_Admin->dataakun($id_akun)
+        ];
+
         $foto = [
             'foto' => $this->M_Admin->datamitrafoto($id_akun)
         ];
         return view('v_profileakun', $mitra, $foto);
     }
+
+     public function indexprofileadmin()
+    {
+        $id_akun = Session::get('user')['id_akun'];
+
+        $admin = DB::table('tb_akun')->where('type_akun', 'admin')->first(); // pakai first(), bukan get()
+
+
+        return view('admin.v_profileakun', compact('admin'));
+    }
+
 
     public function indexfranchise()
     {
@@ -119,43 +150,92 @@ class C_admin extends Controller
         return view('v_franchisee', compact('franchise', 'foto', 'profile'));
     }
 
-    public function index1()
+    public function index1(Request $request)
     {
+        $search = $request->input('search');
+        $dataCalon = $this->M_Admin->datacalon();
+        if ($search) {
+            $dataCalon = collect($dataCalon)->filter(function ($item) use ($search) {
+                return stripos($item->id_calon, $search) !== false||
+                        stripos($item->nama_lengkap, $search) !== false;;
+            });
+        }
         $admin = [
-            'admin' => $this->M_Admin->datacalon()
+            'admin' => $dataCalon
         ];
+
         return view('admin.v_tabelcalon', $admin);
     }
 
-    public function index2()
+    public function index2(Request $request)
     {
+        $search = $request->input('search');
+        $dataAkun = $this->M_Admin->dataakun();
+
+        if ($search) {
+            $dataAkun = collect($dataAkun)->filter(function ($item) use ($search) {
+                return stripos($item->username, $search) !== false||
+                        stripos($item->nama, $search) !== false;
+            });
+        }
+
         $admin = [
-            'admin' => $this->M_Admin->dataakun()
+            'admin' => $dataAkun
         ];
+
         return view('admin.v_tabelakun', $admin);
     }
 
-    public function index3()
+    public function index3(Request $request)
     {
+        $search = $request->input('search');
+        $dataProduk = $this->M_Admin->dataproduk();
+
+        if ($search) {
+            $dataProduk = collect($dataProduk)->filter(function ($item) use ($search) {
+                return stripos($item->nama_produk, $search) !== false;
+            });
+        }
+
         $admin = [
-            'admin' => $this->M_Admin->dataproduk()
+            'admin' => $dataProduk
         ];
         return view('admin.v_tabelproduk', $admin);
     }
 
-    public function index4()
-    {
-        $admin = [
-            'admin' => $this->M_Admin->datafranchisebaru()
-        ];
-        return view('admin.v_tabelfranchisebaru', $admin);
+
+    public function index4(Request $request)
+{
+    $search = $request->input('search');
+    $dataFranchise = $this->M_Admin->datafranchisebaru();
+
+    if ($search) {
+        $dataFranchise = collect($dataFranchise)->filter(function ($item) use ($search) {
+            return stripos($item->nama_franchise, $search) !== false;
+        });
     }
 
-    public function tabelfranchise()
-    {
-        $admin = DB::table('tb_franchise')->get();
-        return view('admin.v_tabelfranchise', compact('admin'));
+    $admin = [
+        'admin' => $dataFranchise
+    ];
+    return view('admin.v_tabelfranchisebaru', $admin);
+}
+
+
+    public function tabelfranchise(Request $request)
+{
+    $search = $request->input('search');
+    $dataFranchise = DB::table('tb_franchise')->get();
+
+    if ($search) {
+        $dataFranchise = collect($dataFranchise)->filter(function ($item) use ($search) {
+            return stripos($item->nama_franchise, $search) !== false;
+        });
     }
+
+    return view('admin.v_tabelfranchise', ['admin' => $dataFranchise]);
+}
+
 
     public function deletecalon($id_calon)
     {
@@ -178,6 +258,12 @@ class C_admin extends Controller
     {
         $this->M_Admin->deleteDataakun($id_akun);
         return redirect()->route('adminakun')->with('success', 'Akun berhasil dihapus');
+    }
+
+    public function deletefranchisebaruq($id_franchisebaru)
+    {
+        $this->M_Admin->deleteDatafranchisebaru($id_franchisebaru);
+        return redirect()->route('adminfranchisebaru')->with('success', 'Akun berhasil dihapus');
     }
 
     public function tambahproduk()
@@ -215,6 +301,7 @@ class C_admin extends Controller
 
         try {
             DB::table('tb_produk')->insert($dataproduk);
+            $this->tambahNotifikasi("Produk '{$request->nama_produk}' berhasil ditambahkan.");
             Log::info('Data produk berhasil disimpan.', $dataproduk);
             return redirect('/admin/tabelproduk')->with('success', 'Tambah Produk Berhasil!.');
         } catch (\Exception $e) {
@@ -224,16 +311,16 @@ class C_admin extends Controller
     }
 
     public function editproduk($id_produk)
-    {
-        if (!$this->M_Admin->detailDataproduk($id_produk)) {
-            abort(404);
-        }
+{
+    $produk = $this->M_Admin->detailDataproduk($id_produk);
 
-        $data = [
-            'produk' => $this->M_Admin->detailDataproduk($id_produk)
-        ];
-        return view('admin.v_editproduk', $data);
+    if (!$produk) {
+        return redirect()->route('adminproduk')->with('error', 'Produk tidak ditemukan.');
     }
+
+    return view('admin.v_editproduk', compact('produk'));
+}
+
 
     public function updateproduk($id_produk)
     {
@@ -242,11 +329,6 @@ class C_admin extends Controller
             'nama_produk' => 'required|min:5|max:20',
             'harga' => 'required|integer',
             'gambar_produk' => 'file|mimes:jpg,jpeg,png,pdf|max:2048',
-        ], [
-            'nama_produk.required' => 'Nama Produk wajib di isi !',
-            'nama_produk.min' => 'Nama Produk minimal 5 karakter',
-            'nama_produk.max' => 'Nama Produk maksimal 20 karakter',
-            'harga.required' => 'Harga Produk wajib di isi !',
         ]);
     
         $data = [
@@ -263,13 +345,24 @@ class C_admin extends Controller
         }
 
         $this->M_Admin->editDataproduk($id_produk, $data);
+        $this->tambahNotifikasi("Produk '{$data['nama_produk']}' berhasil diperbarui.");
         return redirect()->route('adminproduk')->with('pesan', 'Data berhasil diperbarui!');
     }
 
     public function deleteproduk($id_produk)
     {
+        $produk = $this->M_Admin->detailDataproduk($id_produk);
+        if ($produk) {
+            $this->tambahNotifikasi("Produk '{$produk->nama_produk}' berhasil dihapus.");
+        }
         $this->M_Admin->deleteDataproduk($id_produk);
         return redirect()->route('adminproduk')->with('success', 'Produk Berhasil Dihapus');
+    }
+
+    public function deletefranchisebaru($id_franchisebaru)
+    {
+        $this->M_Admin->deleteDatafranchisebaru($id_franchisebaru);
+        return redirect()->route('adminfranchisebaru')->with('success', 'Franchise Baru Berhasil Dihapus');
     }
 
     // Update status untuk franchise baru
@@ -381,14 +474,28 @@ class C_admin extends Controller
         $request->validate([
             'status' => 'required|in:Review Dokumen,Survey Lokasi,Pembayaran,Pembuatan Booth,Diterima,Ditolak'
         ]);
-    
+        
         try {
             DB::table('tb_calonmitra')
                 ->where('id_calon', $id_calon)
                 ->update(['status' => $request->status]);
-
+        
+                $nama_lengkap = DB::table('tb_calonmitra')
+                                    ->where('id_calon', $id_calon)
+                                    ->select('tb_calonmitra.nama_lengkap')
+                                    ->first();
+                        
+                $email = DB::table('tb_calonmitra')
+                            ->leftJoin('tb_akun', 'tb_calonmitra.id_akun', '=', 'tb_akun.id_akun')
+                            ->where('id_calonmitra', $id_calon)
+                            ->select('tb_akun.email')
+                            ->first();
+        
+                if ($nama_lengkap && $email) {
+                    Mail::to($email->email)->send(new KirimNotifikasi($nama_lengkap->nama_lengkap, $request->status));
+                }
             // Jika status Diterima, buat data mitra
-            if ($request->status == 'Diterima') {
+            if ($request->status == 'Pembuatan Booth') {
                 $calon = DB::table('tb_calonmitra')
                     ->where('id_calon', $id_calon)
                     ->first();
@@ -427,5 +534,11 @@ class C_admin extends Controller
             Log::error('Gagal update status calon mitra: ' . $e->getMessage());
             return back()->with('error', 'Gagal memperbarui status calon mitra.');
         }
+    }
+
+    public function getNotifikasi()
+    {
+        $notifikasi = NotifikasiAdmin::orderBy('dibuat_pada', 'desc')->take(10)->get();
+        return response()->json($notifikasi);
     }
 }

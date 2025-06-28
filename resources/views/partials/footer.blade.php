@@ -9,7 +9,7 @@
                     <a href="#" class="social-icon me-3">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="#" class="social-icon me-3">
+                    <a href="" class="social-icon me-3">
                         <i class="fab fa-instagram"></i>
                     </a>
                     <a href="#" class="social-icon me-3">

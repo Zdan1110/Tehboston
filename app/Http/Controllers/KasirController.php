@@ -179,13 +179,20 @@ class KasirController extends Controller
                     'jumlah' => $item['jumlah'],
                 ]);
             }
-
             DB::commit();
-            return response()->json(['success' => true, 'redirect' => url('/print/{id_penjualan}')]);
+            Log::info('kasir Baru disimpan', ['id_penjualan' => $idPenjualan]);
+            return response()->json([
+                'success' => true,
+                'redirect' => route('printkasir', ['id_penjualan' => $idPenjualan])
+            ]);
+            
         } catch (\Exception $e) {
             DB::rollback();
             Log::error("Checkout failed: " . $e->getMessage());
-            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Checkout gagal: ' . $e->getMessage() // tampilkan error
+            ]);
         }
     }
 
@@ -227,9 +234,28 @@ class KasirController extends Controller
         return redirect()->route('editakun', ['id_akun' => $id_akun])->with('pesan', 'Akun kasir berhasil diperbarui!');
     }
 
-    public function print()
+    public function print($id_penjualan)
     {
-        
-        return view('kasir.v_print');
+        // Ambil detail transaksi
+        $datadetail = DB::table('tb_penjualan')
+            ->leftJoin('tb_detailpenjualan', 'tb_penjualan.id_penjualan', '=', 'tb_detailpenjualan.id_penjualan')
+            ->join('tb_produk', 'tb_detailpenjualan.nama_produk', '=', 'tb_produk.nama_produk') // optional kalau perlu produk
+            ->where('tb_penjualan.id_penjualan', $id_penjualan)
+            ->select('tb_detailpenjualan.*')
+            ->get();
+
+        // Ambil data penjualan + info kasir + franchise
+        $data = DB::table('tb_penjualan')
+            ->join('tb_kasir', 'tb_penjualan.id_franchise', '=', 'tb_kasir.id_franchise')
+            ->join('tb_franchise', 'tb_kasir.id_franchise', '=', 'tb_franchise.id_franchise')
+            ->where('tb_penjualan.id_penjualan', $id_penjualan)
+            ->select(
+                'tb_penjualan.*',
+                'tb_franchise.alamat_usaha',
+                'tb_franchise.nama_franchise'
+            )
+            ->first();
+
+        return view('kasir.v_print', compact('data', 'datadetail'));
     }
 }

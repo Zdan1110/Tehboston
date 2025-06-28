@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\Mail\KirimNotifikasiCalon;
+use Illuminate\Support\Facades\Mail;
 
 
 class CalonMitraController extends Controller
@@ -18,6 +20,11 @@ class CalonMitraController extends Controller
     public function __construct()
     {
         $this->M_Admin = new M_Admin();
+    }
+
+    public function indexdaftar()
+    {
+        return view('daftarmitra');
     }
 
     public function store(Request $request)
@@ -100,6 +107,7 @@ class CalonMitraController extends Controller
                 'kode_pos' => $request->kode_pos,
                 'titik_koordinat' => $request->titik_koordinat,
                 'lokasi_usaha' => $fileNamelokasi,
+                'status' => 'Review Dokumen',
             ];
 
             try {
@@ -136,6 +144,21 @@ class CalonMitraController extends Controller
                     ->update([
                         'status' => $request->status
                     ]);
+
+                    $nama_lengkap = DB::table('tb_calonmitra')
+                    ->where('id_calon', $id_calonmitra)
+                    ->select('tb_calonmitra.nama_lengkap')
+                    ->first();
+        
+                    $email = DB::table('tb_calonmitra')
+                                ->leftJoin('tb_akun', 'tb_calonmitra.id_akun', '=', 'tb_akun.id_akun')
+                                ->where('tb_calonmitra.id_calon', $id_calonmitra)
+                                ->select('tb_akun.email')
+                                ->first();
+
+                    if ($nama_lengkap && $email) {
+                        Mail::to($email->email)->send(new KirimNotifikasiCalon($nama_lengkap->nama_lengkap, $request->status));
+                    }
 
                 if ($request->status == 'Pembuatan Booth') {
 
@@ -249,7 +272,21 @@ class CalonMitraController extends Controller
 
         public function status()
         {
-            return view('v_preview');
+            $id_akun = Session::get('user')['id_akun'];
+            $idcalon = DB::table('tb_calonmitra')
+                        ->where('id_akun', $id_akun)
+                        ->first();
+
+            if ($idcalon->status !== 'Diterima') {
+                return view('status', ['calon' => $idcalon]);
+            } else {
+                $idfranchisebaru = DB::table('tb_franchisebaru')
+                                    ->leftJoin('tb_mitra', 'tb_franchisebaru.id_mitra', '=', 'tb_mitra.id_mitra')
+                                    ->where('tb_mitra.id_akun', $id_akun)
+                                    ->select('tb_franchisebaru.*')
+                                    ->get();
+                return view('v_preview', compact('idfranchisebaru'));
+            }
         }
 
         public function qrcode()
